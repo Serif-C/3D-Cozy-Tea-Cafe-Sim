@@ -11,7 +11,7 @@ public class Stove : MonoBehaviour, IInteractable
     [Header("Visuals")]
     [SerializeField] private GameObject cookedItemPrefab;   // what gets produced
     [SerializeField] private Transform spawnPoint;          // where item spawns
-    [SerializeField] private ParticleSystem fireEffect;
+    //[SerializeField] private ParticleSystem fireEffect;
 
     // Interface property: what text to show player
     public string Prompt
@@ -54,7 +54,7 @@ public class Stove : MonoBehaviour, IInteractable
             Debug.Log("Stove: Started cooking!");
             isCooking = true;
             timer = cookTime;
-            fireEffect?.Play(); // start flames if assigned
+            //fireEffect?.Play(); // start flames if assigned
         }
         // Case 2: take finished item
         else if (hasFinishedItem)
@@ -75,7 +75,7 @@ public class Stove : MonoBehaviour, IInteractable
             {
                 isCooking = false;
                 hasFinishedItem = true;
-                fireEffect?.Stop();
+                //fireEffect?.Stop();
                 Debug.Log("Stove: Food is ready!");
             }
         }

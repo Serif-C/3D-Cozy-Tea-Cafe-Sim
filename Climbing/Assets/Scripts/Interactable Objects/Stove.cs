@@ -21,17 +21,17 @@ public class Stove : MonoBehaviour, IInteractable
         {
             if (!isCooking && !hasFinishedItem)
             {
-                return "Start Cooking";
+                return "Start Boiling";
             }
 
             if (isCooking)
             {
-                return "Cooking... ";
+                return "Boiling... ";
             }
 
             if (hasFinishedItem)
             {
-                return "Take Food";
+                return "Take Boiled Water";
             }
 
             return "";
@@ -41,7 +41,7 @@ public class Stove : MonoBehaviour, IInteractable
     // Interface method: can player interact now?
     public bool CanInteract(PlayerInteractor player)
     {
-        // While cooking, prevent interaction (except taking finished item)
+        // While boiling, prevent interaction (except taking finished item)
         if (isCooking) return false;
         return true;
     }
@@ -52,7 +52,7 @@ public class Stove : MonoBehaviour, IInteractable
         // Case 1: start cooking
         if (!isCooking && !hasFinishedItem)
         {
-            Debug.Log("Stove: Started cooking!");
+            Debug.Log("Stove: Started Boiling Water!");
             isCooking = true;
             timer = cookTime;
             //fireEffect?.Play(); // start flames if assigned
@@ -60,7 +60,7 @@ public class Stove : MonoBehaviour, IInteractable
         // Case 2: take finished item
         else if (hasFinishedItem)
         {
-            Debug.Log("Stove: Player takes cooked food!");
+            Debug.Log("Stove: Player takes Boiled Water!");
             GameObject item = Instantiate(cookedItemPrefab, spawnPoint.position, Quaternion.identity);
             player.PickUp(item);
             hasFinishedItem = false;
@@ -77,7 +77,7 @@ public class Stove : MonoBehaviour, IInteractable
                 isCooking = false;
                 hasFinishedItem = true;
                 //fireEffect?.Stop();
-                Debug.Log("Stove: Food is ready!");
+                Debug.Log("Stove: Boiled Water is ready!");
             }
         }
     }

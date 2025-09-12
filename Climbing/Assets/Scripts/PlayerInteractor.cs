@@ -15,7 +15,7 @@ public class PlayerInteractor : MonoBehaviour
     {
         RaycastHit hit;
 
-        if(Physics.Raycast(transform.position, transform.forward, out hit, interactRange, layerMask))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, interactRange, layerMask))
         {
             Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.yellow);
 
@@ -27,5 +27,10 @@ public class PlayerInteractor : MonoBehaviour
                 interactableObject.Interact(this);
             }
         }
+    }
+
+    public void PickUp(GameObject item)
+    {
+
     }
 }

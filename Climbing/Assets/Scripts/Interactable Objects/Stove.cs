@@ -1,15 +1,16 @@
 using UnityEngine;
 
+// Stove is for boiling water
 public class Stove : MonoBehaviour, IInteractable
 {
     [Header("Cooking Settings")]
     [SerializeField] private float cookTime = 3f;
-    private float timer = 0f;             // tracks cooking progress
+    private float timer = 0f;             
     private bool isCooking = false;       // is stove currently active?
     private bool hasFinishedItem = false; // is something ready to pick up?
 
     [Header("Visuals")]
-    [SerializeField] private GameObject cookedItemPrefab;   // what gets produced
+    [SerializeField] private GameObject cookedItemPrefab;   
     [SerializeField] private Transform spawnPoint;          // where item spawns
     //[SerializeField] private ParticleSystem fireEffect;
 
@@ -61,7 +62,7 @@ public class Stove : MonoBehaviour, IInteractable
         {
             Debug.Log("Stove: Player takes cooked food!");
             GameObject item = Instantiate(cookedItemPrefab, spawnPoint.position, Quaternion.identity);
-            //player.PickUp(item); // give it to the player
+            player.PickUp(item);
             hasFinishedItem = false;
         }
     }

@@ -3656,6 +3656,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1cd31a2a0ac655740bf9ccc53a66f7a4, type: 3}
   m_PrefabInstance: {fileID: 693979551}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &731972993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a3c763961cef23439457edaba22e04e, type: 3}
+  m_PrefabInstance: {fileID: 819495102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &731972994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731972993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ad18e4a53bf67d4eb3eddacf25b2d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choppingTime: 3
+  choppingItemPrefab: {fileID: 919132149155446097, guid: fdb4d3af56dd3bc49bc87d2be06749d8, type: 3}
+  spawnPoint: {fileID: 1481666675}
+--- !u!4 &731972997 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7a3c763961cef23439457edaba22e04e, type: 3}
+  m_PrefabInstance: {fileID: 819495102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &731972998
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731972993}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1.2, z: 2.041903}
+  m_Center: {x: 0, y: 0.6, z: 0.02095151}
 --- !u!1 &742941854
 GameObject:
   m_ObjectHideFlags: 0
@@ -4606,10 +4652,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: kitchencounter_straight_B_backsplash
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7a3c763961cef23439457edaba22e04e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7a3c763961cef23439457edaba22e04e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1481666675}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a3c763961cef23439457edaba22e04e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 731972994}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a3c763961cef23439457edaba22e04e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 731972998}
   m_SourcePrefab: {fileID: 100100000, guid: 7a3c763961cef23439457edaba22e04e, type: 3}
 --- !u!1 &825732736
 GameObject:
@@ -7403,6 +7462,37 @@ Transform:
   - {fileID: 2080577358}
   m_Father: {fileID: 494423710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1481666674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481666675}
+  m_Layer: 0
+  m_Name: Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1481666675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481666674}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 731972997}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490982155
 GameObject:
   m_ObjectHideFlags: 0
@@ -7788,7 +7878,7 @@ Transform:
   m_GameObject: {fileID: 1586173005}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.468, y: 1.218, z: 0.61}
+  m_LocalPosition: {x: -0.468, y: 1.277, z: 0.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

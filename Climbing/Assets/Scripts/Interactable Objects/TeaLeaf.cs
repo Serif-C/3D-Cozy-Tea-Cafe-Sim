@@ -7,7 +7,7 @@ public class TeaLeaf : MonoBehaviour, IInteractable
     [SerializeField] private string teaLeafName;
     [SerializeField] private Transform spawnPoint;
 
-    string Prompt
+    public string Prompt
     {
         get
         {

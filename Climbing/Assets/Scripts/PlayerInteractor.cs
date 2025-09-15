@@ -5,8 +5,9 @@ public class PlayerInteractor : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float interactRange;   // Max interact range
-    private bool canHoldItem = true;
+    private bool isHoldingItem = true;
     public Transform carryItemPostion; // Position of the item on player's hand when held
+
 
     private void Awake()
     {
@@ -33,11 +34,21 @@ public class PlayerInteractor : MonoBehaviour
 
     public void PickUp(GameObject item)
     {
-        canHoldItem = false;
+        isHoldingItem = true;
     }
 
-    public bool CanHoldItem()
+    public void PlaceItem(GameObject item, Transform placementPos)
     {
-        return canHoldItem;
+        if (isHoldingItem)
+        {
+            Instantiate(item, placementPos.position, Quaternion.identity);
+            isHoldingItem = false;
+        }
     }
+
+    public bool IsHoldingItem()
+    {
+        return isHoldingItem;
+    }
+
 }

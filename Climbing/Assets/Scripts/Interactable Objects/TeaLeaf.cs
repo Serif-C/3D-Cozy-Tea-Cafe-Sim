@@ -17,7 +17,8 @@ public class TeaLeaf : MonoBehaviour, IInteractable
 
     public bool CanInteract(PlayerInteractor player)
     {
-        return player.CanHoldItem();
+        if (player.IsHoldingItem()) return false;
+        return true;
     }
 
     public void Interact(PlayerInteractor player)

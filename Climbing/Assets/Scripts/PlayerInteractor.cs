@@ -1,13 +1,17 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInteractor : MonoBehaviour
 {
+    [Header("Interaction")]
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float interactRange;   // Max interact range
-    private bool isHoldingItem = true;
-    public Transform carryItemPostion; // Position of the item on player's hand when held
+    public bool isHoldingItem = false;
 
+    [Header("Carry")]
+    public Transform carryItemPostion; // Position of the item on player's hand when held
+    [SerializeField] private GameObject heldItem;
 
     private void Awake()
     {
@@ -34,7 +38,15 @@ public class PlayerInteractor : MonoBehaviour
 
     public void PickUp(GameObject item)
     {
+        if (isHoldingItem || item == null) return;
+
         isHoldingItem = true;
+        heldItem = item;
+
+        // Parent to the carry point so it follows the hand automatically
+        heldItem.transform.SetParent(carryItemPostion, worldPositionStays: false);
+        heldItem.transform.localPosition = Vector3.zero;
+        heldItem.transform.localRotation = Quaternion.identity;
     }
 
     public void PlaceItem(GameObject item, Transform placementPos)

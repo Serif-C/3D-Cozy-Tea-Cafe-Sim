@@ -5,6 +5,7 @@ public class TeaLeaf : MonoBehaviour, IInteractable
     [Header("Tea Leaf Settings")]
     [SerializeField] private GameObject teaLeaftPrefab;
     [SerializeField] private string teaLeafName;
+    [SerializeField] private Transform teaLeafSpawnPoint;
 
     public string Prompt
     {
@@ -23,6 +24,7 @@ public class TeaLeaf : MonoBehaviour, IInteractable
     public void Interact(PlayerInteractor player)
     {
         Debug.Log("Tea Flower: Player takes a Tea Leaf!");
-        player.PickUp(teaLeaftPrefab);
+        GameObject item = Instantiate(teaLeaftPrefab, teaLeafSpawnPoint.position, Quaternion.identity);
+        player.PickUp(item);
     }
 }

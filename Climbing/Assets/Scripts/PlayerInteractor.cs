@@ -53,7 +53,10 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (isHoldingItem)
         {
-            Instantiate(item, placementPos.position, Quaternion.identity);
+
+            // places the item on a surface and de-parent it from the player
+            item.transform.SetParent(placementPos);
+            item.transform.localPosition = placementPos;
             isHoldingItem = false;
         }
     }

@@ -56,7 +56,7 @@ public class PlayerInteractor : MonoBehaviour
 
             // places the item on a surface and de-parent it from the player
             item.transform.SetParent(placementPos);
-            item.transform.localPosition = placementPos;
+            item.transform.localPosition = placementPos.position;
             isHoldingItem = false;
         }
     }

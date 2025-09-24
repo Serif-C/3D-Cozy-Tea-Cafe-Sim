@@ -46,9 +46,12 @@ public class BrewingStation : MonoBehaviour, IInteractable
 
     public void Interact(PlayerInteractor player)
     {
+        bool hasReqItem = player.IsHoldingItem() || player.GetHeldItemType().Equals("Boiled Water");
+
         // Case 1: start cooking
-        if (!isBrewing && !isFinishedBrewing)
+        if (!isBrewing && !isFinishedBrewing && hasReqItem)
         {
+            player.PlaceItem(spawnPoint);
             Debug.Log("Brewing Station: Started Boiling Water!");
             isBrewing = true;
             timer = brewingTime;

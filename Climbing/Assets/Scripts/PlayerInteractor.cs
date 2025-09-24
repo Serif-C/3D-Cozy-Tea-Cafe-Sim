@@ -49,21 +49,34 @@ public class PlayerInteractor : MonoBehaviour
         heldItem.transform.localRotation = Quaternion.identity;
     }
 
-    public void PlaceItem(GameObject item, Transform placementPos)
+    public void PlaceItem(Transform placementPos)
     {
-        if (isHoldingItem)
-        {
+        if (!isHoldingItem || heldItem == null || placementPos == null) return;
 
-            // places the item on a surface and de-parent it from the player
-            item.transform.SetParent(placementPos);
-            item.transform.localPosition = placementPos.position;
-            isHoldingItem = false;
-        }
+        heldItem.transform.SetParent(placementPos, worldPositionStays: false);
+        heldItem.transform.localPosition = Vector3.zero;
+        heldItem.transform.localRotation = Quaternion.identity;
+
+        // Optional: re-enable collider/physics so it sits properly on the surface
+        if (heldItem.TryGetComponent<Collider>(out var col))
+            col.enabled = true;
+        if (heldItem.TryGetComponent<Rigidbody>(out var rb))
+            rb.isKinematic = true; // keep kinematic on counters; set false if you want it to fall
+
+        // clear carry state
+        heldItem = null;
+        isHoldingItem = false;
     }
 
     public bool IsHoldingItem()
     {
         return isHoldingItem;
     }
+
+    public string GetHeldItemType()
+    {
+        return heldItem.GetType().ToString();
+    }
+
 
 }

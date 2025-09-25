@@ -1464,12 +1464,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 179c050023ffb344a91f29c481d65946, type: 3}
       propertyPath: m_Name
-      value: kitchencounter_straight_A_backsplash (2)
+      value: Brewing Station
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 179c050023ffb344a91f29c481d65946, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 179c050023ffb344a91f29c481d65946, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 520214329}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 179c050023ffb344a91f29c481d65946, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2141693311}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 179c050023ffb344a91f29c481d65946, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2141693310}
   m_SourcePrefab: {fileID: 100100000, guid: 179c050023ffb344a91f29c481d65946, type: 3}
 --- !u!1001 &319717406
 PrefabInstance:
@@ -2991,6 +3004,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519848646}
   m_Mesh: {fileID: 2811471509095672206, guid: 73b4514a66039a241ba56126d4a4ff37, type: 3}
+--- !u!1 &520214328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 520214329}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &520214329
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520214328}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2141693309}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &525374020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5281,7 +5325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cookTime: 3
-  cookedItemPrefab: {fileID: 919132149155446097, guid: 267671441d9db4a47a2955ea7cf65263, type: 3}
+  cookedItemPrefab: {fileID: 7377725346547854795, guid: 07a93cc728754344ab7eaea6bd1363ce, type: 3}
   spawnPoint: {fileID: 1586173006}
 --- !u!1001 &999862112
 PrefabInstance:
@@ -9749,6 +9793,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1cd31a2a0ac655740bf9ccc53a66f7a4, type: 3}
   m_PrefabInstance: {fileID: 2136159031}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2141693306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 179c050023ffb344a91f29c481d65946, type: 3}
+  m_PrefabInstance: {fileID: 288152404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2141693309 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 179c050023ffb344a91f29c481d65946, type: 3}
+  m_PrefabInstance: {fileID: 288152404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2141693310
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141693306}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1.2, z: 2.041903}
+  m_Center: {x: 0, y: 0.6, z: 0.02095151}
+--- !u!114 &2141693311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141693306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c47356a1c748cd144b23d9079104a0ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brewingTime: 5
+  brewedTeaPrefab: {fileID: 4198456964990446437, guid: 7081f8721f851b448bb74cad5c12cdeb, type: 3}
+  spawnPoint: {fileID: 520214329}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

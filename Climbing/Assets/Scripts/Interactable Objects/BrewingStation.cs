@@ -8,6 +8,7 @@ public class BrewingStation : MonoBehaviour, IInteractable
     private float timer = 0f;
     private bool isBrewing = false;
     private bool isFinishedBrewing = false;
+    private GameObject storedItem; // what's on the station right now
 
     [Header("Visuals")]
     [SerializeField] private GameObject brewedTeaPrefab;
@@ -46,24 +47,38 @@ public class BrewingStation : MonoBehaviour, IInteractable
 
     public void Interact(PlayerInteractor player)
     {
-        bool hasReqItem = player.IsHoldingItem() || player.GetHeldItemType().Equals("Boiled Water");
+        // Case 1: place boiled water (when empty)
+        if (!isBrewing && !isFinishedBrewing && storedItem == null && player.IsHoldingItem())
+        {
+            // Only accept boiled water
+            if (player.HeldItemHasTag("Boiled Water"))
+            {
+                player.PlaceItem(spawnPoint);
+                storedItem = spawnPoint.childCount > 0 ? spawnPoint.GetChild(0).gameObject : null;
 
-        // Case 1: start cooking
-        if (!isBrewing && !isFinishedBrewing && hasReqItem)
-        {
-            player.PlaceItem(spawnPoint);
-            Debug.Log("Brewing Station: Started Boiling Water!");
-            isBrewing = true;
-            timer = brewingTime;
-            //fireEffect?.Play(); // start flames if assigned
+                // Start brewing immediately after correct placement
+                isBrewing = true;
+                timer = brewingTime;
+                Debug.Log("Brewing Station: Boiled water placed. Brewing started!");
+            }
+            else
+            {
+                Debug.Log("Brewing Station: This station only accepts Boiled Water.");
+            }
+            return;
         }
-        // Case 2: take finished item
-        else if (isFinishedBrewing)
+
+        // Case 2: take finished tea
+        if (isFinishedBrewing && !player.IsHoldingItem())
         {
-            Debug.Log("Brewing Station: Player takes Boiled Water!");
-            GameObject item = Instantiate(brewedTeaPrefab, spawnPoint.position, Quaternion.identity);
-            player.PickUp(item);
-            isFinishedBrewing = false;
+            if (storedItem != null) // storedItem is the finished tea now
+            {
+                player.PickUp(storedItem);
+                storedItem = null;
+                isFinishedBrewing = false;
+                Debug.Log("Brewing Station: Player took tea.");
+            }
+            return;
         }
     }
 
@@ -76,6 +91,11 @@ public class BrewingStation : MonoBehaviour, IInteractable
             {
                 isBrewing = false;
                 isFinishedBrewing = true;
+
+                // Replace boiled water with brewed tea on the socket
+                if (storedItem != null) Destroy(storedItem);
+                storedItem = Instantiate(brewedTeaPrefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
+
                 Debug.Log("Brewing Station: Tea is ready!");
             }
         }

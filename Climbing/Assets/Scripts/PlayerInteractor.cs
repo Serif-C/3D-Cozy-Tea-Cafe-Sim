@@ -73,9 +73,14 @@ public class PlayerInteractor : MonoBehaviour
         return isHoldingItem;
     }
 
-    public string GetHeldItemType()
+    public string GetHeldItemTag()
     {
-        return heldItem.GetType().ToString();
+        return heldItem != null ? heldItem.tag : null;
+    }
+
+    public bool HeldItemHasTag(string tag)
+    {
+        return heldItem != null && heldItem.CompareTag(tag);
     }
 
 

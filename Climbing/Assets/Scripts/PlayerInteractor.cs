@@ -20,6 +20,8 @@ public class PlayerInteractor : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        if (!context.performed) return;
+
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, interactRange, layerMask))

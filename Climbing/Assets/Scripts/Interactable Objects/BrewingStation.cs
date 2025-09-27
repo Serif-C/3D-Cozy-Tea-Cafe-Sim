@@ -54,7 +54,13 @@ public class BrewingStation : MonoBehaviour, IInteractable
             if (player.HeldItemHasTag("Boiled Water"))
             {
                 player.PlaceItem(spawnPoint);
-                storedItem = spawnPoint.childCount > 0 ? spawnPoint.GetChild(0).gameObject : null;
+
+                if (spawnPoint.childCount > 0)
+                    storedItem = spawnPoint.GetChild(0).gameObject;
+                else
+                    storedItem = null;
+
+                //storedItem = spawnPoint.childCount > 0 ? spawnPoint.GetChild(0).gameObject : null;
 
                 // Start brewing immediately after correct placement
                 isBrewing = true;

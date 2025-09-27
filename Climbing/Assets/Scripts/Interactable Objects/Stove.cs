@@ -6,7 +6,7 @@ public class Stove : MonoBehaviour, IInteractable
     [Header("Cooking Settings")]
     [SerializeField] private float cookTime = 3f;
     private float timer = 0f;             
-    private bool isCooking = false;       // is stove currently active?
+    private bool isBoiling = false;       // is stove currently active?
     private bool hasFinishedItem = false; // is something ready to pick up?
 
     [Header("Visuals")]
@@ -19,12 +19,12 @@ public class Stove : MonoBehaviour, IInteractable
     {
         get
         {
-            if (!isCooking && !hasFinishedItem)
+            if (!isBoiling && !hasFinishedItem)
             {
                 return "Start Boiling";
             }
 
-            if (isCooking)
+            if (isBoiling)
             {
                 return "Boiling... ";
             }
@@ -42,23 +42,23 @@ public class Stove : MonoBehaviour, IInteractable
     public bool CanInteract(PlayerInteractor player)
     {
         // While boiling, prevent interaction (except taking finished item)
-        if (isCooking) return false;
+        if (isBoiling) return false;
         return true;
     }
 
     // Interface method: what happens when interact
     public void Interact(PlayerInteractor player)
     {
-        // Case 1: start cooking
-        if (!isCooking && !hasFinishedItem)
+        // Case 1: start boiling
+        if (!isBoiling && !hasFinishedItem)
         {
             Debug.Log("Stove: Started Boiling Water!");
-            isCooking = true;
+            isBoiling = true;
             timer = cookTime;
             //fireEffect?.Play(); // start flames if assigned
         }
         // Case 2: take finished item
-        else if (hasFinishedItem)
+        else if (hasFinishedItem && !player.IsHoldingItem())
         {
             Debug.Log("Stove: Player takes Boiled Water!");
             GameObject item = Instantiate(cookedItemPrefab, spawnPoint.position, Quaternion.identity);
@@ -69,12 +69,12 @@ public class Stove : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (isCooking)
+        if (isBoiling)
         {
             timer -= Time.deltaTime;
             if (timer <= 0f)
             {
-                isCooking = false;
+                isBoiling = false;
                 hasFinishedItem = true;
                 //fireEffect?.Stop();
                 Debug.Log("Stove: Boiled Water is ready!");

@@ -1,7 +1,8 @@
+using System;
 using NUnit.Framework;
 using UnityEngine;
 
-public class BrewingStation : MonoBehaviour, IInteractable
+public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
 {
     [Header("Brewing Settings")]
     [SerializeField] private float brewingTime = 5f;
@@ -14,6 +15,39 @@ public class BrewingStation : MonoBehaviour, IInteractable
     [SerializeField] private GameObject brewedTeaPrefab;
     //[SerializeField] private Tea type;    // shows the tea type later
     [SerializeField] private Transform spawnPoint;  // where brewing prefab spawns
+
+    // IHasProgress attribute
+    public event Action<float, bool> OnProgressChanged;
+
+    public float Progress01
+    {
+        get
+        {
+            if (isBrewing)
+            {
+                float normalized = 1f - (timer / brewingTime);
+                return Mathf.Clamp01(normalized);
+            }
+            else
+            {
+                if (isFinishedBrewing)
+                    return 1f;
+                else
+                    return 0f;
+            }
+        }
+    }
+
+    public bool ShowProgress
+    {
+        get
+        {
+            if (isBrewing)
+                return true;
+            else
+                return false;
+        }
+    }
 
     public string Prompt
     {
@@ -60,8 +94,6 @@ public class BrewingStation : MonoBehaviour, IInteractable
                 else
                     storedItem = null;
 
-                //storedItem = spawnPoint.childCount > 0 ? spawnPoint.GetChild(0).gameObject : null;
-
                 // Start brewing immediately after correct placement
                 isBrewing = true;
                 timer = brewingTime;
@@ -101,9 +133,25 @@ public class BrewingStation : MonoBehaviour, IInteractable
                 // Replace boiled water with brewed tea on the socket
                 if (storedItem != null) Destroy(storedItem);
                 storedItem = Instantiate(brewedTeaPrefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
-
+                RaiseProgressChanged();
                 Debug.Log("Brewing Station: Tea is ready!");
             }
+            else
+            {
+                RaiseProgressChanged();
+            }
+        }
+    }
+
+    private void RaiseProgressChanged()
+    {
+        if (OnProgressChanged != null)
+        {
+            float progressValue = Progress01;
+            bool shouldShow = ShowProgress;
+
+            // Call every method subscribed to this event, passing the values
+            OnProgressChanged.Invoke(progressValue, shouldShow);
         }
     }
 }

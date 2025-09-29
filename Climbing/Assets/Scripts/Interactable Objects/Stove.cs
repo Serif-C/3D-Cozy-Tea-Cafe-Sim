@@ -1,7 +1,10 @@
+using System;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Stove is for boiling water
-public class Stove : MonoBehaviour, IInteractable
+public class Stove : MonoBehaviour, IInteractable, IHasProgress
 {
     [Header("Cooking Settings")]
     [SerializeField] private float cookTime = 3f;
@@ -12,7 +15,41 @@ public class Stove : MonoBehaviour, IInteractable
     [Header("Visuals")]
     [SerializeField] private GameObject cookedItemPrefab;   
     [SerializeField] private Transform spawnPoint;          // where item spawns
-    //[SerializeField] private ParticleSystem fireEffect;
+
+    // IHasProgress attribute
+    public event Action<float, bool> OnProgressChanged;
+
+    public float Progress01
+    {
+        get
+        {
+            if (isBoiling)
+            {
+                float normalized = 1f - (timer / cookTime);
+                return Mathf.Clamp01(normalized);
+            }
+            else
+            {
+                if (hasFinishedItem)
+                    return 1f;
+                else
+                    return 0f;
+            }
+        }
+    }
+
+    public bool ShowProgress
+    {
+        get
+        {
+            if (isBoiling)
+                return true;
+            else
+                return false;
+        }
+    }
+
+
 
     // Interface property: what text to show player
     public string Prompt
@@ -77,8 +114,25 @@ public class Stove : MonoBehaviour, IInteractable
                 isBoiling = false;
                 hasFinishedItem = true;
                 //fireEffect?.Stop();
+                RaiseProgressChanged(); // will flip ShowProgress to false and Progress01 to 1
                 Debug.Log("Stove: Boiled Water is ready!");
             }
+            else
+            {
+                RaiseProgressChanged();
+            }
+        }
+    }
+
+    private void RaiseProgressChanged()
+    {
+        if (OnProgressChanged != null)
+        {
+            float progressValue = Progress01;
+            bool shouldShow = ShowProgress;
+
+            // Call every method subscribed to this event, passing the values
+            OnProgressChanged.Invoke(progressValue, shouldShow);
         }
     }
 }

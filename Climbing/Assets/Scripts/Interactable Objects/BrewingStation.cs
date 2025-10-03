@@ -10,6 +10,8 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
     private bool isBrewing = false;
     private bool isFinishedBrewing = false;
     private GameObject storedItem; // what's on the station right now
+    private bool hasTeaLeaf = false;
+    private bool hasBoildWater = false;
 
     [Header("Visuals")]
     [SerializeField] private GameObject brewedTeaPrefab;
@@ -84,24 +86,48 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
         // Case 1: place boiled water (when empty)
         if (!isBrewing && !isFinishedBrewing && storedItem == null && player.IsHoldingItem())
         {
-            // Only accept boiled water
-            if (player.HeldItemHasTag("Boiled Water"))
+            // Accepts Tea leaf
+            if (player.HeldItemHasTag("Tea Leaf"))
+            {
+                player.PlaceItem(spawnPoint);
+                hasTeaLeaf = true;
+                Destroy(spawnPoint.GetChild(1).gameObject);
+
+                Debug.Log("Recieved Tea Leaf");
+
+                //// Start brewing immediately after correct placement
+                if (hasTeaLeaf && hasBoildWater)
+                {
+                    isBrewing = true;
+                    timer = brewingTime;
+                    Debug.Log("Brewing Station: Boiled water and Tea Leaf placed. Brewing started!");
+                }
+            }
+
+            // Accepts Boiled Water
+            else if (player.HeldItemHasTag("Boiled Water"))
             {
                 player.PlaceItem(spawnPoint);
 
                 if (spawnPoint.childCount > 0)
-                    storedItem = spawnPoint.GetChild(0).gameObject;
+                    storedItem = spawnPoint.GetChild(spawnPoint.childCount - 1).gameObject;
                 else
                     storedItem = null;
 
-                // Start brewing immediately after correct placement
-                isBrewing = true;
-                timer = brewingTime;
-                Debug.Log("Brewing Station: Boiled water placed. Brewing started!");
+                hasBoildWater = true;
+                Debug.Log("Recieved Boiled Water");
+                
+                //// Start brewing immediately after correct placement
+                if (hasTeaLeaf && hasBoildWater)
+                {
+                    isBrewing = true;
+                    timer = brewingTime;
+                    Debug.Log("Brewing Station: Boiled water and Tea Leaf placed. Brewing started!");
+                }
             }
             else
             {
-                Debug.Log("Brewing Station: This station only accepts Boiled Water.");
+                Debug.Log("Brewing Station: This station only accepts Boiled Water and Tea Leaf.");
             }
             return;
         }
@@ -114,6 +140,8 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
                 player.PickUp(storedItem);
                 storedItem = null;
                 isFinishedBrewing = false;
+                hasTeaLeaf = false;
+                hasBoildWater = false;
                 Debug.Log("Brewing Station: Player took tea.");
             }
             return;
@@ -131,7 +159,11 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
                 isFinishedBrewing = true;
 
                 // Replace boiled water with brewed tea on the socket
-                if (storedItem != null) Destroy(storedItem);
+                if (storedItem != null)
+                {
+                    Destroy(storedItem);
+                    Debug.Log("This code gets executed");
+                }
                 storedItem = Instantiate(brewedTeaPrefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
                 RaiseProgressChanged();
                 Debug.Log("Brewing Station: Tea is ready!");

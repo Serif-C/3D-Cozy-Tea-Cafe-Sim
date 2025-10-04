@@ -112,12 +112,18 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
         }
 
         // Case 2: Customer is done 
-        if (isServed && requiresCleaning && !isCleaning)
+        else if (isServed && requiresCleaning && !isCleaning)
         {
             timer = cleaningTime;
+            isCleaning = true;
             hasFinishedCleaning = false;
-            // Destroy finished item for now
-            Destroy(storedItem);
+            Debug.Log("Table: Table is being Cleaned");
+        }
+
+        // Case 3: Table is fresh (i.e., has been cleaned or empty)
+        else
+        {
+            Debug.Log("There is nothing to Clean");
         }
     }
 
@@ -128,6 +134,8 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
             timer -= Time.deltaTime;
             if (timer <= 0f)
             {
+                // Destroy finished item for now
+                Destroy(storedItem);
                 requiresCleaning = true;
             }
         }
@@ -140,6 +148,12 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
                 isCleaning = false;
                 requiresCleaning = false;
                 hasFinishedCleaning = true;
+                isServed = false;
+                RaiseProgressChanged();
+                Debug.Log("Finished cleaning");
+            }
+            else
+            {
                 RaiseProgressChanged();
             }
         }

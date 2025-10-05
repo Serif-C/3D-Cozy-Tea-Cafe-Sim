@@ -83,15 +83,23 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
 
     public void Interact(PlayerInteractor player)
     {
-        // Case 1: place boiled water (when empty)
-        if (!isBrewing && !isFinishedBrewing && storedItem == null && player.IsHoldingItem())
+        if (!isBrewing && !isFinishedBrewing && player.IsHoldingItem())
         {
             // Accepts Tea leaf
             if (player.HeldItemHasTag("Tea Leaf"))
             {
                 player.PlaceItem(spawnPoint);
                 hasTeaLeaf = true;
-                Destroy(spawnPoint.GetChild(1).gameObject);
+
+                //StoreItemAsNextChild();
+
+                for (int i = 0; i < spawnPoint.childCount; i++)
+                {
+                    if(spawnPoint.GetChild(i).CompareTag("Tea Leaf"))
+                    {
+                        Destroy(spawnPoint.GetChild(i).gameObject);
+                    }
+                }
 
                 Debug.Log("Recieved Tea Leaf");
 
@@ -109,15 +117,12 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
             {
                 player.PlaceItem(spawnPoint);
 
-                if (spawnPoint.childCount > 0)
-                    storedItem = spawnPoint.GetChild(spawnPoint.childCount - 1).gameObject;
-                else
-                    storedItem = null;
+                StoreItemAsNextChild();
 
                 hasBoildWater = true;
                 Debug.Log("Recieved Boiled Water");
                 
-                //// Start brewing immediately after correct placement
+                //Start brewing immediately after correct placement
                 if (hasTeaLeaf && hasBoildWater)
                 {
                     isBrewing = true;
@@ -153,7 +158,7 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
         if (isBrewing)
         {
             timer -= Time.deltaTime;
-            if(timer <= 0f)
+            if (timer <= 0f)
             {
                 isBrewing = false;
                 isFinishedBrewing = true;
@@ -173,6 +178,16 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
                 RaiseProgressChanged();
             }
         }
+    }
+
+    private void StoreItemAsNextChild()
+    {
+        if (spawnPoint.childCount > 0)
+            storedItem = spawnPoint.GetChild(spawnPoint.childCount - 1).gameObject;
+        else
+            storedItem = null;
+
+
     }
 
     private void RaiseProgressChanged()

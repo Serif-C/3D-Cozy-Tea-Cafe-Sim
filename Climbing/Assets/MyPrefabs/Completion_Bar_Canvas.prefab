@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5210330935848020639}
   - component: {fileID: 5189579075764852921}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Completion Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 3940565656507118506}
   - component: {fileID: 1213706534961911111}
   - component: {fileID: 8503273756753180580}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 6233791856065772617}
   - component: {fileID: 6241069110783515156}
   - component: {fileID: 7470391870408156891}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 6099511471216097980}
   - component: {fileID: 5879095042595090584}
   - component: {fileID: 2663594580002793360}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Completion_Bar_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

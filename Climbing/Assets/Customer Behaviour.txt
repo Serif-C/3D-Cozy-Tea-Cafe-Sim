@@ -1,0 +1,24 @@
+Customer Behaviour:
+	1. They stand in line outside (outside camera view) and comes in at random interval
+	(perhaps a range from 10s to 20s).
+
+	2. They may come in stack of 1 to 4.
+
+	3. Once inside, they randomly choose from any available table, then sit on chairs 
+	around it.
+
+	4. Once seated, they place a random tea order.
+	
+	5. They will wait for their order for as long as `min_wait_time` happily then grow 	increasingly agitated as it approaches `max_wait_time`. They will leave if it 
+	they have been waiting longer than `max_wait_time`.
+
+	6. While they wait and drink, they will have pop up messages and icons, conveying
+	how they feel about the tea, the service, the appearance of the place, etc...
+	and their small dialogues will be AI Generated for uniqueness.
+
+	7. Once they finish drinking their tea, they have a pop-up of their mood then, they
+	will immediately get up and leave.
+
+	8. While a table is occupier, no other customer may take their table until they are 
+	done. That also means if all tables are occupied, no new customer may enter the cafe. 
+	

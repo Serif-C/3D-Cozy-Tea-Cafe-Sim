@@ -7,6 +7,7 @@ TagManager:
   - Boiled Water
   - Tea Leaf
   - Tea
+  - Customer
   layers:
   - Default
   - TransparentFX

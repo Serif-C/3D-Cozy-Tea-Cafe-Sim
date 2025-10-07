@@ -37,7 +37,12 @@ public class CustomerMovement : MonoBehaviour, IMover
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.speed = moveSpeed;
     }
 
+    private void Update()
+    {
+        
+    }
 
 }

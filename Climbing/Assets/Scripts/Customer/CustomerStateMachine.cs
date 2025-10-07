@@ -7,4 +7,6 @@ public class CustomerStateMachine : MonoBehaviour
      * 1. Relaying info to other customer scripts about what the customer is currently doing
      * 2. Updating states
      */
+
+
 }

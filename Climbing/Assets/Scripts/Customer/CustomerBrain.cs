@@ -63,17 +63,26 @@ public class CustomerBrain : MonoBehaviour
 
     IEnumerator WaitInLine()
     {
-        yield return new WaitForEndOfFrame();
+        SetState(CustomerState.WaitingInLine);
+        var spot = queue.RequestSpot();
+        yield return Go(spot);
+        // ... “turn in line” logic here ...
     }
 
     IEnumerator PlaceOrder()
     {
-        yield return new WaitForEndOfFrame();
+        SetState(CustomerState.PlacingOrder);
+        yield return Go(counter);
+        // ... order logic ...
     }
 
     IEnumerator SitAndDrink()
     {
-        yield return new WaitForEndOfFrame();
+        SetState(CustomerState.Sitting);
+        var seat = seating.AssignSeat();
+        yield return Go(seat);
+        SetState(CustomerState.Drinking);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));
     }
 
     IEnumerator LeaveCafe()
@@ -83,13 +92,30 @@ public class CustomerBrain : MonoBehaviour
     }
 
 
+
+    /* Create a flag done = false;
+     * Define a tiny helper function Handler() that sets done = true
+     * Tell movement to start going somewhere
+     * Subscribe to the movement’s event — “when you arrive, call Handler()”
+     * Wait (do nothing) until done flips to true
+     * Once we’re done waiting, unsubscribe from the event (cleanup)
+     */
     IEnumerator Go(ITarget t)
     {
         bool done = false;
-        void Handler() { done = true; }
+        void Handler()
+        {
+            done = true; 
+        }
         mover.ReachedTarget += Handler;
         mover.GoTo(t);
+
+        //  Pause the coroutine here and wait until 'done' becomes true.
+        //  The lambda () => done creates a function that returns 'done'.
+        //  Unity will resume this coroutine only when that function returns true,
+        //  meaning the mover has reached its target.
         yield return new WaitUntil(() => done);
+
         mover.ReachedTarget -= Handler;
     }
 }

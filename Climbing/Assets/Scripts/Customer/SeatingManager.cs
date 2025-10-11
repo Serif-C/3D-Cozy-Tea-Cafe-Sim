@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class SeatingManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private TransformTarget[] seats;
+    
+    public ITarget AssignSeat()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        int random = UnityEngine.Random.Range(0, seats.Length);
+        return seats[random];
     }
 }

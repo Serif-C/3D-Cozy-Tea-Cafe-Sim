@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class QueueManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private TransformTarget[] spots;
+    int next;
+    public ITarget RequestSpot()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        int i = next;
+        next = next + 1;
+        int clamped = Mathf.Min(i, spots.Length - 1);
+        return spots[clamped];
     }
 }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1088596767126459667}
   - component: {fileID: 4184018869992980998}
   - component: {fileID: 6592952667170457460}
-  - component: {fileID: 3310511389275884955}
   - component: {fileID: 4288528815455803743}
   - component: {fileID: 5329805386692548914}
   - component: {fileID: 2248165364476832548}
@@ -134,19 +133,6 @@ MonoBehaviour:
   exit: {fileID: 0}
   queue: {fileID: 2248165364476832548}
   seating: {fileID: 3085243426183691437}
---- !u!114 &3310511389275884955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2764545133507838133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72862becbc4ac1145b59ad98bd374df2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customerPrefabs: []
 --- !u!114 &4288528815455803743
 MonoBehaviour:
   m_ObjectHideFlags: 0

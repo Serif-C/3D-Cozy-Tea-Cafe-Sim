@@ -41,7 +41,7 @@ public class CustomerBrain : MonoBehaviour
     private void SetState(CustomerState s)
     {
         current = s;
-        Debug.Log("Customer - Current State: " + current.ToString());
+        //Debug.Log("Customer - Current State: " + current.ToString());
         if (OnStateChanged != null)
         {
             OnStateChanged.Invoke(s);

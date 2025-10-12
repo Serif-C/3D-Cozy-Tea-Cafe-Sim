@@ -10,12 +10,12 @@ public class CustomerSpawner : MonoBehaviour
     private IObjectPool<GameObject> pool;
     private Coroutine spawnLoop;
 
-    private void Awake()
+    private void Start()
     {
         // Guard against empty setup
         if (customerPrefabs == null || customerPrefabs.Length == 0)
         {
-            Debug.LogError("CustomerSpawner: No customerPrefabs assigned.");
+            Debug.LogError("CustomerSpawner: No customerPrefabs assigned");
             enabled = false;
             return;
         }
@@ -29,11 +29,8 @@ public class CustomerSpawner : MonoBehaviour
             defaultCapacity: CustomerManager.Instance.GetDefaultMax(),
             maxSize: CustomerManager.Instance.GetMaxNumCustomer()
         );
-    }
 
-    private void OnEnable()
-    {
-        spawnLoop ??= StartCoroutine(SpawnLoop(7, 15));
+        spawnLoop = StartCoroutine(SpawnLoop(7, 15)); // start AFTER pool exists
     }
 
     private void OnDisable()

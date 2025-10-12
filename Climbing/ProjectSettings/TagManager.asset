@@ -8,6 +8,11 @@ TagManager:
   - Tea Leaf
   - Tea
   - Customer
+  - Seats
+  - Counter
+  - Queue
+  - Entrance
+  - Exit
   layers:
   - Default
   - TransparentFX

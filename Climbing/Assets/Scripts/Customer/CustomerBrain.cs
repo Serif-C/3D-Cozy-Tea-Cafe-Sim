@@ -16,6 +16,7 @@ public enum CustomerState
 public class CustomerBrain : MonoBehaviour
 {
     [SerializeField] private MonoBehaviour moverProvider;
+
     private IMover mover;
 
     [SerializeField] private TransformTarget entry;
@@ -40,6 +41,7 @@ public class CustomerBrain : MonoBehaviour
     private void SetState(CustomerState s)
     {
         current = s;
+        Debug.Log("Customer - Current State: " + current.ToString());
         if (OnStateChanged != null)
         {
             OnStateChanged.Invoke(s);

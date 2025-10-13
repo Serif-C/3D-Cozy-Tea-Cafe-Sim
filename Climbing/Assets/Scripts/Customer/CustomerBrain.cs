@@ -31,6 +31,10 @@ public class CustomerBrain : MonoBehaviour
     private void Awake()
     {
         mover = (IMover)moverProvider;
+
+        entry = GameObject.FindGameObjectWithTag("Entrance").gameObject.GetComponent<TransformTarget>();
+        counter = GameObject.FindGameObjectWithTag("Counter").gameObject.GetComponent<TransformTarget>();
+        exit = GameObject.FindGameObjectWithTag("Exit").gameObject.GetComponent<TransformTarget>();
     }
 
     private void Start()

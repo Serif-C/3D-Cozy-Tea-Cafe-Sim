@@ -11,9 +11,12 @@ public class SeatingManager : MonoBehaviour
         var tag = GameObject.FindGameObjectsWithTag("Seats");
         var list = new List<TransformTarget>(tag.Length);
 
-        foreach (var go in tag)
+        foreach (var s in tag)
         {
-            if (go.TryGetComponent(out TransformTarget seat)) list.Add(seat);
+            if (s.TryGetComponent(out TransformTarget seat))
+            {
+                list.Add(seat);
+            }
         }
 
         seats = list.ToArray();

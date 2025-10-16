@@ -15,10 +15,14 @@ public enum CustomerState
 
 public class CustomerBrain : MonoBehaviour
 {
+    [Header("Customer Action Providers")]
     [SerializeField] private MonoBehaviour moverProvider;
+    [SerializeField] private OrderSystem orderSystemProvider;
 
     private IMover mover;
+    private IOrderSystem orderSystem;
 
+    [Header("Customer Destination References")]
     [SerializeField] private TransformTarget entry;
     [SerializeField] private TransformTarget counter;
     [SerializeField] private TransformTarget exit;
@@ -31,6 +35,7 @@ public class CustomerBrain : MonoBehaviour
     private void Awake()
     {
         mover = (IMover)moverProvider;
+        orderSystem = (IOrderSystem)orderSystemProvider;
 
         entry = GameObject.FindGameObjectWithTag("Entrance").gameObject.GetComponent<TransformTarget>();
         counter = GameObject.FindGameObjectWithTag("Counter").gameObject.GetComponent<TransformTarget>();
@@ -79,7 +84,17 @@ public class CustomerBrain : MonoBehaviour
     {
         SetState(CustomerState.PlacingOrder);
         yield return Go(counter);
+
         // ... order logic ...
+        var handle = orderSystem.PlaceOrder(gameObject);
+
+        // Wait (do nothing) until the order is ready, via event
+        bool rdy = false;
+        void MarkReady() { rdy = true; };
+
+        handle.OnReady += MarkReady;
+        yield return new WaitUntil(() => rdy);
+        handle.OnReady -= MarkReady;
     }
 
     IEnumerator SitAndDrink()
@@ -96,7 +111,6 @@ public class CustomerBrain : MonoBehaviour
         SetState(CustomerState.LeavingCafe);
         yield return Go(exit);
     }
-
 
 
     /* Create a flag done = false;

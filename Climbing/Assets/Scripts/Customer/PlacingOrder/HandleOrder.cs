@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class HandleOrder : MonoBehaviour, IHandleOrder
+public class HandleOrder : IHandleOrder
 {
     public bool IsReady { get; private set; }
 

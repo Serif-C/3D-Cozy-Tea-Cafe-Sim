@@ -12,11 +12,39 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
     private bool requiresCleaning = false;
     private bool hasFinishedCleaning = false;
     private GameObject storedItem;
+    [SerializeField] private DrinkItem servedDrinkMeta;
+
 
     [Header("Visuals")]
     [SerializeField] private Transform spawnPoint;
 
     public event Action<float, bool> OnProgressChanged;
+
+    // CustomerBrain uses this to check:
+    public bool HasDrinkFor(OrderTicket ticket)
+    {
+        // Served, have a tea, and matches ID and Drink
+        return isServed
+            && spawnPoint != null
+            && spawnPoint.childCount > 1
+            && servedDrinkMeta != null
+            && servedDrinkMeta.OrderId == ticket.OrderId
+            && servedDrinkMeta.DrinkType == ticket.Drink;
+    }
+
+    // Utility so we don't duplicate this pattern
+    private bool servedItemExists()
+    {
+                                                // Completion bar occupies index = 0
+        return isServed && spawnPoint != null && spawnPoint.childCount > 1 && servedDrinkMeta != null;    
+    }
+    
+    // Expose the raw meta if ever needed
+    public bool TryGetServedDrink(out DrinkItem meta)
+    {
+        meta = servedDrinkMeta;
+        return isServed && servedItemExists() && servedDrinkMeta != null;
+    }
 
     public float Progress01
     {
@@ -96,9 +124,16 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
                 player.PlaceItem(spawnPoint);
 
                 if (spawnPoint.childCount > 0)
+                {
                     storedItem = spawnPoint.GetChild(spawnPoint.childCount - 1).gameObject;
+                    // read DrinkItem meta from the placed object
+                    servedDrinkMeta = storedItem.GetComponent<DrinkItem>();
+                }
                 else
+                {
                     storedItem = null;
+                    servedDrinkMeta = null;
+                }
 
                 isServed = true;
                 timer = customerSeatTime;
@@ -149,6 +184,11 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
                 requiresCleaning = false;
                 hasFinishedCleaning = true;
                 isServed = false;
+
+                // drop references
+                servedDrinkMeta = null;
+                storedItem = null;
+
                 RaiseProgressChanged();
                 Debug.Log("Finished cleaning");
             }

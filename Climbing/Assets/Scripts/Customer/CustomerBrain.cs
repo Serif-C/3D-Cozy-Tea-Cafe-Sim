@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using static UnityEngine.CullingGroup;
 using System.Collections;
+using System.Net.Sockets;
 
 public enum CustomerState
 {
@@ -18,7 +19,6 @@ public class CustomerBrain : MonoBehaviour
     [Header("Customer Action Providers")]
     [SerializeField] private MonoBehaviour moverProvider;
     [SerializeField] private OrderSystem orderSystemProvider;
-
     private IMover mover;
     private IOrderSystem orderSystem;
 
@@ -31,6 +31,10 @@ public class CustomerBrain : MonoBehaviour
 
     public CustomerState current { get; private set; }
     public event Action<CustomerState> OnStateChanged;
+
+    [Header("Customer Order Settings")]
+    private OrderTicket ticket;
+    private DrinkType PickDrinkForThisCustomer() => DrinkType.Herbal;
 
     private void Awake()
     {
@@ -86,22 +90,39 @@ public class CustomerBrain : MonoBehaviour
         yield return Go(counter);
 
         // ... order logic ...
-        var handle = orderSystem.PlaceOrder(gameObject);
+        // Create the customer's ticket (no need to wait for anything here)
+        ticket = new OrderTicket
+        {
+            OrderId = Guid.NewGuid(),
+            Drink = PickDrinkForThisCustomer()
+        };
 
-        // Wait (do nothing) until the order is ready, via event
-        bool rdy = false;
-        void MarkReady() { rdy = true; };
+        //var handle = orderSystem.PlaceOrder(gameObject);
 
-        handle.OnReady += MarkReady;
-        yield return new WaitUntil(() => rdy);
-        handle.OnReady -= MarkReady;
+        //// Wait (do nothing) until the order is ready, via event
+        //bool rdy = false;
+        //void MarkReady() { rdy = true; };
+
+        //handle.OnReady += MarkReady;
+        //yield return new WaitUntil(() => rdy);
+        //handle.OnReady -= MarkReady;
     }
 
     IEnumerator SitAndDrink()
     {
         SetState(CustomerState.Sitting);
-        var seat = seating.AssignSeat();
-        yield return Go(seat);
+
+        // SeatingManager returns an ITarget that is actually a TransformTarget on the seat
+        var seatTarget = seating.AssignSeat();      // returns ITarget, but it's a TransformTarget internally
+        var seatTT = (TransformTarget)seatTarget;   // safe downcast 
+        var table = seatTT.GetComponentInParent<Table>();   // find the Table for this seat
+        yield return Go(seatTarget);    // Walk to seat
+
+        // Now wait until the correct drink shows up on THIS table
+        while (table == null || !table.HasDrinkFor(ticket))
+            yield return new WaitForSeconds(0.25f);
+
+        // Got the right drink -> start drinking
         SetState(CustomerState.Drinking);
         yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));
     }

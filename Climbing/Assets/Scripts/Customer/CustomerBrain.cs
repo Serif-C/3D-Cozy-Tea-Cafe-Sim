@@ -30,11 +30,12 @@ public class CustomerBrain : MonoBehaviour
     [SerializeField] private SeatingManager seating;
 
     public CustomerState current { get; private set; }
+    public CustomerState stateRightNow;
     public event Action<CustomerState> OnStateChanged;
 
     [Header("Customer Order Settings")]
-    private OrderTicket ticket;
-    private DrinkType PickDrinkForThisCustomer() => DrinkType.Herbal;
+    private DrinkType desiredDrink;
+    private DrinkType PickDrinkForThisCustomer() => DrinkType.BlackTea;
 
     private void Awake()
     {
@@ -90,22 +91,7 @@ public class CustomerBrain : MonoBehaviour
         yield return Go(counter);
 
         // ... order logic ...
-        // Create the customer's ticket (no need to wait for anything here)
-        ticket = new OrderTicket
-        {
-            OrderId = Guid.NewGuid(),
-            Drink = PickDrinkForThisCustomer()
-        };
-
-        //var handle = orderSystem.PlaceOrder(gameObject);
-
-        //// Wait (do nothing) until the order is ready, via event
-        //bool rdy = false;
-        //void MarkReady() { rdy = true; };
-
-        //handle.OnReady += MarkReady;
-        //yield return new WaitUntil(() => rdy);
-        //handle.OnReady -= MarkReady;
+        desiredDrink = PickDrinkForThisCustomer();
     }
 
     IEnumerator SitAndDrink()
@@ -116,10 +102,12 @@ public class CustomerBrain : MonoBehaviour
         var seatTarget = seating.AssignSeat();      // returns ITarget, but it's a TransformTarget internally
         var seatTT = (TransformTarget)seatTarget;   // safe downcast 
         var table = seatTT.GetComponentInParent<Table>();   // find the Table for this seat
+
+        if(table == null) { Debug.LogError("Table is null"); }
         yield return Go(seatTarget);    // Walk to seat
 
         // Now wait until the correct drink shows up on THIS table
-        while (table == null || !table.HasDrinkFor(ticket))
+        while (table == null || !table.HasDrinkOfType(desiredDrink))
             yield return new WaitForSeconds(0.25f);
 
         // Got the right drink -> start drinking
@@ -158,5 +146,11 @@ public class CustomerBrain : MonoBehaviour
         yield return new WaitUntil(() => done);
 
         mover.ReachedTarget -= Handler;
+    }
+
+    private void Update()
+    {
+        // Just to see in the inspector the current state
+        stateRightNow = current;
     }
 }

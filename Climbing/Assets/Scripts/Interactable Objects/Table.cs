@@ -21,15 +21,14 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
     public event Action<float, bool> OnProgressChanged;
 
     // CustomerBrain uses this to check:
-    public bool HasDrinkFor(OrderTicket ticket)
+    public bool HasDrinkOfType(DrinkType type)
     {
         // Served, have a tea, and matches ID and Drink
         return isServed
             && spawnPoint != null
             && spawnPoint.childCount > 1
             && servedDrinkMeta != null
-            && servedDrinkMeta.OrderId == ticket.OrderId
-            && servedDrinkMeta.DrinkType == ticket.Drink;
+            && servedDrinkMeta.DrinkType == type;
     }
 
     // Utility so we don't duplicate this pattern
@@ -123,7 +122,7 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
             {
                 player.PlaceItem(spawnPoint);
 
-                if (spawnPoint.childCount > 0)
+                if (spawnPoint.childCount > 1)
                 {
                     storedItem = spawnPoint.GetChild(spawnPoint.childCount - 1).gameObject;
                     // read DrinkItem meta from the placed object

@@ -30,7 +30,7 @@ public class CustomerSpawner : MonoBehaviour
             maxSize: CustomerManager.Instance.GetMaxNumCustomer()
         );
 
-        spawnLoop = StartCoroutine(SpawnLoop(7, 15)); // start AFTER pool exists
+        spawnLoop = StartCoroutine(SpawnLoop(15, 30)); // start AFTER pool exists
     }
 
     private void OnDisable()

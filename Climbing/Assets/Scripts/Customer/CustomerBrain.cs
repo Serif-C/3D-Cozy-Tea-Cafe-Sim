@@ -34,11 +34,16 @@ public class CustomerBrain : MonoBehaviour
     public event Action<CustomerState> OnStateChanged;
 
     [Header("Customer Order Settings")]
-    private DrinkType desiredDrink;
-    private DrinkType PickDrinkForThisCustomer() => DrinkType.BlackTea;
+    private DrinkType desiredDrink = DrinkType.BlackTea;
+    //private DrinkType PickDrinkForThisCustomer() => DrinkType.BlackTea;
+
+    // For parenting/unparenting the customer
+    private Transform originalParent;
+    private Table currentTable;
 
     private void Awake()
     {
+        originalParent = transform.parent;
         mover = (IMover)moverProvider;
         orderSystem = (IOrderSystem)orderSystemProvider;
 
@@ -91,7 +96,7 @@ public class CustomerBrain : MonoBehaviour
         yield return Go(counter);
 
         // ... order logic ...
-        desiredDrink = PickDrinkForThisCustomer();
+        //desiredDrink = PickDrinkForThisCustomer();
     }
 
     IEnumerator SitAndDrink()
@@ -106,18 +111,47 @@ public class CustomerBrain : MonoBehaviour
         if(table == null) { Debug.LogError("Table is null"); }
         yield return Go(seatTarget);    // Walk to seat
 
-        // Now wait until the correct drink shows up on THIS table
-        while (table == null || !table.HasDrinkOfType(desiredDrink))
+        // Attach to table for sitting/drinking
+        AttachToTable(table);
+
+        //// Now wait until the correct drink shows up on THIS table
+        //while (table == null || !table.HasDrinkOfType(desiredDrink))
+        //    yield return new WaitForSeconds(0.25f);
+
+        // Wait until the correct drink shows up on THIS table
+        while (currentTable == null || !currentTable.HasDrinkOfType(desiredDrink))
             yield return new WaitForSeconds(0.25f);
 
         // Got the right drink -> start drinking
         SetState(CustomerState.Drinking);
         yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));
+
+    }
+
+    private void AttachToTable(Table table)
+    {
+        currentTable = table;
+
+        // Keep world position/rotation as-is when parenting (important!)
+        // If your Table has non-uniform scale, consider leaving customers unparented,
+        // or ensure the Table and its ancestors use uniform scale (1,1,1).
+        transform.SetParent(table.transform, worldPositionStays: true);
+        //transform.localScale = new Vector3(1/3, 1, 1/3);
+
+    }
+
+    private void DetachToTable()
+    {
+        transform.SetParent(originalParent, worldPositionStays: true);
+        currentTable = null;
     }
 
     IEnumerator LeaveCafe()
     {
         SetState(CustomerState.LeavingCafe);
+
+        DetachToTable();
+
         yield return Go(exit);
     }
 
@@ -152,5 +186,21 @@ public class CustomerBrain : MonoBehaviour
     {
         // Just to see in the inspector the current state
         stateRightNow = current;
+
+        ChangeColor();
+    }
+
+    // For Testing Purposes
+    [SerializeField] private Material[] customerMaterials;
+    private void ChangeColor()
+    {
+        if(stateRightNow.Equals(CustomerState.Drinking))
+        {
+            gameObject.GetComponent<MeshRenderer>().material = customerMaterials[1];
+        }
+        else
+        {
+            gameObject.GetComponent<MeshRenderer>().material = customerMaterials[0];
+        }
     }
 }

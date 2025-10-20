@@ -14,6 +14,11 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
     private GameObject storedItem;
     [SerializeField] private DrinkItem servedDrinkMeta;
 
+    [Header("Table Occupation Settings")]
+    private bool isTableOccupied = false;
+    public void SetOccupiedValue(bool value) { isTableOccupied = value; }
+    public bool IsTableOccupied() { return isTableOccupied; }
+
 
     [Header("Visuals")]
     [SerializeField] private Transform spawnPoint;

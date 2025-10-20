@@ -92,7 +92,6 @@ public class CustomerBrain : MonoBehaviour
         SetState(CustomerState.WaitingInLine);
         var spot = queue.RequestSpot();
         yield return Go(spot);
-        // ... “turn in line” logic here ...
     }
 
     IEnumerator PlaceOrder()
@@ -106,28 +105,39 @@ public class CustomerBrain : MonoBehaviour
 
     IEnumerator SitAndDrink()
     {
+        TransformTarget seatTarget = null;
+
+        // If no seat is free, keep waiting in line
+        while (!seating.TryReserveRandomFreeSeat(out seatTarget))
+        {
+            // Ensure customer is waiting in line
+            if (current != CustomerState.WaitingInLine)
+            {
+                SetState(CustomerState.WaitingInLine);
+                var spot = queue.RequestSpot();
+                yield return Go(spot);
+            }
+
+            // Wait a bit before checking again
+            yield return new WaitForSeconds(0.5f);
+        }
+
         SetState(CustomerState.Sitting);
 
-        // SeatingManager returns an ITarget that is actually a TransformTarget on the seat
-        var seatTarget = seating.AssignSeat();      // returns ITarget, but it's a TransformTarget internally
-        var seatTT = (TransformTarget)seatTarget;   // safe downcast 
+        var seatTT = seatTarget;   // safe downcast 
         var table = seatTT.GetComponentInParent<Table>();   // find the Table for this seat
 
         if(table == null) { Debug.LogError("Table is null"); }
-        yield return Go(seatTarget);    // Walk to seat
-
+        
         // Attach to table for sitting/drinking
         AttachToTable(table);
 
-        //// Now wait until the correct drink shows up on THIS table
-        //while (table == null || !table.HasDrinkOfType(desiredDrink))
-        //    yield return new WaitForSeconds(0.25f);
+        yield return Go(seatTarget);    // Walk to seat
 
         // Wait until the correct drink shows up on THIS table
         while (currentTable == null || !currentTable.HasDrinkOfType(desiredDrink))
             yield return new WaitForSeconds(0.25f);
 
-        // Got the right drink -> start drinking
         SetState(CustomerState.Drinking);
         yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));
 
@@ -137,18 +147,22 @@ public class CustomerBrain : MonoBehaviour
     {
         currentTable = table;
 
+
         // Keep world position/rotation as-is when parenting (important!)
         // If your Table has non-uniform scale, consider leaving customers unparented,
         // or ensure the Table and its ancestors use uniform scale (1,1,1).
         transform.SetParent(table.transform, worldPositionStays: true);
-        //transform.localScale = new Vector3(1/3, 1, 1/3);
-
     }
 
     private void DetachToTable()
     {
         transform.SetParent(originalParent, worldPositionStays: true);
-        currentTable = null;
+
+        if (currentTable != null)
+        {
+            currentTable.SetOccupiedValue(false);   // mark table free
+            currentTable = null;
+        }
     }
 
     IEnumerator LeaveCafe()

@@ -6,6 +6,8 @@ public class CustomerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] customerPrefabs;
     [SerializeField] private Vector3 spawnRadius = new Vector3(5, 0, 5);
+    [SerializeField] private int minSpawnTime = 7;
+    [SerializeField] private int maxSpawnTime = 15;
 
     private IObjectPool<GameObject> pool;
     private Coroutine spawnLoop;
@@ -30,7 +32,7 @@ public class CustomerSpawner : MonoBehaviour
             maxSize: CustomerManager.Instance.GetMaxNumCustomer()
         );
 
-        spawnLoop = StartCoroutine(SpawnLoop(15, 30)); // start AFTER pool exists
+        spawnLoop = StartCoroutine(SpawnLoop(minSpawnTime, maxSpawnTime)); // start AFTER pool exists
     }
 
     private void OnDisable()
@@ -60,9 +62,22 @@ public class CustomerSpawner : MonoBehaviour
             Random.Range(-spawnRadius.z, spawnRadius.z)
         );
         obj.transform.SetPositionAndRotation(pos, Quaternion.identity);
+
+        // Hand the customer a release callback
+        var brain = obj.GetComponent<CustomerBrain>();
+        if (brain != null)
+            brain.Init(ReleaseToPool);
     }
 
-    private void OnRelease(GameObject obj) => obj.SetActive(false);
+    private void OnRelease(GameObject obj)
+    {
+        obj.SetActive(false);
+
+        // Clear callback (optional hygiene)
+        var brain = obj.GetComponent<CustomerBrain>();
+        if (brain != null)
+            brain.Init(null);
+    }
 
     private void OnDestroyItem(GameObject obj) => Destroy(obj);
 
@@ -70,19 +85,28 @@ public class CustomerSpawner : MonoBehaviour
     {
         while (true)
         {
+            int max = CustomerManager.Instance.GetMaxNumCustomer();
+            int active = 0;
+
+            if (pool is ObjectPool<GameObject> concretePool)
+                active = concretePool.CountAll - concretePool.CountInactive;
+
+
             // only spawn if we have room
-            if (pool.CountInactive + ActiveCount() < CustomerManager.Instance.GetMaxNumCustomer())
+            if (active < max)
             {
                 var customer = pool.Get();
 
-                // When your customer “leaves the cafe”, call:
-                // pool.Release(customer);
             }
 
             yield return new WaitForSeconds(Random.Range(minSeconds, maxSeconds));
         }
     }
 
-    // Replace with your real active count if you track it
-    private int ActiveCount() => 0;
+    private void ReleaseToPool(GameObject go)
+    {
+        // Optional: guard against releasing something already inactive
+        if (go != null)
+            pool.Release(go);
+    }
 }

@@ -41,6 +41,11 @@ public class CustomerBrain : MonoBehaviour
     private Transform originalParent;
     private Table currentTable;
 
+    // For CustomerSpawner 
+    private System.Action<GameObject> releaseToPool;
+    public void Init(System.Action<GameObject> releasePool) { releaseToPool = releasePool; }
+    public void DeSpawn() { releaseToPool?.Invoke(gameObject); }
+
     private void Awake()
     {
         originalParent = transform.parent;
@@ -153,6 +158,8 @@ public class CustomerBrain : MonoBehaviour
         DetachToTable();
 
         yield return Go(exit);
+
+        DeSpawn();
     }
 
 

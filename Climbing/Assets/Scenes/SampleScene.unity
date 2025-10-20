@@ -4301,7 +4301,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  interactRange: 2
+  interactRange: 2.5
   isHoldingItem: 0
   carryItemPostion: {fileID: 1905432878}
   heldItem: {fileID: 0}
@@ -9592,6 +9592,8 @@ MonoBehaviour:
   - {fileID: 2764545133507838133, guid: 748f32483ed7ae749b6ce00edc327198, type: 3}
   - {fileID: 2764545133507838133, guid: 748f32483ed7ae749b6ce00edc327198, type: 3}
   spawnRadius: {x: 5, y: 0, z: 5}
+  minSpawnTime: 7
+  maxSpawnTime: 15
 --- !u!1001 &1760568934
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3900,7 +3900,7 @@ GameObject:
   - component: {fileID: 726525949}
   m_Layer: 0
   m_Name: Counter_Spot
-  m_TagString: Counter
+  m_TagString: Queue
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9098,7 +9098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133783780253ab94ba61c101a5be419e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxNumCustomer: 6
+  maxNumCustomer: 10
 --- !u!4 &1603642020
 Transform:
   m_ObjectHideFlags: 0
@@ -11814,7 +11814,7 @@ GameObject:
   - component: {fileID: 1711813855349054618}
   m_Layer: 0
   m_Name: Counter
-  m_TagString: Untagged
+  m_TagString: Counter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

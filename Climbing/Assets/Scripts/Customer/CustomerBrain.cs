@@ -41,6 +41,10 @@ public class CustomerBrain : MonoBehaviour
     private Transform originalParent;
     private Table currentTable;
 
+    // For Queue spots
+    private ITarget currentQueueSpot;
+    private Coroutine queueMove;
+
     // For CustomerSpawner 
     private System.Action<GameObject> releaseToPool;
     public void Init(System.Action<GameObject> releasePool) { releaseToPool = releasePool; }
@@ -90,17 +94,39 @@ public class CustomerBrain : MonoBehaviour
     IEnumerator WaitInLine()
     {
         SetState(CustomerState.WaitingInLine);
-        var spot = queue.RequestSpot();
-        yield return Go(spot);
+
+        currentQueueSpot = queue.Join(this);
+        if (currentQueueSpot != null)
+            yield return Go(currentQueueSpot);
+
+        // Wait until customer is in front AND the customer is free
+        while (true)
+        {
+            if (queue.IsMyTurn(this))
+            {
+                if (queue.TryAcquireCounter(this))
+                    break; // this customer owns the counter now
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        // Since this customer now owns the counter:
+        // Leave the line (compress others) then walk to the counter
+        queue.Leave(this);
+        yield return Go(queue.CounterTarget);
     }
 
     IEnumerator PlaceOrder()
     {
         SetState(CustomerState.PlacingOrder);
-        yield return Go(counter);
 
         // ... order logic ...
-        //desiredDrink = PickDrinkForThisCustomer();
+        // Ordering time for now to simulate ordering
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
+
+        // free the counter for the next customer
+        queue.ReleaseCounter(this);
     }
 
     IEnumerator SitAndDrink()
@@ -114,8 +140,13 @@ public class CustomerBrain : MonoBehaviour
             if (current != CustomerState.WaitingInLine)
             {
                 SetState(CustomerState.WaitingInLine);
-                var spot = queue.RequestSpot();
-                yield return Go(spot);
+                currentQueueSpot = queue.Join(this);
+                if (currentQueueSpot != null)
+                    yield return Go(currentQueueSpot);
+
+                while (!queue.IsMyTurn(this))
+                { yield return new WaitForSeconds(0.1f); }
+                queue.Leave(this);
             }
 
             // Wait a bit before checking again
@@ -201,6 +232,18 @@ public class CustomerBrain : MonoBehaviour
         yield return new WaitUntil(() => done);
 
         mover.ReachedTarget -= Handler;
+    }
+
+    public void UpdateQueueTarget(ITarget newSpot)
+    {
+        currentQueueSpot = newSpot;
+
+        if (current == CustomerState.WaitingInLine && newSpot != null)
+        {
+            // Re-issue movement to the new spot
+            if (queueMove != null) StopCoroutine(queueMove);
+            queueMove = StartCoroutine(Go(newSpot));
+        }
     }
 
     private void Update()

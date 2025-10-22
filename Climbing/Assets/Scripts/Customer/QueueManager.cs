@@ -38,6 +38,7 @@ public class QueueManager : MonoBehaviour
         if (!line.Contains(customer))
         {
             line.Add(customer);
+            ReAssignAll(); // compress everyone right away
         }
 
         return GetSpotForIndex(IndexOf(customer));
@@ -89,9 +90,10 @@ public class QueueManager : MonoBehaviour
 
     public bool TryAcquireCounter(CustomerBrain customer)
     {
-        if (atCounter == null || atCounter == customer)
+        if (IsMyTurn(customer) && (atCounter == null || atCounter == customer))
         {
             atCounter = customer;
+            //Leave(customer);    // peel off front; re-assign all
             return true;
         }
         return false;

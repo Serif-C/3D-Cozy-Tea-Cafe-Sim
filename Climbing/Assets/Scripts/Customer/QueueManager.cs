@@ -5,10 +5,14 @@ using UnityEngine;
 public class QueueManager : MonoBehaviour
 {
     [SerializeField] private TransformTarget[] spots;   // ordered: [0] nearest counter
-    private readonly List<CustomerBrain> line = new();  // current queue, 0 = front
     private TransformTarget counter;
     private CustomerBrain atCounter;
     public ITarget CounterTarget => counter;
+
+    // After building and assigning spots
+    private bool[] occupied;
+    private readonly List<CustomerBrain> line = new();  // current queue, 0 = front
+    private readonly Dictionary<CustomerBrain, int> slotByCustomer = new();
 
     private void Awake()
     {
@@ -30,6 +34,31 @@ public class QueueManager : MonoBehaviour
                         .CompareTo(Vector3.Distance(counter.GetComponent<Transform>().position, b.transform.position)));
 
         spots = list.ToArray();
+
+        occupied = new bool[spots.Length];
+    }
+
+    private void Reserve(int index, CustomerBrain customer)
+    {
+        occupied[index] = true;
+        slotByCustomer[customer] = index;
+        customer.UpdateQueueTarget(spots[index]);   // tell customer where to stand
+    }
+
+    private void Free(CustomerBrain customer)
+    {
+        if (slotByCustomer.TryGetValue(customer, out var idx))
+        {
+            occupied[idx] = false;
+            slotByCustomer.Remove(customer);
+        }
+    }
+
+    private int FindFreeSlotStartingAt(int start)
+    {
+        for (int i = start; i < spots.Length; i++) if (!occupied[i]) return i;
+        for (int i = 0; i < occupied.Length; i++) if (!occupied[i]) return i;
+        return spots.Length - 1;    // clamp overflow to the back
     }
 
     // Customer joins the queue; return the spot they should go to now
@@ -38,19 +67,24 @@ public class QueueManager : MonoBehaviour
         if (!line.Contains(customer))
         {
             line.Add(customer);
-            ReAssignAll(); // compress everyone right away
         }
 
-        return GetSpotForIndex(IndexOf(customer));
+        int desired = Mathf.Clamp(line.IndexOf(customer), 0, spots.Length - 1);
+        int idx = FindFreeSlotStartingAt(desired);
+        Reserve(idx, customer);
+
+        ReAssignAll(); // compress everyone right away
+
+        return spots[idx];
     }
 
     public void Leave(CustomerBrain customer)
     {
-        int index = IndexOf(customer);
-        if (index < 0) return;
-
-        line.RemoveAt(index);
-        ReAssignAll();
+        int i = line.IndexOf(customer);
+        if (i < 0) return;
+        line.RemoveAt(i);
+        Free(customer);
+        ReAssignAll(); // shift everyone forward
     }
 
     public bool IsMyTurn(CustomerBrain customer)
@@ -68,9 +102,15 @@ public class QueueManager : MonoBehaviour
 
     public void ReAssignAll()
     {
+        System.Array.Fill(occupied, false);
+        slotByCustomer.Clear();
+
         for (int i = 0; i < line.Count; i++)
         {
-            line[i].UpdateQueueTarget(GetSpotForIndex(i));
+            var c = line[i];
+            int desired = Mathf.Clamp(i, 0, spots.Length - 1);
+            int idx = FindFreeSlotStartingAt(desired);
+            Reserve(idx, c);
         }
     }
 
@@ -93,9 +133,10 @@ public class QueueManager : MonoBehaviour
         if (IsMyTurn(customer) && (atCounter == null || atCounter == customer))
         {
             atCounter = customer;
-            //Leave(customer);    // peel off front; re-assign all
+            Leave(customer);    // peel off front; re-assign all
             return true;
         }
+
         return false;
     }
 

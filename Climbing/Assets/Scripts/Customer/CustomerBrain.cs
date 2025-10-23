@@ -3,6 +3,7 @@ using System;
 using static UnityEngine.CullingGroup;
 using System.Collections;
 using System.Net.Sockets;
+using NUnit.Framework;
 
 public enum CustomerState
 {
@@ -36,6 +37,7 @@ public class CustomerBrain : MonoBehaviour
     [Header("Customer Order Settings")]
     private DrinkType desiredDrink = DrinkType.BlackTea;
     //private DrinkType PickDrinkForThisCustomer() => DrinkType.BlackTea;
+    [SerializeField] private int sizeOfMenu;    // The number of drinks in DrinkType enum
 
     // For parenting/unparenting the customer
     private Transform originalParent;
@@ -50,6 +52,7 @@ public class CustomerBrain : MonoBehaviour
     public void Init(System.Action<GameObject> releasePool) { releaseToPool = releasePool; }
     public void DeSpawn() { releaseToPool?.Invoke(gameObject); }
 
+
     private void Awake()
     {
         originalParent = transform.parent;
@@ -59,6 +62,14 @@ public class CustomerBrain : MonoBehaviour
         entry = GameObject.FindGameObjectWithTag("Entrance").gameObject.GetComponent<TransformTarget>();
         counter = GameObject.FindGameObjectWithTag("Counter").gameObject.GetComponent<TransformTarget>();
         exit = GameObject.FindGameObjectWithTag("Exit").gameObject.GetComponent<TransformTarget>();
+
+        if (queue == null)
+            queue = FindFirstObjectByType<QueueManager>(); // single shared instance
+
+        foreach (DrinkType drink in Enum.GetValues(typeof(DrinkType)))
+        {
+            sizeOfMenu++;
+        }
     }
 
     private void Start()
@@ -113,7 +124,7 @@ public class CustomerBrain : MonoBehaviour
 
         // Since this customer now owns the counter:
         // Leave the line (compress others) then walk to the counter
-        queue.Leave(this);
+        //queue.Leave(this);
         yield return Go(queue.CounterTarget);
     }
 
@@ -123,6 +134,7 @@ public class CustomerBrain : MonoBehaviour
 
         // ... order logic ...
         // Ordering time for now to simulate ordering
+        desiredDrink = OrderForARandomDrink();
         yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
 
         // free the counter for the next customer
@@ -133,23 +145,9 @@ public class CustomerBrain : MonoBehaviour
     {
         TransformTarget seatTarget = null;
 
-        // If no seat is free, keep waiting in line
+        // NEW: just retry seat reservation on a short cadence (no queue churn)
         while (!seating.TryReserveRandomFreeSeat(out seatTarget))
         {
-            // Ensure customer is waiting in line
-            if (current != CustomerState.WaitingInLine)
-            {
-                SetState(CustomerState.WaitingInLine);
-                currentQueueSpot = queue.Join(this);
-                if (currentQueueSpot != null)
-                    yield return Go(currentQueueSpot);
-
-                while (!queue.IsMyTurn(this))
-                { yield return new WaitForSeconds(0.1f); }
-                queue.Leave(this);
-            }
-
-            // Wait a bit before checking again
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -160,10 +158,10 @@ public class CustomerBrain : MonoBehaviour
 
         if(table == null) { Debug.LogError("Table is null"); }
         
-        // Attach to table for sitting/drinking
-        AttachToTable(table);
 
         yield return Go(seatTarget);    // Walk to seat
+        // Attach to table for sitting/drinking
+        AttachToTable(table);
 
         // Wait until the correct drink shows up on THIS table
         while (currentTable == null || !currentTable.HasDrinkOfType(desiredDrink))
@@ -266,5 +264,11 @@ public class CustomerBrain : MonoBehaviour
         {
             gameObject.GetComponent<MeshRenderer>().material = customerMaterials[0];
         }
+    }
+
+    private DrinkType OrderForARandomDrink()
+    {
+        DrinkType randomDrinkType = (DrinkType) UnityEngine.Random.Range(0, Enum.GetValues(typeof(DrinkType)).Length);
+        return randomDrinkType;
     }
 }

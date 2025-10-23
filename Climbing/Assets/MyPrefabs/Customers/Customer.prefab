@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 6592952667170457460}
   - component: {fileID: 4288528815455803743}
   - component: {fileID: 5329805386692548914}
-  - component: {fileID: 2248165364476832548}
   - component: {fileID: 3085243426183691437}
   m_Layer: 0
   m_Name: Customer
@@ -132,7 +131,7 @@ MonoBehaviour:
   entry: {fileID: 0}
   counter: {fileID: 0}
   exit: {fileID: 0}
-  queue: {fileID: 2248165364476832548}
+  queue: {fileID: 0}
   seating: {fileID: 3085243426183691437}
   stateRightNow: 0
   customerMaterials:
@@ -173,26 +172,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2248165364476832548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2764545133507838133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a52bc994d27f7f4ca81da986681576a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &3085243426183691437
 MonoBehaviour:
   m_ObjectHideFlags: 0

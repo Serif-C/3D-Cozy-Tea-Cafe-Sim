@@ -38,6 +38,9 @@ public class CustomerBrain : MonoBehaviour
     private DrinkType desiredDrink = DrinkType.BlackTea;
     //private DrinkType PickDrinkForThisCustomer() => DrinkType.BlackTea;
     [SerializeField] private int sizeOfMenu;    // The number of drinks in DrinkType enum
+    private CustomerMood myMood;
+    [SerializeField] private float moodDecayAmount = 2f;    // The amount of mood deducted
+    [SerializeField] private float moodDecayRate = 0.25f;   // The frequency the is deducted
 
     // For parenting/unparenting the customer
     private Transform originalParent;
@@ -70,6 +73,8 @@ public class CustomerBrain : MonoBehaviour
         {
             sizeOfMenu++;
         }
+
+        myMood = gameObject.GetComponent<CustomerMood>();
     }
 
     private void Start()
@@ -165,7 +170,15 @@ public class CustomerBrain : MonoBehaviour
 
         // Wait until the correct drink shows up on THIS table
         while (currentTable == null || !currentTable.HasDrinkOfType(desiredDrink))
-            yield return new WaitForSeconds(0.25f);
+        {
+            myMood.DecayMood(moodDecayAmount);
+
+            if (myMood.GetCurrentMoodValue() <= 0) break;
+
+            yield return new WaitForSeconds(moodDecayRate);
+        }
+
+        if (myMood.GetMood(myMood.currentMoodValue) == Moods.ScrewThisIAmLeaving) { SetState(CustomerState.LeavingCafe); }
 
         SetState(CustomerState.Drinking);
         yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));

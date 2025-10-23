@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1088596767126459667}
   - component: {fileID: 4184018869992980998}
   - component: {fileID: 6592952667170457460}
+  - component: {fileID: 2935746446799378450}
   - component: {fileID: 4288528815455803743}
   - component: {fileID: 5329805386692548914}
   - component: {fileID: 3085243426183691437}
@@ -134,9 +135,25 @@ MonoBehaviour:
   queue: {fileID: 0}
   seating: {fileID: 3085243426183691437}
   stateRightNow: 0
+  sizeOfMenu: 0
+  moodDecayAmount: 0.2
+  moodDecayRate: 0.25
   customerMaterials:
   - {fileID: 2100000, guid: 1816148b007fee3478a36edaeb2c1bb5, type: 2}
   - {fileID: 2100000, guid: c32c147c3bec89e4b9f9aec1a012b656, type: 2}
+--- !u!114 &2935746446799378450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764545133507838133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4145da5ff57f484b8a9c83441dfe03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMoodValue: 0
 --- !u!114 &4288528815455803743
 MonoBehaviour:
   m_ObjectHideFlags: 0

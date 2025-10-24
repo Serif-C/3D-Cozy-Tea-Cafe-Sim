@@ -203,7 +203,6 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
         }
     }
     
-
     private void RaiseProgressChanged()
     {
         if (OnProgressChanged != null)
@@ -214,5 +213,10 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
             // Call every method subscribed to this event, passing the values
             OnProgressChanged.Invoke(progressValue, shouldShow);
         }
+    }
+
+    public Transform GetSpawnPoint()
+    {
+        return spawnPoint;
     }
 }

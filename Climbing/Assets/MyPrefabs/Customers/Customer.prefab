@@ -138,6 +138,7 @@ MonoBehaviour:
   sizeOfMenu: 0
   moodDecayAmount: 0.2
   moodDecayRate: 0.25
+  coinPrefab: {fileID: 111490766695922311, guid: 5f80248db315c9c429b0e24df9a1cbfd, type: 3}
   customerMaterials:
   - {fileID: 2100000, guid: 1816148b007fee3478a36edaeb2c1bb5, type: 2}
   - {fileID: 2100000, guid: c32c147c3bec89e4b9f9aec1a012b656, type: 2}
@@ -154,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMoodValue: 0
+  startRange: {x: 30, y: 70}
 --- !u!114 &4288528815455803743
 MonoBehaviour:
   m_ObjectHideFlags: 0

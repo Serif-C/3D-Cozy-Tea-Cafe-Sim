@@ -35,7 +35,7 @@ public class CustomerBrain : MonoBehaviour
     public event Action<CustomerState> OnStateChanged;
 
     [Header("Customer Order Settings")]
-    private DrinkType desiredDrink = DrinkType.BlackTea;
+    [SerializeField] private DrinkType desiredDrink = DrinkType.BlackTea;
     //private DrinkType PickDrinkForThisCustomer() => DrinkType.BlackTea;
     [SerializeField] private int sizeOfMenu;    // The number of drinks in DrinkType enum
     private CustomerMood myMood;
@@ -54,6 +54,9 @@ public class CustomerBrain : MonoBehaviour
     private System.Action<GameObject> releaseToPool;
     public void Init(System.Action<GameObject> releasePool) { releaseToPool = releasePool; }
     public void DeSpawn() { releaseToPool?.Invoke(gameObject); }
+
+    // Spawning coins
+    [SerializeField] private GameObject coinPrefab;
 
 
     private void Awake()
@@ -192,6 +195,9 @@ public class CustomerBrain : MonoBehaviour
 
         SetState(CustomerState.Drinking);
         yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));
+
+        // Customer Successfully finished drinking -> give coin to the player
+        Instantiate(coinPrefab, table.GetSpawnPoint().position, Quaternion.identity);
     }
 
     private void AttachToTable(Table table)

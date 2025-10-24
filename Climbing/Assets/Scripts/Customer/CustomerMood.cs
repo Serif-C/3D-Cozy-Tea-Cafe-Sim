@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,44 +14,63 @@ public enum Moods
 
 public class CustomerMood : MonoBehaviour
 {
-    /*
-     * 1. Goes from 0 to 100 -> 0 means customer leaves
-     * 2. Influences how much tip they give to the player
-     */
+    [Range(0, 100)] public float currentMoodValue;
+    [SerializeField] private Vector2 startRange = new Vector2(30f, 70f);
 
-    public float currentMoodValue;
-    private float startingMood;
+    public event Action<float, Moods> OnMoodChanged;
 
     private void Awake()
     {
-        // Customer starts with a mood between 30 to 70
-        startingMood = Random.Range(30f, 70f);
-        currentMoodValue = startingMood;
+        currentMoodValue = Mathf.Clamp(UnityEngine.Random.Range(startRange.x, startRange.y), 0f, 100f);
+        RaiseChanged();
     }
 
-    public float GetCurrentMoodValue()
+    //public bool IsFedUp => currentMoodValue <= 0f;
+    public bool IsFedUp
     {
-        return currentMoodValue;
+        get { return currentMoodValue <= 0f; }
+    }
+
+    public void Decay(float amount)
+    {
+        SetMood(currentMoodValue - amount);
+    }
+
+    // amountPerSecond * deltaTime (caller provides dt or you can pass Time.deltaTime)
+    public void DecayPerSecond(float amountPerTick, float secondsPerTick)
+    {
+        if (secondsPerTick <= 0f) return;
+        float perSecond = amountPerTick / secondsPerTick;
+        SetMood(currentMoodValue - perSecond * Time.deltaTime);
+    }
+
+    public void SetMood(float value01to100)
+    {
+        float clamped = Mathf.Clamp(value01to100, 0f, 100f);
+        if (!Mathf.Approximately(clamped, currentMoodValue))
+        {
+            currentMoodValue = clamped;
+            RaiseChanged();
+        }
     }
 
     public Moods GetMood(float moodValue)
     {
-        if (moodValue <= 0)
-            return Moods.ScrewThisIAmLeaving;
-        else if (moodValue <= 20)
-            return Moods.VeryUnsatisfied;
-        else if (moodValue <= 40)
-            return Moods.Unsatisfied;
-        else if (moodValue <= 60)
-            return Moods.NotSatisfiedUnsatisfied;
-        else if (moodValue <= 80)
-            return Moods.Satisfied;
-        else
-            return Moods.VerySatisfied;
+        if (moodValue <= 0) return Moods.ScrewThisIAmLeaving;
+        if (moodValue <= 20) return Moods.VeryUnsatisfied;
+        if (moodValue <= 40) return Moods.Unsatisfied;
+        if (moodValue <= 60) return Moods.NotSatisfiedUnsatisfied;
+        if (moodValue <= 80) return Moods.Satisfied;
+        return Moods.VerySatisfied;
     }
 
-    public void DecayMood(float decayAmount)
+    private void RaiseChanged()
     {
-        currentMoodValue -= decayAmount;
+        if (OnMoodChanged != null)
+        {
+            Moods moodCategory = GetMood(currentMoodValue);
+            OnMoodChanged.Invoke(currentMoodValue, moodCategory);
+        }
     }
+
 }

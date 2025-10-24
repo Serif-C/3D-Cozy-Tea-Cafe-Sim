@@ -171,18 +171,27 @@ public class CustomerBrain : MonoBehaviour
         // Wait until the correct drink shows up on THIS table
         while (currentTable == null || !currentTable.HasDrinkOfType(desiredDrink))
         {
-            myMood.DecayMood(moodDecayAmount);
+            //myMood.DecayMood(moodDecayAmount);
+            // time-scaled decay: amountPerSecond * deltaTime
+            //if (myMood.GetCurrentMoodValue() <= 0) break;
+            //yield return new WaitForSeconds(moodDecayRate);
 
-            if (myMood.GetCurrentMoodValue() <= 0) break;
+            myMood.DecayPerSecond(moodDecayAmount, moodDecayRate);
 
-            yield return new WaitForSeconds(moodDecayRate);
+            if (myMood.IsFedUp)
+            {
+                SetState(CustomerState.LeavingCafe);
+                // play here: angry animation or something
+                yield return LeaveCafe();
+                yield break;
+            }
+
+            yield return null;
+
         }
-
-        if (myMood.GetMood(myMood.currentMoodValue) == Moods.ScrewThisIAmLeaving) { SetState(CustomerState.LeavingCafe); }
 
         SetState(CustomerState.Drinking);
         yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));
-
     }
 
     private void AttachToTable(Table table)

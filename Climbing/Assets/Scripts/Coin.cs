@@ -25,6 +25,11 @@ public class Coin : MonoBehaviour
         transform.Rotate(0f, 90f * Time.deltaTime, 0f, Space.World);
     }
 
+    public void SetAmountWithTip(int amount)
+    {
+        coinAmount += amount;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         PlayerWallet wallet = other.gameObject.GetComponent<PlayerWallet>();

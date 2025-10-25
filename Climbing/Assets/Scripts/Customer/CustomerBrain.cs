@@ -55,8 +55,12 @@ public class CustomerBrain : MonoBehaviour
     public void Init(System.Action<GameObject> releasePool) { releaseToPool = releasePool; }
     public void DeSpawn() { releaseToPool?.Invoke(gameObject); }
 
-    // Spawning coins
+    [Header("Coin and Tip Settings")]
     [SerializeField] private GameObject coinPrefab;
+    [SerializeField] private float minTip = 0f;
+    [SerializeField] private float maxTip = 20f;
+    // Animation curve tipping: Most tip low, but rarely, very happy customers tip really high
+    [SerializeField] private AnimationCurve tipByMood = AnimationCurve.Linear(0f, 0f, 1f, 1f); 
 
 
     private void Awake()
@@ -197,7 +201,17 @@ public class CustomerBrain : MonoBehaviour
         yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));
 
         // Customer Successfully finished drinking -> give coin to the player
-        Instantiate(coinPrefab, table.GetSpawnPoint().position, Quaternion.identity);
+        int tipAmount = ComputeTipFromMood(myMood.currentMoodValue);
+        if (tipAmount > 0)
+        {
+            GameObject coin = Instantiate(coinPrefab, table.GetSpawnPoint().position, Quaternion.identity);
+            Coin coinComp = coin.GetComponent<Coin>();
+            if (coinComp != null)
+            {
+                coinComp.SetAmountWithTip(tipAmount);
+            }
+        }
+
     }
 
     private void AttachToTable(Table table)
@@ -280,6 +294,27 @@ public class CustomerBrain : MonoBehaviour
         ChangeColor();
     }
 
+
+    private DrinkType OrderForARandomDrink()
+    {
+        DrinkType randomDrinkType = (DrinkType) UnityEngine.Random.Range(0, Enum.GetValues(typeof(DrinkType)).Length);
+        return randomDrinkType;
+    }
+
+    private int ComputeTipFromMood(float mood01to100)
+    {
+        // Example: k = (59 / 100) = 0.59f, 
+        //          raw = 0 + (20 - 0) * k = 11.8f
+        float k = Mathf.Clamp01(mood01to100 / 100f);
+        float raw = Mathf.Lerp(minTip, maxTip, k);
+        //float curve = Mathf.Clamp01(tipByMood.Evaluate(k));
+
+        // Additional randomness to make it feel natural
+        float jitter = UnityEngine.Random.Range(-k, k);
+        int final = Mathf.Max(0, Mathf.RoundToInt(raw + jitter));
+        return final;
+    }
+    
     // For Testing Purposes
     [SerializeField] private Material[] customerMaterials;
     private void ChangeColor()
@@ -292,11 +327,5 @@ public class CustomerBrain : MonoBehaviour
         {
             gameObject.GetComponent<MeshRenderer>().material = customerMaterials[0];
         }
-    }
-
-    private DrinkType OrderForARandomDrink()
-    {
-        DrinkType randomDrinkType = (DrinkType) UnityEngine.Random.Range(0, Enum.GetValues(typeof(DrinkType)).Length);
-        return randomDrinkType;
     }
 }

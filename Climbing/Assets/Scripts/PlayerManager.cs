@@ -14,10 +14,61 @@ public class PlayerManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SetCountAmount(int amount)
     {
         walletBalance += amount;
+    }
+
+    public void ResetWallet()
+    {
+        walletBalance = 0;
+        SaveWallet();
+    }
+
+    private void LoadWallet()
+    {
+        PlayerSaveData data = SaveSystem.Load();
+
+        if (data != null)
+        {
+            // migrate if needed
+            if (data.version < 1)
+            {
+                // migration logic if needed
+                data.version = 1;
+            }
+
+            walletBalance = data.walletBalance;
+        }
+        else
+        {
+            walletBalance = 0;
+            // create initial save
+            SaveWallet();
+        }
+    }
+
+    private void SaveWallet()
+    {
+        PlayerSaveData data = new PlayerSaveData();
+        data.version = 1;
+        data.walletBalance = walletBalance;
+        SaveSystem.Save(data);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveWallet();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            SaveWallet();
+        }    
     }
 }

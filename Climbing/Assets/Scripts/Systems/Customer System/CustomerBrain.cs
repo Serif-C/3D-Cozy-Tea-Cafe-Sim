@@ -19,9 +19,7 @@ public class CustomerBrain : MonoBehaviour
 {
     [Header("Customer Action Providers")]
     [SerializeField] private MonoBehaviour moverProvider;
-    [SerializeField] private OrderSystem orderSystemProvider;
     private IMover mover;
-    private IOrderSystem orderSystem;
 
     [Header("Customer Destination References")]
     [SerializeField] private TransformTarget entry;
@@ -67,7 +65,6 @@ public class CustomerBrain : MonoBehaviour
     {
         originalParent = transform.parent;
         mover = (IMover)moverProvider;
-        orderSystem = (IOrderSystem)orderSystemProvider;
 
         entry = GameObject.FindGameObjectWithTag("Entrance").gameObject.GetComponent<TransformTarget>();
         counter = GameObject.FindGameObjectWithTag("Counter").gameObject.GetComponent<TransformTarget>();

@@ -12,9 +12,10 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
     private GameObject storedItem; // what's on the station right now
     private bool hasTeaLeaf = false;
     private bool hasBoildWater = false;
+    private DrinkType leafType;
 
     [Header("Visuals")]
-    [SerializeField] private GameObject brewedTeaPrefab;
+    [SerializeField] private GameObject[] brewedTeaPrefab;
     //[SerializeField] private Tea type;    // shows the tea type later
     [SerializeField] private Transform spawnPoint;  // where brewing prefab spawns
 
@@ -88,6 +89,7 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
             // Accepts Tea leaf
             if (player.HeldItemHasTag("Tea Leaf"))
             {
+                leafType = player.gameObject.GetComponentInChildren<Leaf>().GetLeafType();
                 player.PlaceItem(spawnPoint);
                 hasTeaLeaf = true;
 
@@ -169,7 +171,15 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
                     Destroy(storedItem);
                     Debug.Log("This code gets executed");
                 }
-                storedItem = Instantiate(brewedTeaPrefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
+
+                for (int i = 0; i < brewedTeaPrefab.Length; i++)
+                {
+                    if (leafType == brewedTeaPrefab[i].gameObject.GetComponent<DrinkItem>().DrinkType)
+                    {
+                        storedItem = Instantiate(brewedTeaPrefab[i], spawnPoint.position, spawnPoint.rotation, spawnPoint);
+                    }
+                }
+
                 RaiseProgressChanged();
                 Debug.Log("Brewing Station: Tea is ready!");
             }

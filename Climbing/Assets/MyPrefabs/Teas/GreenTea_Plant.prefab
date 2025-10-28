@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1724080987372072942, guid: aef005b3b9cfce44fb193940adef11dd, type: 3}
+  - {fileID: 2100000, guid: 59e8edcb852d2f649bf1a2a0cebd0dca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teaLeaftPrefab: {fileID: 943303920584371282, guid: ee4baf0ca3ced1941a9bc40f4d2873b9, type: 3}
   teaLeafSpawnPoint: {fileID: 8335671004312710648}
-  leafType: 1
+  leafType: 0
 --- !u!135 &4241135012007386003
 SphereCollider:
   m_ObjectHideFlags: 0

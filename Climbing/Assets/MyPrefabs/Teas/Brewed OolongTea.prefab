@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 247517097268345993}
   - component: {fileID: 1194156897127942914}
   m_Layer: 0
-  m_Name: Brewed Tea
+  m_Name: Brewed OolongTea
   m_TagString: Tea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76b324a0a0d591e4aa12cf65f7cf7b93, type: 2}
+  - {fileID: 2100000, guid: 5ba9bb8e896174941ba76b6c651adff2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,4 +99,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449fc4b1dbdc5f344ae01c46d4750e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DrinkType: 1
+  DrinkType: 2

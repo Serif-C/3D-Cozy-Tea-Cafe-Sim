@@ -13,6 +13,7 @@ namespace TeaShop.Systems.Building
         [SerializeField] private InputActionReference pointAction;
         [SerializeField] private InputActionReference placeAction;
         [SerializeField] private InputActionReference cancelAction;
+        [SerializeField] private PlacementValidator validator;
 
         [Header("State")]
         [SerializeField] private bool buildModeEnabled = false;
@@ -66,6 +67,7 @@ namespace TeaShop.Systems.Building
             if (buildCamera == null) buildCamera = Camera.main;
             if (grid == null) grid = FindFirstObjectByType<PlacementGrid>();
             if (registry == null) registry = FindFirstObjectByType<PlacementRegistry>();
+            if (validator == null) validator = FindFirstObjectByType<PlacementValidator>();
         }
 
         private void Start()
@@ -140,24 +142,18 @@ namespace TeaShop.Systems.Building
             }
         }
 
-        //private void UpdateGhostPosition()
-        //{
-        //    Ray ray = buildCamera.ScreenPointToRay(Input.mousePosition);
-        //    RaycastHit hit;
-
-        //    if (Physics.Raycast(ray, out hit, 200f))
-        //    {
-        //        Vector3 snapped = grid.SnapToGrid(hit.point);
-        //        if (ghost != null) ghost.transform.position = snapped;
-        //    }
-        //}
-
         private void TryPlace()
         {
             if (ghost == null || selectedItem == null) return;
 
             Vector3 pos = ghost.transform.position;
             Quaternion rot = ghost.transform.rotation;
+
+            if (validator != null)
+            {
+                bool ok = validator.CanPlaceAt(selectedItem, pos, rot);
+                if (!ok) return; // silently fail for now (later show a red ghost)
+            }
 
             GameObject go = Instantiate(selectedItem.Prefab, pos, rot);
             PlaceableInstance inst = go.GetComponent<PlaceableInstance>();

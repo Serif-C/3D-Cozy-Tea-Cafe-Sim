@@ -13,7 +13,7 @@ namespace TeaShop.Systems.Building
         [SerializeField] private PlaceableCategory category;
         [SerializeField] private GameObject prefab;
 
-        [Header("Footprint (grid cells")]
+        [Header("Footprint (grid cells)")]
         [Tooltip("Width in grid cells (x).")]
         [SerializeField] private int width = 1;
         [Tooltip("Depth in grid cells (z).")]

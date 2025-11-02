@@ -146,6 +146,15 @@ namespace TeaShop.Systems.Building
         {
             if (ghost == null || selectedItem == null) return;
 
+            int price = selectedItem.PriceCents;
+            int current = PlayerManager.Instance.walletBalance;
+
+            if (current < price)
+            {
+                // TO:DO: UI feedback "Not enough money"
+                return;
+            }
+
             Vector3 pos = ghost.transform.position;
             Quaternion rot = ghost.transform.rotation;
 
@@ -161,6 +170,11 @@ namespace TeaShop.Systems.Building
             inst.Init(selectedItem);
 
             if (registry != null) registry.Register(inst);
+
+            // Spend wallet balance
+            int newBalance = PlayerManager.Instance.walletBalance - price;
+            PlayerManager.Instance.SetCountAmount(newBalance);
+
         }
 
         private void RebuildGhost()

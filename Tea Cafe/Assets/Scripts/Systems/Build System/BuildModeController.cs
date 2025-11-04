@@ -152,6 +152,7 @@ namespace TeaShop.Systems.Building
             if (current < price)
             {
                 // TO:DO: UI feedback "Not enough money"
+                Debug.Log("Not enough money");
                 return;
             }
 
@@ -173,7 +174,7 @@ namespace TeaShop.Systems.Building
 
             // Spend wallet balance
             int newBalance = PlayerManager.Instance.walletBalance - price;
-            PlayerManager.Instance.SetCountAmount(newBalance);
+            PlayerManager.Instance.SetWalletBalance(newBalance);
 
         }
 

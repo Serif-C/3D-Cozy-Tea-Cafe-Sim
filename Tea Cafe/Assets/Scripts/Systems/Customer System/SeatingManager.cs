@@ -55,4 +55,14 @@ public class SeatingManager : MonoBehaviour
         return true;
 
     }
+
+    public void AddSeat(Transform seat)
+    {
+        
+    }
+
+    public void RemoveSeat(Transform seat)
+    {
+
+    }
 }

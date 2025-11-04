@@ -22,6 +22,11 @@ public class PlayerManager : MonoBehaviour
         walletBalance += amount;
     }
 
+    public void SetWalletBalance(int balance)
+    {
+        walletBalance = balance;
+    }
+
     public void ResetWallet()
     {
         walletBalance = 0;

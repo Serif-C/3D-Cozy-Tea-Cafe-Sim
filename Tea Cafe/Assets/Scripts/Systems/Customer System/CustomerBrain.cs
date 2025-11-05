@@ -27,6 +27,7 @@ public class CustomerBrain : MonoBehaviour
     [SerializeField] private TransformTarget exit;
     [SerializeField] private QueueManager queue;
     private SeatingManager seating;
+    private TransformTarget mySeat;
 
     public CustomerState current { get; private set; }
     public CustomerState stateRightNow;
@@ -172,11 +173,24 @@ public class CustomerBrain : MonoBehaviour
 
         SetState(CustomerState.Sitting);
 
+        mySeat = seatTarget;
         var seatTT = seatTarget;   // safe downcast 
-        var table = seatTT.GetComponentInParent<Table>();   // find the Table for this seat
 
-        if(table == null) { Debug.LogError("Table is null"); }
-        
+        var table = SeatingManager.Instance.GetTableForSeat(seatTarget);
+        if (table == null)
+        {
+            // Seat fails front-of-table rule or mapping not found -> bail and retry
+            // Release this seat and try again
+            SeatingManager.Instance.ReleaseSeat(seatTarget);
+            mySeat = null;
+            yield return new WaitForSeconds(0.25f);
+            StartCoroutine(SitAndDrink()); // simple retry; or loop here
+            yield break;
+        }
+
+        //var table = seatTT.GetComponentInParent<Table>();   // find the Table for this seat
+        //if(table == null) { Debug.LogError("Table is null"); }
+
 
         yield return Go(seatTarget);    // Walk to seat
         // Attach to table for sitting/drinking
@@ -248,6 +262,12 @@ public class CustomerBrain : MonoBehaviour
         SetState(CustomerState.LeavingCafe);
 
         DetachToTable();
+
+        if (mySeat != null)
+        {
+            SeatingManager.Instance.ReleaseSeat(mySeat);
+            mySeat = null;
+        }
 
         yield return Go(exit);
 

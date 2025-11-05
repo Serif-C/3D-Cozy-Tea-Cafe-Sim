@@ -9872,6 +9872,7 @@ GameObject:
   - component: {fileID: 1764737102}
   - component: {fileID: 1764737103}
   - component: {fileID: 1764737104}
+  - component: {fileID: 1764737105}
   m_Layer: 0
   m_Name: Buildmode Controller
   m_TagString: Untagged
@@ -9914,7 +9915,7 @@ MonoBehaviour:
   cancelAction: {fileID: 7397424227253829928, guid: e3a37244f698c484d826e0969e285515, type: 3}
   validator: {fileID: 0}
   buildModeEnabled: 0
-  selectedItem: {fileID: 11400000, guid: 118f730c8ad58364eabc204b44518645, type: 2}
+  selectedItem: {fileID: 11400000, guid: 24e541dd5c7015341b82409797676e26, type: 2}
 --- !u!114 &1764737104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9931,6 +9932,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   allowedArea: {fileID: 1979746240}
+--- !u!114 &1764737105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764737101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ab0e0dadcdcdb34190a55d25b1741cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registry: {fileID: 0}
+  seating: {fileID: 0}
 --- !u!1 &1767372856
 GameObject:
   m_ObjectHideFlags: 0
@@ -10987,6 +11002,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1999408306}
+  - component: {fileID: 1999408307}
   m_Layer: 0
   m_Name: Tables
   m_TagString: Untagged
@@ -11013,6 +11029,19 @@ Transform:
   - {fileID: 172044626}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1999408307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999408305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb5ff83b80f17242bc02414028538ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seats: []
 --- !u!1 &2001873147
 GameObject:
   m_ObjectHideFlags: 0
@@ -11482,7 +11511,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 111490766695922311, guid: 5f80248db315c9c429b0e24df9a1cbfd, type: 3}
       propertyPath: m_Name
-      value: w
+      value: Coin
       objectReference: {fileID: 0}
     - target: {fileID: 4147454883915003952, guid: 5f80248db315c9c429b0e24df9a1cbfd, type: 3}
       propertyPath: m_LocalPosition.x

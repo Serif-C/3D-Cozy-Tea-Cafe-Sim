@@ -26,7 +26,7 @@ public class CustomerBrain : MonoBehaviour
     [SerializeField] private TransformTarget counter;
     [SerializeField] private TransformTarget exit;
     [SerializeField] private QueueManager queue;
-    [SerializeField] private SeatingManager seating;
+    private SeatingManager seating;
 
     public CustomerState current { get; private set; }
     public CustomerState stateRightNow;
@@ -72,6 +72,16 @@ public class CustomerBrain : MonoBehaviour
 
         if (queue == null)
             queue = FindFirstObjectByType<QueueManager>(); // single shared instance
+
+        // Resolve seating if not set
+        if (seating == null)
+            seating = SeatingManager.Instance != null
+                ? SeatingManager.Instance
+                : FindFirstObjectByType<SeatingManager>();
+
+        // Safety log
+        if (seating == null)
+            Debug.LogError("CustomerBrain: SeatingManager not found in scene.");
 
         foreach (DrinkType drink in Enum.GetValues(typeof(DrinkType)))
         {

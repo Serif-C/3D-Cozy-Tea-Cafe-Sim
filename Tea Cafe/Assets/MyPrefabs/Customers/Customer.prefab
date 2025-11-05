@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 2935746446799378450}
   - component: {fileID: 4288528815455803743}
   - component: {fileID: 5329805386692548914}
-  - component: {fileID: 3085243426183691437}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Customer
@@ -128,17 +127,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moverProvider: {fileID: 4288528815455803743}
-  orderSystemProvider: {fileID: 0}
   entry: {fileID: 0}
   counter: {fileID: 0}
   exit: {fileID: 0}
   queue: {fileID: 0}
-  seating: {fileID: 3085243426183691437}
+  seating: {fileID: 0}
   stateRightNow: 0
+  desiredDrink: 1
   sizeOfMenu: 0
   moodDecayAmount: 0.2
   moodDecayRate: 0.25
   coinPrefab: {fileID: 111490766695922311, guid: 5f80248db315c9c429b0e24df9a1cbfd, type: 3}
+  minTip: 0
+  maxTip: 20
+  tipByMood:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   customerMaterials:
   - {fileID: 2100000, guid: 1816148b007fee3478a36edaeb2c1bb5, type: 2}
   - {fileID: 2100000, guid: c32c147c3bec89e4b9f9aec1a012b656, type: 2}
@@ -191,20 +216,3 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3085243426183691437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2764545133507838133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fb5ff83b80f17242bc02414028538ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seats:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}

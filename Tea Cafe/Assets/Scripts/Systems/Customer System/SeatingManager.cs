@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEditor.Search;
@@ -5,14 +6,23 @@ using UnityEngine;
 
 public class SeatingManager : MonoBehaviour
 {
-    [SerializeField] private TransformTarget[] seats;
+    public static SeatingManager Instance { get; private set; }
+    //[SerializeField] private TransformTarget[] seats;
+    [SerializeField] private List<TransformTarget> seats;
 
     private void Awake()
     {
 
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         var tag = GameObject.FindGameObjectsWithTag("Seats");
         var list = new List<TransformTarget>(tag.Length);
-        var listOfTables = new List<Table>();
+        //var listOfTables = new List<Table>();
 
         foreach (var s in tag)
         {
@@ -22,7 +32,7 @@ public class SeatingManager : MonoBehaviour
             }
         }
 
-        seats = list.ToArray();
+        seats = list;
     }
 
     public bool TryReserveRandomFreeSeat(out TransformTarget seat)
@@ -30,9 +40,9 @@ public class SeatingManager : MonoBehaviour
         seat = null;
 
         // Build a list of free seats
-        var free = new List<int>(seats.Length);
+        var free = new List<int>(seats.Count);
 
-        for (int i = 0; i < seats.Length; i++)
+        for (int i = 0; i < seats.Count; i++)
         {
             var table = seats[i].GetComponentInParent<Table>();
             if (table != null && !table.IsTableOccupied())
@@ -58,11 +68,11 @@ public class SeatingManager : MonoBehaviour
 
     public void AddSeat(Transform seat)
     {
-        
+        seats.Add(seat.gameObject.GetComponent<TransformTarget>());
     }
 
     public void RemoveSeat(Transform seat)
     {
-
+        seats.Remove(seat.gameObject.GetComponent<TransformTarget>());
     }
 }

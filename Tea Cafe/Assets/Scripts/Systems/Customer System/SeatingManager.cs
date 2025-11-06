@@ -14,9 +14,9 @@ public class SeatingManager : MonoBehaviour
 
     [Header("Chair -> Table validation")]
     [SerializeField] private LayerMask tableMask;               // layer tablecolliders are on
-    [SerializeField] private float tableCheckDistance = 1.25f;  // how far in front to look for a chair
+    [SerializeField] private float tableConeMaxDistance = 1.75f;
+    [SerializeField] private float tableConeHalfAngleDeg = 25f; // 25° each side (~50° FOV)
     [SerializeField] private float tableCheckHeight = 0.6f;
-    [SerializeField] private float tableCheckRadius = 0.15f;
 
     private void Awake()
     {
@@ -195,36 +195,58 @@ public class SeatingManager : MonoBehaviour
         table = null;
         if (seat == null) return false;
 
-        // 1) Find the nearest Table in range (independent of seat forward)
-        Vector3 pos = seat.transform.position + Vector3.up * tableCheckHeight;
-        Collider[] hits = Physics.OverlapSphere(pos, tableCheckDistance, tableMask, QueryTriggerInteraction.Ignore);
+        Vector3 seatPos = seat.Position + Vector3.up * tableCheckHeight;
+        Vector3 seatFwd = seat.transform.forward.normalized;
 
-        Table nearest = null;
-        float best = float.PositiveInfinity;
+        // 1) Collect nearby colliders (candidate tables)
+        Collider[] hits = Physics.OverlapSphere(
+            seatPos,
+            tableConeMaxDistance,
+            tableMask,
+            QueryTriggerInteraction.Ignore
+        );
+        if (hits == null || hits.Length == 0) return false;
 
+        Table bestTable = null;
+        Vector3 bestPoint = default;
+        float bestSqr = float.PositiveInfinity;
+
+        // 2) Filter by cone (angle) and choose nearest collider point
         for (int i = 0; i < hits.Length; i++)
         {
-            Table t = hits[i].GetComponentInParent<Table>();
+            var col = hits[i];
+            var t = col.GetComponentInParent<Table>();
             if (t == null) continue;
 
-            float d = Vector3.Distance(seat.transform.position, t.transform.position);
-            if (d < best)
+            // closest *surface* point on the table to the chair
+            Vector3 p = col.ClosestPoint(seatPos);
+            Vector3 toP = (p - seatPos);
+            float dist = toP.magnitude;
+            if (dist <= 1e-4f) continue; // effectively same point
+
+            Vector3 dir = toP / dist;
+
+            // ANGLE test -> inside cone?
+            float angle = Mathf.Acos(Mathf.Clamp(Vector3.Dot(seatFwd, dir), -1f, 1f)) * Mathf.Rad2Deg;
+            if (angle > tableConeHalfAngleDeg) continue; // outside cone
+
+            // Keep nearest inside the cone
+            float d2 = dist * dist;
+            if (d2 < bestSqr)
             {
-                best = d;
-                nearest = t;
+                bestSqr = d2;
+                bestPoint = p;
+                bestTable = t;
             }
         }
 
-        if (nearest == null) return false;
+        if (bestTable == null) return false;
 
-        // 2) Facing rule: seat must point (roughly) toward the table
-        Vector3 toTable = (nearest.transform.position - seat.transform.position).normalized;
-        float facing = Vector3.Dot(seat.transform.forward, toTable); // +1 = directly facing
+        // Optionally: do a visibility check (ray) if you want to ensure nothing blocks the chair -> table line
+        // if (Physics.Linecast(seatPos, bestPoint, out var hit, ~0, QueryTriggerInteraction.Ignore) && !hit.collider.GetComponentInParent<Table>())
+        //     return false;
 
-        // tweak the threshold as you like (0.35 ~ within ~70° cone)
-        if (facing < 0.35f) return false;
-
-        table = nearest;
+        table = bestTable;
         return true;
     }
 
@@ -237,13 +259,35 @@ public class SeatingManager : MonoBehaviour
             var s = seats[i];
             if (s == null) continue;
 
-            Vector3 pos = s.transform.position + Vector3.up * tableCheckHeight;
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(pos, tableCheckDistance);
+            Vector3 pos = s.Position + Vector3.up * tableCheckHeight;
+            Vector3 fwd = s.transform.forward;
 
-            // facing ray
+            // draw cone edges
+            float ang = tableConeHalfAngleDeg;
+            Quaternion qL = Quaternion.AngleAxis(-ang, Vector3.up);
+            Quaternion qR = Quaternion.AngleAxis(ang, Vector3.up);
+
+            Vector3 leftDir = qL * fwd;
+            Vector3 rightDir = qR * fwd;
+
             Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(pos, pos + s.transform.forward * tableCheckDistance);
+            Gizmos.DrawLine(pos, pos + leftDir * tableConeMaxDistance);
+            Gizmos.DrawLine(pos, pos + rightDir * tableConeMaxDistance);
+
+            // base arc (rough)
+            Gizmos.color = new Color(1f, 1f, 0f, 0.4f);
+            const int seg = 16;
+            Vector3 prev = pos + leftDir * tableConeMaxDistance;
+            for (int sIdx = 1; sIdx <= seg; sIdx++)
+            {
+                float t = (float)sIdx / seg;
+                float a = Mathf.Lerp(-ang, ang, t);
+                Vector3 dir = Quaternion.AngleAxis(a, Vector3.up) * fwd;
+                Vector3 curr = pos + dir * tableConeMaxDistance;
+                Gizmos.DrawLine(prev, curr);
+                prev = curr;
+            }
         }
     }
+
 }

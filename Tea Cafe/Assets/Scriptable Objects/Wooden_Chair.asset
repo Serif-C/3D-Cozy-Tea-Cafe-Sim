@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wooden_Chair
   m_EditorClassIdentifier: 
   id: 02
-  category: 0
+  category: 2
   prefab: {fileID: 7800646358868240545, guid: 104f893159717bc48a97e260555c9b04, type: 3}
   width: 1
   depth: 1

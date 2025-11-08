@@ -167,10 +167,11 @@ namespace TeaShop.Systems.Building
 
             GameObject go = Instantiate(selectedItem.Prefab, pos, rot);
             PlaceableInstance inst = go.GetComponent<PlaceableInstance>();
-            if (inst == null) go.AddComponent<PlaceableInstance>();
+            if (inst == null) inst = go.AddComponent<PlaceableInstance>(); //  assign it!
             inst.Init(selectedItem);
 
-            if (registry != null) registry.Register(inst);
+            if (registry != null) registry.Register(inst);                 //  now non-null
+
 
             // Spend wallet balance
             int newBalance = PlayerManager.Instance.walletBalance - price;

@@ -172,6 +172,10 @@ namespace TeaShop.Systems.Building
 
             if (registry != null) registry.Register(inst);                 //  now non-null
 
+            // persist immediately
+            // (can also be done via BuildSaveAdapter OnEnable method which I am doing)
+            var saver = FindFirstObjectByType<BuildSaveAdapter>();
+            if (saver != null) saver.SaveNow();
 
             // Spend wallet balance
             int newBalance = PlayerManager.Instance.walletBalance - price;

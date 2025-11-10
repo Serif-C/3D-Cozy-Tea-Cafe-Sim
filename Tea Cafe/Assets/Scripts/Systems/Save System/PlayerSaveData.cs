@@ -8,6 +8,7 @@ public struct PlacementRecord
     public Quaternion rotation;
 }
 
+[System.Serializable]
 public class PlayerSaveData
 {
     public int version = 1;

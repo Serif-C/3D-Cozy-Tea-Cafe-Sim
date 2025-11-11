@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2935746446799378450}
   - component: {fileID: 4288528815455803743}
   - component: {fileID: 5329805386692548914}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Customer
   m_TagString: Customer
   m_Icon: {fileID: 0}
@@ -131,7 +131,6 @@ MonoBehaviour:
   counter: {fileID: 0}
   exit: {fileID: 0}
   queue: {fileID: 0}
-  seating: {fileID: 0}
   stateRightNow: 0
   desiredDrink: 1
   sizeOfMenu: 0

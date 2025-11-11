@@ -4,6 +4,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
     public int walletBalance = 0;
+    private bool isQuitting;
 
     private void Awake()
     {
@@ -15,6 +16,8 @@ public class PlayerManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        LoadWallet();
     }
 
     public void SetCountAmount(int amount)
@@ -58,22 +61,22 @@ public class PlayerManager : MonoBehaviour
 
     private void SaveWallet()
     {
-        PlayerSaveData data = new PlayerSaveData();
-        data.version = 1;
+        // Merge with existing save so we DON'T lose placements
+        var data = SaveSystem.Load() ?? new PlayerSaveData();
+        data.version = Mathf.Max(data.version, 1);
         data.walletBalance = walletBalance;
         SaveSystem.Save(data);
     }
 
     private void OnApplicationQuit()
     {
+        isQuitting = true;
         SaveWallet();
     }
 
     private void OnDestroy()
     {
-        if (Instance == this)
-        {
+        if (Instance == this && !isQuitting && Application.isPlaying)
             SaveWallet();
-        }    
     }
 }

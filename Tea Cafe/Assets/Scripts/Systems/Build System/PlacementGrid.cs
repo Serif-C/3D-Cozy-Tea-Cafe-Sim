@@ -10,9 +10,9 @@ namespace TeaShop.Systems.Building
         public Vector3 SnapToGrid(Vector3 worldPos)
         {
             Vector3 local = worldPos;
-            if (origin == null)
+            if (origin != null)
             {
-                local = worldPos - origin.position; ;
+                local = worldPos - origin.position;
             }
 
             float gx = Mathf.Round(local.x / cellSize) * cellSize;

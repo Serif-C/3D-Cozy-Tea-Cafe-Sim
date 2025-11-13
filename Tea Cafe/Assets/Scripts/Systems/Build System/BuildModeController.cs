@@ -28,6 +28,7 @@ namespace TeaShop.Systems.Building
 
         private GameObject ghost;
         private bool placeTriggeredThisFrame;
+        private bool selectTriggered;
 
         private void OnEnable()
         {
@@ -92,44 +93,65 @@ namespace TeaShop.Systems.Building
 
         private void OnPlacePerformed(InputAction.CallbackContext ctx)
         {
-            // If dragging a selected instance, drop it here (validate + save)
+            // 1) If dragging, confirm the move
             if (dragging && selectedInst != null)
             {
                 TryDropSelected();
                 return;
             }
 
-            placeTriggeredThisFrame = true; // placing from ghost (existing flow)
+            // 2) If no ghost but we have an item selected, enter place mode now
+            if (ghost == null && selectedItem != null)
+            {
+                EnterPlaceMode(selectedItem);
+                return; // next click will place
+            }
+
+            // 3) Only place when we actually have an item/ghost
+            if (selectedItem == null || ghost == null) return;
+
+            placeTriggeredThisFrame = true;
         }
 
         private void OnCancelPerformed(InputAction.CallbackContext ctx)
         {
-            SetBuildMode(false);
+            if (dragging && selectedInst != null)
+            {
+                CancelDragAndRevert();
+                return;
+            }
+
+            if (ghost != null)
+            {
+                EnterEditMode();  // just clear ghost, stay in build mode
+                return;
+            }
+
+            SetBuildMode(false); // leave build mode entirely
         }
 
         private void OnSelectPerformed(InputAction.CallbackContext ctx)
         {
-            // ignore UI clicks
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
+            // Defer UI check to Update if you kept that warning workaround, otherwise:
+            if (EventSystem.current && EventSystem.current.IsPointerOverGameObject()) return;
 
-            // If we're placing a new item, selection will place it (existing flow)
-            if (selectedItem != null && ghost != null)
-                return;
+            // If a ghost is active, switch to EDIT first (so we can select)
+            if (ghost != null) EnterEditMode();
 
-            // Try pick an existing placed object
             var hit = RaycastPlaced();
-            if (hit.inst != null)
-            {
-                SelectInstance(hit.inst);
+            if (hit.inst == null) return;
 
-                // Begin dragging immediately
-                dragging = true;
-                dragStartPosition = selectedInst.transform.position;
-                dragStartRotation = selectedInst.transform.rotation;
+            SelectInstance(hit.inst);
 
-                // make the selected ignore raycast while dragging so we don't hit itself
-                SetLayerRecursively(selectedInst.gameObject, LayerMask.NameToLayer("Ignore Raycast"));
-            }
+            // Begin dragging immediately; make the picked object ignore raycasts
+            dragging = true;
+            dragStartPosition = selectedInst.transform.position;
+            dragStartRotation = selectedInst.transform.rotation;
+
+            SetLayerRecursively(selectedInst.gameObject, LayerMask.NameToLayer("Ignore Raycast"));
+
+            // Make absolutely sure the ghost won't obscure the picked object
+            DestroyGhost();
         }
 
         private void OnRotatePerformed(InputAction.CallbackContext ctx)
@@ -162,6 +184,37 @@ namespace TeaShop.Systems.Building
             Deselect();
         }
 
+        private void EnterPlaceMode(PlaceableItemConfig cfg)
+        {
+            selectedItem = cfg;
+            EnsureGhost();
+        }
+
+        private void EnterEditMode()
+        {
+
+            DestroyGhost();
+        }
+
+        private void EnsureGhost()
+        {
+            if (selectedItem != null && ghost == null)
+            {
+                ghost = Instantiate(selectedItem.Prefab);
+                SetLayerRecursively(ghost, LayerMask.NameToLayer("Ignore Raycast"));
+                ApplyGhostMaterial(ghost, 0.5f);
+            }
+        }
+
+        private void DestroyGhost()
+        {
+            if (ghost != null)
+            {
+                Destroy(ghost);
+                ghost = null;
+            }
+        }
+
 
         private void Awake()
         {
@@ -173,7 +226,7 @@ namespace TeaShop.Systems.Building
 
         private void Start()
         {
-            SetBuildMode(true);
+            SetBuildMode(buildModeEnabled); // respect the serialized toggle
         }
 
         private void Update()
@@ -190,7 +243,27 @@ namespace TeaShop.Systems.Building
             }
             // -----------------------------------------------------------------------
 
-            if (selectedItem == null) return;
+            if (selectTriggered)
+            {
+                selectTriggered = false;
+
+                // UI guard here (safe timing)
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                    return;
+
+                if (selectedItem == null || ghost == null) // only when no ghost
+                {
+                    var hit = RaycastPlaced();
+                    if (hit.inst != null)
+                    {
+                        SelectInstance(hit.inst);
+                        dragging = true;
+                        dragStartPosition = selectedInst.transform.position;
+                        dragStartRotation = selectedInst.transform.rotation;
+                        SetLayerRecursively(selectedInst.gameObject, LayerMask.NameToLayer("Ignore Raycast"));
+                    }
+                }
+            }
 
             // 1) Update ghost from pointer position action
             UpdateGhostPositionFromAction();
@@ -230,10 +303,17 @@ namespace TeaShop.Systems.Building
         {
             buildModeEnabled = enabled;
 
-            if (enabled)
-                RebuildGhost();
-            else
+            if (!buildModeEnabled)
+            {
+                // leaving build mode: clean up
+                dragging = false;
+                selectedInst = null;
                 DestroyGhost();
+                return;
+            }
+
+            // entering build mode: EDIT by default
+            EnterEditMode();
         }
 
         public void SelectItem(PlaceableItemConfig item)
@@ -298,6 +378,9 @@ namespace TeaShop.Systems.Building
             if (inst == null) inst = go.AddComponent<PlaceableInstance>(); //  assign it!
             inst.Init(selectedItem);
 
+            bool keepPlacing = false; // set true if you want “paint multiple”
+            if (!keepPlacing) EnterEditMode();
+
             if (registry != null) registry.Register(inst);                 //  now non-null
 
             // Spend wallet balance
@@ -317,22 +400,18 @@ namespace TeaShop.Systems.Building
             Vector3 pos = selectedInst.transform.position;
             Quaternion rot = selectedInst.transform.rotation;
 
-            // validate new spot using the same PlacementValidator
             if (validator != null && selectedInst.GetConfig() != null)
             {
                 if (!validator.CanPlaceAt(selectedInst.GetConfig(), pos, rot))
                 {
-                    // invalid -> revert
                     CancelDragAndRevert();
                     return;
                 }
             }
-
-            // commit: restore layer, stop dragging
             dragging = false;
-            SetLayerRecursively(selectedInst.gameObject, 0); // Default (or store previous if needed)
+            SetLayerRecursively(selectedInst.gameObject, 0); // Default
 
-            // persist
+            // Persist
             var saver = FindFirstObjectByType<BuildSaveAdapter>();
             if (saver != null) saver.SaveNow();
         }
@@ -361,12 +440,6 @@ namespace TeaShop.Systems.Building
             ghost = Instantiate(selectedItem.Prefab);
             SetLayerRecursively(ghost, LayerMask.NameToLayer("Ignore Raycast")); // Avoid self-hits
             ApplyGhostMaterial(ghost, 0.5f);
-        }
-
-        private void DestroyGhost()
-        {
-            if (ghost != null) Destroy(ghost);
-            ghost = null;
         }
 
         private (PlaceableInstance inst, RaycastHit hit) RaycastPlaced()

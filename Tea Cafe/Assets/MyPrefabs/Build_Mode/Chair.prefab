@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2892821845574748381}
   - component: {fileID: 6461810331745016396}
   - component: {fileID: -3036813583540714743}
+  - component: {fileID: -5793183893793981588}
   m_Layer: 0
   m_Name: Chair
   m_TagString: Seats
@@ -114,3 +115,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 24e541dd5c7015341b82409797676e26, type: 2}
   gridSize: {x: 1, y: 1}
+--- !u!65 &-5793183893793981588
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7800646358868240545}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7500076, y: 1.2080345, z: 0.79623425}
+  m_Center: {x: 0.000019073486, y: 0.60402644, z: -0.02311714}

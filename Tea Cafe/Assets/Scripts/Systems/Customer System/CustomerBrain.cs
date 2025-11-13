@@ -26,6 +26,7 @@ public class CustomerBrain : MonoBehaviour
     [SerializeField] private TransformTarget counter;
     [SerializeField] private TransformTarget exit;
     [SerializeField] private QueueManager queue;
+    [SerializeField] private OrderBubble orderBubble;
     private SeatingManager seating;
     private TransformTarget mySeat;
 
@@ -90,6 +91,11 @@ public class CustomerBrain : MonoBehaviour
         }
 
         myMood = gameObject.GetComponent<CustomerMood>();
+
+        if (orderBubble == null)
+            orderBubble = gameObject.GetComponentInChildren<OrderBubble>();
+
+        orderBubble.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -156,6 +162,9 @@ public class CustomerBrain : MonoBehaviour
         // Ordering time for now to simulate ordering
         desiredDrink = OrderForARandomDrink();
         yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
+
+        orderBubble.gameObject.SetActive(true);
+        orderBubble.VisualizeOrder(desiredDrink);
 
         // free the counter for the next customer
         queue.ReleaseCounter(this);

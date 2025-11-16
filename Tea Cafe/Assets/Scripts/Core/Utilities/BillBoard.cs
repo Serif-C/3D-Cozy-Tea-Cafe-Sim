@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BillBoard : MonoBehaviour
 {
+    // Might also have to billboard the customer/player sprites to achieve 2.5D effect
+
     private Transform cam;
 
     private void Start()

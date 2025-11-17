@@ -26,9 +26,12 @@ public class CustomerBrain : MonoBehaviour
     [SerializeField] private TransformTarget counter;
     [SerializeField] private TransformTarget exit;
     [SerializeField] private QueueManager queue;
-    [SerializeField] private OrderBubble orderBubble;
     private SeatingManager seating;
     private TransformTarget mySeat;
+
+    [Header("UI Related")]
+    [SerializeField] private OrderBubble orderBubble;
+    [SerializeField] private SpriteRenderer emote;
 
     public CustomerState current { get; private set; }
     public CustomerState stateRightNow;
@@ -197,10 +200,6 @@ public class CustomerBrain : MonoBehaviour
             yield break;
         }
 
-        //var table = seatTT.GetComponentInParent<Table>();   // find the Table for this seat
-        //if(table == null) { Debug.LogError("Table is null"); }
-
-
         yield return Go(seatTarget);    // Walk to seat
         // Attach to table for sitting/drinking
         AttachToTable(table);
@@ -208,15 +207,11 @@ public class CustomerBrain : MonoBehaviour
         // Wait until the correct drink shows up on THIS table
         while (currentTable == null || !currentTable.HasDrinkOfType(desiredDrink))
         {
-            //myMood.DecayMood(moodDecayAmount);
-            // time-scaled decay: amountPerSecond * deltaTime
-            //if (myMood.GetCurrentMoodValue() <= 0) break;
-            //yield return new WaitForSeconds(moodDecayRate);
-
             myMood.DecayPerSecond(moodDecayAmount, moodDecayRate);
 
             if (myMood.IsFedUp)
             {
+                myMood.GetEmote(myMood.currentMoodValue);
                 SetState(CustomerState.LeavingCafe);
                 // play here: angry animation or something
                 yield return LeaveCafe();
@@ -227,6 +222,9 @@ public class CustomerBrain : MonoBehaviour
 
         }
 
+        // Order delivered, order bubble no longer needed
+        orderBubble.gameObject.SetActive(false);
+        emote.sprite = myMood.GetEmote(myMood.currentMoodValue);
         SetState(CustomerState.Drinking);
         yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));
 
@@ -355,13 +353,17 @@ public class CustomerBrain : MonoBehaviour
     [SerializeField] private Material[] customerMaterials;
     private void ChangeColor()
     {
-        if(stateRightNow.Equals(CustomerState.Drinking))
+        MeshRenderer mr;
+        if (gameObject.TryGetComponent<MeshRenderer>(out mr))
         {
-            gameObject.GetComponent<MeshRenderer>().material = customerMaterials[1];
-        }
-        else
-        {
-            gameObject.GetComponent<MeshRenderer>().material = customerMaterials[0];
+            if (stateRightNow.Equals(CustomerState.Drinking))
+            {
+                mr.material = customerMaterials[1];
+            }
+            else
+            {
+                mr.material = customerMaterials[0];
+            }
         }
     }
 }

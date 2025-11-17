@@ -19,6 +19,8 @@ public class CustomerMood : MonoBehaviour
 
     public event Action<float, Moods> OnMoodChanged;
 
+    [SerializeField] private Sprite[] emotes;
+
     private void Awake()
     {
         currentMoodValue = Mathf.Clamp(UnityEngine.Random.Range(startRange.x, startRange.y), 0f, 100f);
@@ -73,4 +75,13 @@ public class CustomerMood : MonoBehaviour
         }
     }
 
+    public Sprite GetEmote(float moodValue)
+    {
+        if (GetMood(moodValue) == Moods.ScrewThisIAmLeaving) return emotes[0];
+        else if (GetMood(moodValue) == Moods.VeryUnsatisfied) return emotes[1];
+        else if (GetMood(moodValue) == Moods.Unsatisfied) return emotes[2];
+        else if (GetMood(moodValue) == Moods.NotSatisfiedUnsatisfied) return emotes[3];
+        else if (GetMood(moodValue) == Moods.Satisfied) return emotes[4];
+        else return emotes[5];
+    }
 }

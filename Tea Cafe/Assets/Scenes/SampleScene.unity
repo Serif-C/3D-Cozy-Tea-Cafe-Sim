@@ -1990,13 +1990,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.8660254, z: -0.5, w: 0}
-  m_LocalPosition: {x: -5, y: 40, z: 25}
+  m_LocalRotation: {x: 0, y: 0.8870109, z: -0.46174863, w: 0}
+  m_LocalPosition: {x: -5, y: 30, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 60, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 59.97, y: 180, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2365,13 +2365,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358146450}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.8660254, z: -0.5, w: 0}
-  m_LocalPosition: {x: -5, y: 40, z: 25}
+  m_LocalRotation: {x: 0, y: 0.8870109, z: -0.46174863, w: 0}
+  m_LocalPosition: {x: -5, y: 30, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 60, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 55, y: 180, z: 0}
 --- !u!1001 &362025962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4596,6 +4596,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: f5afd8da-e4f1-4e9f-9468-c3a5c937aa97
     m_ActionName: 'BuildMode/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 59cd4d80-eda5-4e38-99bc-0c24308ea294
+    m_ActionName: 'BuildMode/Select[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f5c9f37d-0198-471a-88a1-9a9faa46cd0c
+    m_ActionName: 'BuildMode/Delete[/Keyboard/delete]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 072c69c7-8e9a-402b-88dc-cb3163856fbe
+    m_ActionName: 'BuildMode/Rotate[/Keyboard/r]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -10352,8 +10364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerPrefabs:
-  - {fileID: 2764545133507838133, guid: 748f32483ed7ae749b6ce00edc327198, type: 3}
-  - {fileID: 2764545133507838133, guid: 748f32483ed7ae749b6ce00edc327198, type: 3}
+  - {fileID: 2764545133507838133, guid: 93d36857ae3e08940a3268adb6aa2250, type: 3}
   spawnRadius: {x: 5, y: 0, z: 5}
   minSpawnTime: 3
   maxSpawnTime: 3

@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2138955539, guid: d84eb799b30ed5b478c43317dfcda054, type: 3}
+  m_Sprite: {fileID: 252350778, guid: 030f2e53a3ca3f348839936a3348baa1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 4288528815455803743}
   - component: {fileID: 5329805386692548914}
   m_Layer: 7
-  m_Name: Customer 2D
+  m_Name: Customer_2D_03
   m_TagString: Customer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMoodValue: 7.2
-  startRange: {x: 30, y: 70}
+  startRange: {x: 80, y: 100}
   emotes:
   - {fileID: 903275101, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
   - {fileID: -1074192354, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}

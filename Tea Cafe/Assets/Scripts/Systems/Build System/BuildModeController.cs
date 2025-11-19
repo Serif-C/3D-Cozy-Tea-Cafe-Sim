@@ -17,6 +17,7 @@ namespace TeaShop.Systems.Building
         [SerializeField] private InputActionReference deleteAction;
         [SerializeField] private InputActionReference rotateAction;
         [SerializeField] private PlacementValidator validator;
+        [SerializeField] private Material ghostMaterial;
 
         [Header("State")]
         [SerializeField] private bool buildModeEnabled = false;
@@ -466,16 +467,21 @@ namespace TeaShop.Systems.Building
 
         private void ApplyGhostMaterial(GameObject root, float alpha)
         {
+            // ignore 'alpha' now and just use the dedicated ghostMaterial.
+            if (ghostMaterial == null) return;
+
             Renderer[] rends = root.GetComponentsInChildren<Renderer>(true);
             for (int i = 0; i < rends.Length; i++)
             {
-                Material m = rends[i].material;
-                if (m.HasProperty("_Color"))
+                Renderer rend = rends[i];
+
+                // Handle renderers that use multiple materials (submeshes)
+                Material[] mats = rend.sharedMaterials;
+                for (int m = 0; m < mats.Length; m++)
                 {
-                    Color c = m.color;
-                    c.a = alpha;
-                    m.color = c;
+                    mats[m] = ghostMaterial;
                 }
+                rend.sharedMaterials = mats;
             }
         }
 

@@ -14,3 +14,8 @@ public interface IMover
     void Stop();
     void Warp(Vector3 position);
 }
+
+public interface IResettable
+{
+    public void ResetObject();
+}

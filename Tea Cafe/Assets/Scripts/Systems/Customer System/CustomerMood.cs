@@ -16,15 +16,16 @@ public class CustomerMood : MonoBehaviour
 {
     [Range(0, 100)] public float currentMoodValue;
     [SerializeField] private Vector2 startRange = new Vector2(30f, 70f);
-
     public event Action<float, Moods> OnMoodChanged;
-
     [SerializeField] private Sprite[] emotes;
+    private float startingMood;
 
     private void Awake()
     {
         currentMoodValue = Mathf.Clamp(UnityEngine.Random.Range(startRange.x, startRange.y), 0f, 100f);
         RaiseChanged();
+
+        startingMood = currentMoodValue;
     }
 
     //public bool IsFedUp => currentMoodValue <= 0f;
@@ -83,5 +84,10 @@ public class CustomerMood : MonoBehaviour
         else if (GetMood(moodValue) == Moods.NotSatisfiedUnsatisfied) return emotes[3];
         else if (GetMood(moodValue) == Moods.Satisfied) return emotes[4];
         else return emotes[5];
+    }
+
+    public void ResetMood()
+    {
+        currentMoodValue = startingMood;
     }
 }

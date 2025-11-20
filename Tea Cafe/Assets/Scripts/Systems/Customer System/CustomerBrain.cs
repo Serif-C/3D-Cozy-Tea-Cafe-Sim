@@ -15,7 +15,7 @@ public enum CustomerState
     LeavingCafe
 }
 
-public class CustomerBrain : MonoBehaviour
+public class CustomerBrain : MonoBehaviour, IResettable
 {
     [Header("Customer Action Providers")]
     [SerializeField] private MonoBehaviour moverProvider;
@@ -63,8 +63,13 @@ public class CustomerBrain : MonoBehaviour
     [SerializeField] private float minTip = 0f;
     [SerializeField] private float maxTip = 20f;
     // Animation curve tipping: Most tip low, but rarely, very happy customers tip really high
-    [SerializeField] private AnimationCurve tipByMood = AnimationCurve.Linear(0f, 0f, 1f, 1f); 
+    [SerializeField] private AnimationCurve tipByMood = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
+    private void OnEnable()
+    {
+        ResetObject();
+        StartCoroutine(Run());
+    }
 
     private void Awake()
     {
@@ -268,6 +273,8 @@ public class CustomerBrain : MonoBehaviour
     {
         SetState(CustomerState.LeavingCafe);
 
+        orderBubble.gameObject.SetActive(false);
+
         DetachToTable();
 
         if (mySeat != null)
@@ -347,6 +354,13 @@ public class CustomerBrain : MonoBehaviour
         float jitter = UnityEngine.Random.Range(-k, k);
         int final = Mathf.Max(0, Mathf.RoundToInt(raw + jitter));
         return final;
+    }
+
+    public void ResetObject()
+    {
+        SetState(CustomerState.EnteringCafe);
+        myMood.ResetMood();
+
     }
     
     // For Testing Purposes

@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMoodValue: 7.2
-  startRange: {x: 80, y: 100}
+  startRange: {x: 10, y: 10}
   emotes:
   - {fileID: 903275101, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
   - {fileID: -1074192354, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}

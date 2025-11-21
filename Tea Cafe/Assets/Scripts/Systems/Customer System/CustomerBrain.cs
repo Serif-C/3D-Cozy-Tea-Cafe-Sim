@@ -65,12 +65,6 @@ public class CustomerBrain : MonoBehaviour, IResettable
     // Animation curve tipping: Most tip low, but rarely, very happy customers tip really high
     [SerializeField] private AnimationCurve tipByMood = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
-    private void OnEnable()
-    {
-        ResetObject();
-        StartCoroutine(Run());
-    }
-
     private void Awake()
     {
         originalParent = transform.parent;
@@ -106,8 +100,20 @@ public class CustomerBrain : MonoBehaviour, IResettable
         orderBubble.gameObject.SetActive(false);
     }
 
-    private void Start()
+    //private void Start()
+    //{
+    //    StartCoroutine(Run());
+    //}
+
+    private void OnEnable()
     {
+        StartCoroutine(DelayedStart());
+    }
+
+    private IEnumerator DelayedStart()
+    {
+        yield return null; // wait 1 frame!!!
+        ResetObject();
         StartCoroutine(Run());
     }
 

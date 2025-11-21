@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a9570ac1e88f84a978461566b36a35, type: 3}
   m_Name: Wooden_Tile
   m_EditorClassIdentifier: 
-  id: 01
+  id: 06
   category: 3
-  prefab: {fileID: 1283660444954753329, guid: a3bbfca9f3767f14b88dcf1fc3735b78, type: 3}
+  prefab: {fileID: 5669935524031061378, guid: 68f13f4235d70784ab38eb4be5992763, type: 3}
   width: 1
   depth: 1
   priceCents: 25

@@ -47,7 +47,7 @@ public class CustomerSpawner : MonoBehaviour
         var prefab = customerPrefabs[random];
 
         // Instantiate a new instance for the pool
-        var go = Instantiate(prefab);
+        var go = Instantiate(prefab, parent: null);
         go.SetActive(false);
         return go;
     }

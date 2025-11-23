@@ -914,10 +914,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 832.0,
-            "y": 61.0,
+            "x": 829.0,
+            "y": 112.99999237060547,
             "width": 208.0,
-            "height": 312.0
+            "height": 311.9999694824219
         }
     },
     "m_Slots": [

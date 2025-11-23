@@ -372,6 +372,7 @@ GameObject:
   - component: {fileID: 4016337740061751002}
   - component: {fileID: 8817931560530472339}
   - component: {fileID: 3692686078136184084}
+  - component: {fileID: 2225407632321540390}
   m_Layer: 7
   m_Name: Char_Sprite
   m_TagString: Untagged
@@ -482,6 +483,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9827081ef613d419d482a0545167ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2225407632321540390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6099344808441619400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126cfada2aad4d14a92f59b6560e3055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  secondsBtwnNextAnimation: 0.15
+  animationMaterials:
+  - {fileID: 2100000, guid: 2c8fa793247f31f4cae0300f15af33c3, type: 2}
+  - {fileID: 2100000, guid: 5920adfa793eaec48a138b62f17e0e1c, type: 2}
+  - {fileID: 2100000, guid: 947dae9c3f30b85468fbc2b8e70fac09, type: 2}
+  - {fileID: 2100000, guid: 442423495a395fe45bade3eb902c6757, type: 2}
+  - {fileID: 2100000, guid: f0366c18de9285142a6696339c7c3592, type: 2}
+  - {fileID: 2100000, guid: 70b0e5b503937bf4cafe2a05987a02fd, type: 2}
+  - {fileID: 2100000, guid: 69e4f20fec1d87e4095d3ea519c879da, type: 2}
+  - {fileID: 2100000, guid: c8fc50b7d9ee37f46a19831fba8c6a45, type: 2}
 --- !u!1001 &2124569226155137800
 PrefabInstance:
   m_ObjectHideFlags: 0

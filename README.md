@@ -13,8 +13,14 @@ Serve customers, brew drinks, decorate your café, and build a warm safe haven f
 
 Customer Flow, Order Preparation, Thought Bubbles
 
-<p align="center"> <img src="https://github.com/Serif-C/3D-Cozy-Tea-Cafe-Sim/blob/main/Small%20Demo%20GIF.gif" width="70%" /> </p>
+<p align="center"> <img src="https://github.com/Serif-C/3D-Cozy-Tea-Cafe-Sim/blob/main/Small%20Demo%20GIF.gif" width="75%" /> </p>
 
+
+🎥 **Shaders/VFX Preview**
+<p align="center"> 
+<img src="https://github.com/Serif-C/3D-Cozy-Tea-Cafe-Sim/blob/main/Screenshot 2025-11-24 162215.png" width="40%" /> 
+<img src="https://github.com/Serif-C/3D-Cozy-Tea-Cafe-Sim/blob/main/Screenshot 2025-11-24 162303.png" width="40%" />
+</p>
 
 🌿 **Core Features**
 

@@ -273,6 +273,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
             currentTable.SetOccupiedValue(false);   // mark table free
             currentTable = null;
         }
+        orderBubble.gameObject.SetActive(false);
     }
 
     IEnumerator LeaveCafe()

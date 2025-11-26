@@ -19,24 +19,6 @@ public class MenuManager : MonoBehaviour
         Instance = this;
     }
 
-    //public GameObject GetDesiredDrink(DrinkType desireDrink)
-    //{
-    //    GameObject drink = null;
-
-    //    if (menu == null) return null; // menu is empty
-
-    //    for (int i = 0; i < menu.Length; i++)
-    //    {
-    //        if (menu[i].gameObject.GetComponent<DrinkItem>().DrinkType == desireDrink)
-    //        {
-    //            drink = menu[i];
-    //            break;
-    //        }
-    //    }
-
-    //    return drink;
-    //}
-
     public Sprite GetDesiredDrink(DrinkType desireDrink)
     {
         Sprite drink = null;

@@ -17,9 +17,10 @@ Customer Flow, Order Preparation, Thought Bubbles
 
 
 🎥 **Shaders/VFX Preview**
+<p align="center"> Toon Shader (Left), Toon + Outline Shader (Right)</p>
 <p align="center"> 
-<img src="https://github.com/Serif-C/3D-Cozy-Tea-Cafe-Sim/blob/main/Screenshot 2025-11-24 162215.png" width="40%" /> 
-<img src="https://github.com/Serif-C/3D-Cozy-Tea-Cafe-Sim/blob/main/Screenshot 2025-11-24 162303.png" width="40%" />
+<img src="https://github.com/Serif-C/3D-Cozy-Tea-Cafe-Sim/blob/main/Screenshot 2025-11-24 162934.png" width="40%" height="450px" /> 
+<img src="https://github.com/Serif-C/3D-Cozy-Tea-Cafe-Sim/blob/main/Screenshot 2025-11-24 162904.png" width="40%" height="435px" />
 </p>
 
 🌿 **Core Features**

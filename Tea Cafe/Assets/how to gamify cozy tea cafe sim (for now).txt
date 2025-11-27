@@ -1,0 +1,9 @@
+how to gamify cozy tea cafe sim
+1. Customers should feel expressive (show a bunch of emotes while drinking their order)
+2. Customer arrival should be based on time (chill hours and busy hours)
+3. Enhance visual feedback by highlighting interactables
+4. Create player shop where coin can be spent
+5. Enhance build mode to allow the cafe to be expanded and upgraded
+6. More visual upgrades such as adding water
+7. Expand order menu
+8. Animate objects, customers, players

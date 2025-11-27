@@ -12,6 +12,11 @@ public class ChoppingBoard : MonoBehaviour, IInteractable
     [SerializeField] private GameObject choppingItemPrefab;
     [SerializeField] private Transform spawnPoint;
 
+    private DrinkType leafType;
+
+    // Chopping Board should output a chopped tea leaf of the same leafType
+    // This tea leaf is a prerequisite of brewing station
+
     public string Prompt
     {
         get
@@ -45,6 +50,8 @@ public class ChoppingBoard : MonoBehaviour, IInteractable
     {
         if (!isChopping && !hasFinishedChopping)
         {
+            leafType = player.gameObject.GetComponentInChildren<Leaf>().GetLeafType();
+
             Debug.Log("ChoppingBoard: Started Chopping Tea Leaves!");
             isChopping = true;
             timer = choppingTime;

@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class ChoppingBoard : MonoBehaviour, IInteractable
+public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
 {
     [Header("Chopping Board Settings")]
     [SerializeField] private float choppingTime = 3f;
@@ -16,6 +17,38 @@ public class ChoppingBoard : MonoBehaviour, IInteractable
 
     // Chopping Board should output a chopped tea leaf of the same leafType
     // This tea leaf is a prerequisite of brewing station
+
+    public event Action<float, bool> OnProgressChanged;
+
+    public float Progress01
+    {
+        get
+        {
+            if (isChopping)
+            {
+                float normalized = 1f - (timer / choppingTime);
+                return Mathf.Clamp01(normalized);
+            }
+            else
+            {
+                if (hasFinishedChopping)
+                    return 1f;
+                else
+                    return 0f;
+            }
+        }
+    }
+
+    public bool ShowProgress
+    {
+        get
+        {
+            if (isChopping)
+                return true;
+            else
+                return false;
+        }
+    }
 
     public string Prompt
     {
@@ -77,7 +110,20 @@ public class ChoppingBoard : MonoBehaviour, IInteractable
                 isChopping = false;
                 hasFinishedChopping = true;
                 Debug.Log("Chopping Board: Tea Leaves has been Chopped!");
+                RaiseProgressChanged();
             }
+        }
+    }
+
+    private void RaiseProgressChanged()
+    {
+        if (OnProgressChanged != null)
+        {
+            float progressValue = Progress01;
+            bool shouldShow = ShowProgress;
+
+            // Call every method subscribed to this event, passing the values
+            OnProgressChanged.Invoke(progressValue, shouldShow);
         }
     }
 }

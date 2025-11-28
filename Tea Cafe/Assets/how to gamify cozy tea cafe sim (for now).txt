@@ -7,3 +7,29 @@ how to gamify cozy tea cafe sim
 6. More visual upgrades such as adding water
 7. Expand order menu
 8. Animate objects, customers, players
+
+Gameplayloop-wise it should be something like:
+- You start with basic Tea orders with prep - serve looking like:
+	1. Boil Water
+	2. Pick correct leaf
+	3. Chop leaf
+	4. Brew tea (boiled water + chopped leaf)
+	5. Serve
+
+- Then as the game continues (probably after a couple in-game days), customers start
+  to place more complex orders requiring more steps (such as smoothies or bobas):
+	1. Boil Water
+	2. Pick correct leaf
+	3. Chop leaf
+	4. Brew tea (boiled water + chopped leaf)
+	5. Pick up ice pack
+	6. Blend ice + brewed tea
+	7. Serve
+
+- Then maybe some pastry options too etc...
+
+- Seasonal menu should also be a thing
+
+- Non-seasonal menu should always be available to order
+
+These added tasks and complexity are the motivation behind expanding the cafe and hiring workers.

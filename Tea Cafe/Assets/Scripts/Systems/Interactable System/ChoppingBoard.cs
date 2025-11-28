@@ -8,12 +8,14 @@ public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
     private float timer = 0f;
     private bool isChopping = false;
     private bool hasFinishedChopping = false;
+    private GameObject storedItem;
+    private DrinkType leafType;
 
     [Header("Visuals")]
     [SerializeField] private GameObject choppingItemPrefab;
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private GameObject choppedLeavesPrefab;
 
-    private DrinkType leafType;
 
     // Chopping Board should output a chopped tea leaf of the same leafType
     // This tea leaf is a prerequisite of brewing station
@@ -81,13 +83,20 @@ public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
 
     public void Interact(PlayerInteractor player)
     {
+        // Accepts Tea leaf
         if (!isChopping && !hasFinishedChopping)
         {
-            leafType = player.gameObject.GetComponentInChildren<Leaf>().GetLeafType();
+            if (player.HeldItemHasTag("Tea Leaf"))
+            {
+                leafType = player.gameObject.GetComponentInChildren<Leaf>().GetLeafType();
+                player.PlaceItem(spawnPoint);
 
-            Debug.Log("ChoppingBoard: Started Chopping Tea Leaves!");
-            isChopping = true;
-            timer = choppingTime;
+                StoreItemAsNextChild();
+
+                Debug.Log("ChoppingBoard: Started Chopping Tea Leaves!");
+                isChopping = true;
+                timer = choppingTime;
+            }
         }
 
         else if (hasFinishedChopping)
@@ -109,10 +118,30 @@ public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
             {
                 isChopping = false;
                 hasFinishedChopping = true;
+
+                if (storedItem != null)
+                {
+                    Destroy(storedItem);
+                }
+
+                storedItem = Instantiate(choppedLeavesPrefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
+
                 Debug.Log("Chopping Board: Tea Leaves has been Chopped!");
                 RaiseProgressChanged();
             }
+            else
+            {
+                RaiseProgressChanged();
+            }
         }
+    }
+
+    private void StoreItemAsNextChild()
+    {
+        if (spawnPoint.childCount > 0)
+            storedItem = spawnPoint.GetChild(spawnPoint.childCount - 1).gameObject;
+        else
+            storedItem = null;
     }
 
     private void RaiseProgressChanged()

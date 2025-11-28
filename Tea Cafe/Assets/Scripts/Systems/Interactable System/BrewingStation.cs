@@ -169,7 +169,6 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
                 if (storedItem != null)
                 {
                     Destroy(storedItem);
-                    Debug.Log("This code gets executed");
                 }
 
                 for (int i = 0; i < brewedTeaPrefab.Length; i++)
@@ -196,8 +195,6 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
             storedItem = spawnPoint.GetChild(spawnPoint.childCount - 1).gameObject;
         else
             storedItem = null;
-
-
     }
 
     private void RaiseProgressChanged()

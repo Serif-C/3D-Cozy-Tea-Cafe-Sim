@@ -100,11 +100,6 @@ public class CustomerBrain : MonoBehaviour, IResettable
         orderBubble.gameObject.SetActive(false);
     }
 
-    //private void Start()
-    //{
-    //    StartCoroutine(Run());
-    //}
-
     private void OnEnable()
     {
         StartCoroutine(DelayedStart());
@@ -120,7 +115,6 @@ public class CustomerBrain : MonoBehaviour, IResettable
     private void SetState(CustomerState s)
     {
         current = s;
-        //Debug.Log("Customer - Current State: " + current.ToString());
         if (OnStateChanged != null)
         {
             OnStateChanged.Invoke(s);
@@ -164,7 +158,6 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
         // Since this customer now owns the counter:
         // Leave the line (compress others) then walk to the counter
-        //queue.Leave(this);
         yield return Go(queue.CounterTarget);
     }
 

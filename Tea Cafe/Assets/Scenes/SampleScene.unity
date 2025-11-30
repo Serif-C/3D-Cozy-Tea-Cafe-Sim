@@ -8611,7 +8611,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7440275934091145596}
+    m_TransformParent: {fileID: 1481666675}
     m_Modifications:
     - target: {fileID: 6099511471216097980, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -8671,7 +8671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7846663673553905845, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.18
+      value: 0.05640596
       objectReference: {fileID: 0}
     - target: {fileID: 7846663673553905845, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8679,23 +8679,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7846663673553905845, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7846663673553905845, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7846663673553905845, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7846663673553905845, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.05
+      value: -0.10000001
       objectReference: {fileID: 0}
     - target: {fileID: 7846663673553905845, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.18
+      value: 1.33
       objectReference: {fileID: 0}
     - target: {fileID: 7846663673553905845, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9052,10 +9052,11 @@ Transform:
   m_GameObject: {fileID: 1481666674}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.049999997, y: -0.14999998, z: -0.23640609}
+  m_LocalPosition: {x: 0.049999997, y: 0.236, z: -0.236}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1433989072}
   m_Father: {fileID: 7440275934091145596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490982155
@@ -12734,7 +12735,7 @@ GameObject:
   - component: {fileID: 3469287836671994096}
   - component: {fileID: 1711813855899425850}
   - component: {fileID: 731972998}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CuttingBoard_Counter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14203,7 +14204,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1433989072}
   - {fileID: 3792466292779725030}
   - {fileID: 1481666675}
   m_Father: {fileID: 543450652888917845}
@@ -14489,6 +14489,7 @@ MonoBehaviour:
   choppingTime: 3
   choppingItemPrefab: {fileID: 919132149155446097, guid: 5809bf03b41c7bf4b9d8050d68f62511, type: 3}
   spawnPoint: {fileID: 1481666675}
+  choppedLeavesPrefab: {fileID: 8927096555599509939, guid: 5a5b9559d68aff74bbdb8817c63c238d, type: 3}
 --- !u!65 &8577676506740558357
 BoxCollider:
   m_ObjectHideFlags: 0

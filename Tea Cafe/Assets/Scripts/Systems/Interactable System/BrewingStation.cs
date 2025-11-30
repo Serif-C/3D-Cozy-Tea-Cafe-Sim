@@ -11,7 +11,7 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
     private bool isFinishedBrewing = false;
     private GameObject storedItem; // what's on the station right now
     private bool hasTeaLeaf = false;
-    private bool hasBoildWater = false;
+    private bool hasBoiledWater = false;
     private DrinkType leafType;
 
     [Header("Visuals")]
@@ -91,13 +91,12 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
             {
                 leafType = player.gameObject.GetComponentInChildren<Leaf>().GetLeafType();
                 player.PlaceItem(spawnPoint);
+
+                // To hide tea leaf as it doesnt need to be placed in the game scene
                 hasTeaLeaf = true;
-
-                //StoreItemAsNextChild();
-
                 for (int i = 0; i < spawnPoint.childCount; i++)
                 {
-                    if(spawnPoint.GetChild(i).CompareTag("Tea Leaf"))
+                    if (spawnPoint.GetChild(i).CompareTag("Tea Leaf"))
                     {
                         Destroy(spawnPoint.GetChild(i).gameObject);
                     }
@@ -105,8 +104,8 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
 
                 Debug.Log("Recieved Tea Leaf");
 
-                //// Start brewing immediately after correct placement
-                if (hasTeaLeaf && hasBoildWater)
+                // Start brewing immediately after correct placement
+                if (hasTeaLeaf && hasBoiledWater)
                 {
                     isBrewing = true;
                     timer = brewingTime;
@@ -121,11 +120,11 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
 
                 StoreItemAsNextChild();
 
-                hasBoildWater = true;
+                hasBoiledWater = true;
                 Debug.Log("Recieved Boiled Water");
                 
                 //Start brewing immediately after correct placement
-                if (hasTeaLeaf && hasBoildWater)
+                if (hasTeaLeaf && hasBoiledWater)
                 {
                     isBrewing = true;
                     timer = brewingTime;
@@ -148,7 +147,7 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
                 storedItem = null;
                 isFinishedBrewing = false;
                 hasTeaLeaf = false;
-                hasBoildWater = false;
+                hasBoiledWater = false;
                 Debug.Log("Brewing Station: Player took tea.");
             }
             return;

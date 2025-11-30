@@ -102,8 +102,8 @@ public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
         else if (hasFinishedChopping)
         {
             Debug.Log("ChoppingBoard: Player takes chopped Tea Leaves");
-            GameObject item = Instantiate(choppingItemPrefab, spawnPoint.position, Quaternion.identity);
-            player.PickUp(item);
+            //GameObject item = Instantiate(choppedLeavesPrefab, spawnPoint.position, Quaternion.identity);
+            player.PickUp(storedItem);
             hasFinishedChopping = false;
         }
     }

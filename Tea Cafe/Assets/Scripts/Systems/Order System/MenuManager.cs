@@ -1,12 +1,22 @@
+using System;
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
+
+[Serializable]
+public class MenuEntry
+{
+    public GameObject menuItem;
+    public Sprite icon;
+    public DrinkType drinkType;
+}
 
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
 
-    [Header("Prefabs of the entire Menu")]
-    [SerializeField] private GameObject[] menu;
-    [SerializeField] private Sprite[] drinkSprite;
+    [SerializeField] private List<MenuEntry> menuEntries;
+    private Dictionary<DrinkType, MenuEntry> entriesByType;
 
     private void Awake()
     {
@@ -17,23 +27,30 @@ public class MenuManager : MonoBehaviour
         }
 
         Instance = this;
-    }
 
-    public Sprite GetDesiredDrink(DrinkType desireDrink)
-    {
-        Sprite drink = null;
+        entriesByType = new Dictionary<DrinkType, MenuEntry>();
 
-        if (menu == null) return null; // menu is empty
-
-        for (int i = 0; i < menu.Length; i++)
+        foreach (MenuEntry entry in menuEntries)
         {
-            if (menu[i].gameObject.GetComponent<DrinkItem>().DrinkType == desireDrink)
+            if (entriesByType.ContainsKey(entry.drinkType))
             {
-                drink = drinkSprite[i];
-                break;
+                Debug.LogWarning($"MenuManager: duplicate drink type {entry.drinkType}");
+                continue;
+            }
+            else
+            {
+                entriesByType.Add(entry.drinkType, entry);
             }
         }
+    }
 
-        return drink;
+    public Sprite GetDesiredDrink(DrinkType desiredDrink)
+    {
+        if (entriesByType != null && entriesByType.TryGetValue(desiredDrink, out MenuEntry entry))
+        {
+            return entry.icon;
+        }
+
+        return null;
     }
 }

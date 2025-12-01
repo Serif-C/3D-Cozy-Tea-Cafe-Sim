@@ -2,6 +2,15 @@ using System;
 using NUnit.Framework;
 using UnityEngine;
 
+[Serializable]
+public class IngredientRequirement
+{
+    public string requiredTag;
+    public int requiredAmount = 1;
+
+    [HideInInspector] public int currenAmount;
+}
+
 public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
 {
     [Header("Brewing Settings")]
@@ -21,6 +30,9 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
 
     // IHasProgress attribute
     public event Action<float, bool> OnProgressChanged;
+
+    [Header("Recipe Settings")]
+    [SerializeField] private IngredientRequirement[] requirements;
 
     public float Progress01
     {

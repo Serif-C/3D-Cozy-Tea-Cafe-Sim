@@ -85,5 +85,8 @@ public class PlayerInteractor : MonoBehaviour
         return heldItem != null && heldItem.CompareTag(tag);
     }
 
-
+    public void SetIsHoldingItem(bool isHoldingItem)
+    {
+        this.isHoldingItem = isHoldingItem;
+    }
 }

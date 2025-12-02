@@ -8,7 +8,7 @@ public class IngredientRequirement
     public string requiredTag;
     public int requiredAmount = 1;
 
-    [HideInInspector] public int currenAmount;
+    [HideInInspector] public int currentAmount;
 }
 
 public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
@@ -21,7 +21,6 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
     private GameObject storedItem; // what's on the station right now
     private bool hasTeaLeaf = false;
     private bool hasBoiledWater = false;
-    private DrinkType leafType;
 
     [Header("Visuals")]
     [SerializeField] private GameObject[] brewedTeaPrefab;
@@ -33,6 +32,7 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
 
     [Header("Recipe Settings")]
     [SerializeField] private IngredientRequirement[] requirements;
+    private DrinkType leafType;
 
     public float Progress01
     {
@@ -94,72 +94,106 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
         return true;
     }
 
+    //public void Interact(PlayerInteractor player)
+    //{
+    //    if (!isBrewing && !isFinishedBrewing && player.IsHoldingItem())
+    //    {
+    //        // Accepts Tea leaf
+    //        if (player.HeldItemHasTag("Tea Leaf"))
+    //        {
+    //            leafType = player.gameObject.GetComponentInChildren<Leaf>().GetLeafType();
+    //            player.PlaceItem(spawnPoint);
+
+    //            // To hide tea leaf as it doesnt need to be placed in the game scene
+    //            hasTeaLeaf = true;
+    //            for (int i = 0; i < spawnPoint.childCount; i++)
+    //            {
+    //                if (spawnPoint.GetChild(i).CompareTag("Tea Leaf"))
+    //                {
+    //                    Destroy(spawnPoint.GetChild(i).gameObject);
+    //                }
+    //            }
+
+    //            Debug.Log("Recieved Tea Leaf");
+
+    //            // Start brewing immediately after correct placement
+    //            if (hasTeaLeaf && hasBoiledWater)
+    //            {
+    //                isBrewing = true;
+    //                timer = brewingTime;
+    //                Debug.Log("Brewing Station: Boiled water and Tea Leaf placed. Brewing started!");
+    //            }
+    //        }
+
+    //        // Accepts Boiled Water
+    //        else if (player.HeldItemHasTag("Boiled Water"))
+    //        {
+    //            player.PlaceItem(spawnPoint);
+
+    //            StoreItemAsNextChild();
+
+    //            hasBoiledWater = true;
+    //            Debug.Log("Recieved Boiled Water");
+                
+    //            //Start brewing immediately after correct placement
+    //            if (hasTeaLeaf && hasBoiledWater)
+    //            {
+    //                isBrewing = true;
+    //                timer = brewingTime;
+    //                Debug.Log("Brewing Station: Boiled water and Tea Leaf placed. Brewing started!");
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Brewing Station: This station only accepts Boiled Water and Tea Leaf.");
+    //        }
+    //        return;
+    //    }
+
+    //    // Case 2: take finished tea
+    //    if (isFinishedBrewing && !player.IsHoldingItem())
+    //    {
+    //        if (storedItem != null) // storedItem is the finished tea now
+    //        {
+    //            player.PickUp(storedItem);
+    //            storedItem = null;
+    //            isFinishedBrewing = false;
+    //            hasTeaLeaf = false;
+    //            hasBoiledWater = false;
+    //            Debug.Log("Brewing Station: Player took tea.");
+    //        }
+    //        return;
+    //    }
+    //}
+
     public void Interact(PlayerInteractor player)
     {
+        // Case 1: add ingredients (only if not brewing and not finished)
         if (!isBrewing && !isFinishedBrewing && player.IsHoldingItem())
         {
-            // Accepts Tea leaf
-            if (player.HeldItemHasTag("Tea Leaf"))
+            bool accepted = TryAcceptingIngredient(player);
+
+            if (accepted && AllRequirementsMet())
             {
-                leafType = player.gameObject.GetComponentInChildren<Leaf>().GetLeafType();
-                player.PlaceItem(spawnPoint);
-
-                // To hide tea leaf as it doesnt need to be placed in the game scene
-                hasTeaLeaf = true;
-                for (int i = 0; i < spawnPoint.childCount; i++)
-                {
-                    if (spawnPoint.GetChild(i).CompareTag("Tea Leaf"))
-                    {
-                        Destroy(spawnPoint.GetChild(i).gameObject);
-                    }
-                }
-
-                Debug.Log("Recieved Tea Leaf");
-
-                // Start brewing immediately after correct placement
-                if (hasTeaLeaf && hasBoiledWater)
-                {
-                    isBrewing = true;
-                    timer = brewingTime;
-                    Debug.Log("Brewing Station: Boiled water and Tea Leaf placed. Brewing started!");
-                }
+                // All prerequisites satisfied -> start brewing
+                isBrewing = true;
+                timer = brewingTime;
+                Debug.Log("Brewing Station: All ingredients placed. Brewing started!");
             }
 
-            // Accepts Boiled Water
-            else if (player.HeldItemHasTag("Boiled Water"))
-            {
-                player.PlaceItem(spawnPoint);
-
-                StoreItemAsNextChild();
-
-                hasBoiledWater = true;
-                Debug.Log("Recieved Boiled Water");
-                
-                //Start brewing immediately after correct placement
-                if (hasTeaLeaf && hasBoiledWater)
-                {
-                    isBrewing = true;
-                    timer = brewingTime;
-                    Debug.Log("Brewing Station: Boiled water and Tea Leaf placed. Brewing started!");
-                }
-            }
-            else
-            {
-                Debug.Log("Brewing Station: This station only accepts Boiled Water and Tea Leaf.");
-            }
             return;
         }
 
         // Case 2: take finished tea
         if (isFinishedBrewing && !player.IsHoldingItem())
         {
-            if (storedItem != null) // storedItem is the finished tea now
+            if (storedItem != null)
             {
                 player.PickUp(storedItem);
                 storedItem = null;
                 isFinishedBrewing = false;
-                hasTeaLeaf = false;
-                hasBoiledWater = false;
+
+                ResetRequirements();   // ready for next recipe
                 Debug.Log("Brewing Station: Player took tea.");
             }
             return;
@@ -198,6 +232,70 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
                 RaiseProgressChanged();
             }
         }
+    }
+
+    private bool AllRequirementsMet()
+    {
+        foreach (var req in requirements)
+        {
+            if (req.currentAmount < req.requiredAmount)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void ResetRequirements()
+    {
+        foreach (var req in requirements)
+        {
+            req.currentAmount = 0;
+        }
+    }
+
+    private bool TryAcceptingIngredient(PlayerInteractor player)
+    {
+        if (!player.isHoldingItem)
+        {
+            return false;
+        }
+
+        GameObject held = player.carryItemPostion.GetChild(0).gameObject;
+
+        foreach (var req in requirements)
+        {
+            // skip requirements that are already full
+            if (req.currentAmount >= req.requiredAmount)
+                continue;
+
+            if (!held.CompareTag(req.requiredTag))
+                continue;
+
+            if (req.requiredTag == "Tea Leaf")
+            {
+                // Capture which tea leaf so we know which brewed tea to spawn
+                leafType = held.GetComponent<Leaf>().GetLeafType();
+
+                // Leaf is not needed visually
+                Destroy(held);
+
+                player.SetIsHoldingItem(false);
+            }
+            else
+            {
+                // Boiled water sits on the spawn point
+                player.PlaceItem(spawnPoint);
+                StoreItemAsNextChild();
+            }
+
+            req.currentAmount++;
+            return true;
+        }
+
+        Debug.Log("Brewing Station: This ingredient isn't needed for this recipe.");
+        return false;
     }
 
     private void StoreItemAsNextChild()

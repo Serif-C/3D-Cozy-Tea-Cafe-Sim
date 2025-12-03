@@ -12413,10 +12413,10 @@ MonoBehaviour:
   requirements:
   - requiredTag: Boiled Water
     requiredAmount: 1
-    currenAmount: 0
+    currentAmount: 0
   - requiredTag: Tea Leaf
     requiredAmount: 1
-    currenAmount: 0
+    currentAmount: 0
 --- !u!33 &220201851168505667
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -14640,6 +14640,12 @@ MonoBehaviour:
   choppingItemPrefab: {fileID: 919132149155446097, guid: 5809bf03b41c7bf4b9d8050d68f62511, type: 3}
   spawnPoint: {fileID: 1481666675}
   choppedLeavesPrefab: {fileID: 8927096555599509939, guid: 5a5b9559d68aff74bbdb8817c63c238d, type: 3}
+  requirements:
+  - acceptableTags:
+    - Tea Leaf
+    - Choppable
+    requiredAmount: 1
+    currentAmount: 0
 --- !u!65 &8577676506740558357
 BoxCollider:
   m_ObjectHideFlags: 0

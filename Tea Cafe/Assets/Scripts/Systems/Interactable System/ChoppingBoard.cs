@@ -1,6 +1,15 @@
 using System;
 using UnityEngine;
 
+[Serializable]
+public class ChoppingBoardRequirements
+{
+    public string[] acceptableTags;
+    public int requiredAmount = 1;
+
+    [HideInInspector] public int currentAmount;
+}
+
 public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
 {
     [Header("Chopping Board Settings")]
@@ -21,6 +30,9 @@ public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
     // This tea leaf is a prerequisite of brewing station
 
     public event Action<float, bool> OnProgressChanged;
+
+    [Header("Recipe Settings")]
+    [SerializeField] private ChoppingBoardRequirements[] requirements;
 
     public float Progress01
     {
@@ -83,17 +95,12 @@ public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
 
     public void Interact(PlayerInteractor player)
     {
-        // Accepts Tea leaf
         if (!isChopping && !hasFinishedChopping)
         {
-            if (player.HeldItemHasTag("Tea Leaf"))
+            bool accepted = TryAcceptingIngredient(player);
+
+            if (accepted && AllRequirementsMet())
             {
-                leafType = player.gameObject.GetComponentInChildren<Leaf>().GetLeafType();
-                player.PlaceItem(spawnPoint);
-
-                StoreItemAsNextChild();
-
-                Debug.Log("ChoppingBoard: Started Chopping Tea Leaves!");
                 isChopping = true;
                 timer = choppingTime;
             }
@@ -101,10 +108,14 @@ public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
 
         else if (hasFinishedChopping)
         {
-            Debug.Log("ChoppingBoard: Player takes chopped Tea Leaves");
-            //GameObject item = Instantiate(choppedLeavesPrefab, spawnPoint.position, Quaternion.identity);
-            player.PickUp(storedItem);
-            hasFinishedChopping = false;
+            if (storedItem != null)
+            {
+                player.PickUp(storedItem);
+                storedItem = null;
+                hasFinishedChopping = false;
+                ResetRequirements();
+                Debug.Log("ChoppingBoard: Player takes chopped Tea Leaves");
+            }
         }
     }
 
@@ -134,6 +145,69 @@ public class ChoppingBoard : MonoBehaviour, IInteractable, IHasProgress
                 RaiseProgressChanged();
             }
         }
+    }
+
+    private bool AllRequirementsMet()
+    {
+        foreach (var req in requirements)
+        {
+            if (req.currentAmount < req.requiredAmount)
+                return false;
+        }
+
+        return true;
+    }
+
+    private void ResetRequirements()
+    {
+        foreach (var req in requirements)
+        {
+            req.currentAmount = 0;
+        }
+    }
+
+    private bool TryAcceptingIngredient(PlayerInteractor player)
+    {
+        if (!player.isHoldingItem)
+        {
+            return false;
+        }
+
+        GameObject held = player.carryItemPostion.GetChild(0).gameObject;
+        string requiredTag = held.tag;
+
+        foreach (var req in requirements)
+        {
+            // skip requirements that are already full
+            if (req.currentAmount >= req.requiredAmount) continue;
+            for (int i = 0; i < req.acceptableTags.Length; i++)
+            {
+                if (!held.CompareTag(req.acceptableTags[i]))
+                    continue;
+            }
+
+            for (int i = 0;i < req.acceptableTags.Length; i++)
+            {
+                // Capture which tea leaf so we know which brewed tea to spawn
+                if (requiredTag == req.acceptableTags[i])
+                {
+                    leafType = held.GetComponent<Leaf>().GetLeafType();
+                    player.PlaceItem(spawnPoint);
+                    StoreItemAsNextChild();
+                }
+                else
+                {
+                    player.PlaceItem(spawnPoint);
+                    StoreItemAsNextChild();
+                }
+            }
+
+            req.currentAmount++;
+            return true;
+        }
+
+        Debug.Log("Chopping Board: This ingredient cannot be chopped.");
+        return false;
     }
 
     private void StoreItemAsNextChild()

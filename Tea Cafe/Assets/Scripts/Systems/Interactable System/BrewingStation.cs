@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 
 [Serializable]
-public class IngredientRequirement
+public class BrewingStationRequirements
 {
     public string requiredTag;
     public int requiredAmount = 1;
@@ -19,8 +19,6 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
     private bool isBrewing = false;
     private bool isFinishedBrewing = false;
     private GameObject storedItem; // what's on the station right now
-    private bool hasTeaLeaf = false;
-    private bool hasBoiledWater = false;
 
     [Header("Visuals")]
     [SerializeField] private GameObject[] brewedTeaPrefab;
@@ -31,7 +29,7 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
     public event Action<float, bool> OnProgressChanged;
 
     [Header("Recipe Settings")]
-    [SerializeField] private IngredientRequirement[] requirements;
+    [SerializeField] private BrewingStationRequirements[] requirements;
     private DrinkType leafType;
 
     public float Progress01
@@ -93,78 +91,6 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
         if (isBrewing) return false; 
         return true;
     }
-
-    //public void Interact(PlayerInteractor player)
-    //{
-    //    if (!isBrewing && !isFinishedBrewing && player.IsHoldingItem())
-    //    {
-    //        // Accepts Tea leaf
-    //        if (player.HeldItemHasTag("Tea Leaf"))
-    //        {
-    //            leafType = player.gameObject.GetComponentInChildren<Leaf>().GetLeafType();
-    //            player.PlaceItem(spawnPoint);
-
-    //            // To hide tea leaf as it doesnt need to be placed in the game scene
-    //            hasTeaLeaf = true;
-    //            for (int i = 0; i < spawnPoint.childCount; i++)
-    //            {
-    //                if (spawnPoint.GetChild(i).CompareTag("Tea Leaf"))
-    //                {
-    //                    Destroy(spawnPoint.GetChild(i).gameObject);
-    //                }
-    //            }
-
-    //            Debug.Log("Recieved Tea Leaf");
-
-    //            // Start brewing immediately after correct placement
-    //            if (hasTeaLeaf && hasBoiledWater)
-    //            {
-    //                isBrewing = true;
-    //                timer = brewingTime;
-    //                Debug.Log("Brewing Station: Boiled water and Tea Leaf placed. Brewing started!");
-    //            }
-    //        }
-
-    //        // Accepts Boiled Water
-    //        else if (player.HeldItemHasTag("Boiled Water"))
-    //        {
-    //            player.PlaceItem(spawnPoint);
-
-    //            StoreItemAsNextChild();
-
-    //            hasBoiledWater = true;
-    //            Debug.Log("Recieved Boiled Water");
-                
-    //            //Start brewing immediately after correct placement
-    //            if (hasTeaLeaf && hasBoiledWater)
-    //            {
-    //                isBrewing = true;
-    //                timer = brewingTime;
-    //                Debug.Log("Brewing Station: Boiled water and Tea Leaf placed. Brewing started!");
-    //            }
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("Brewing Station: This station only accepts Boiled Water and Tea Leaf.");
-    //        }
-    //        return;
-    //    }
-
-    //    // Case 2: take finished tea
-    //    if (isFinishedBrewing && !player.IsHoldingItem())
-    //    {
-    //        if (storedItem != null) // storedItem is the finished tea now
-    //        {
-    //            player.PickUp(storedItem);
-    //            storedItem = null;
-    //            isFinishedBrewing = false;
-    //            hasTeaLeaf = false;
-    //            hasBoiledWater = false;
-    //            Debug.Log("Brewing Station: Player took tea.");
-    //        }
-    //        return;
-    //    }
-    //}
 
     public void Interact(PlayerInteractor player)
     {
@@ -267,11 +193,8 @@ public class BrewingStation : MonoBehaviour, IInteractable, IHasProgress
         foreach (var req in requirements)
         {
             // skip requirements that are already full
-            if (req.currentAmount >= req.requiredAmount)
-                continue;
-
-            if (!held.CompareTag(req.requiredTag))
-                continue;
+            if (req.currentAmount >= req.requiredAmount) continue;
+            if (!held.CompareTag(req.requiredTag)) continue;
 
             if (req.requiredTag == "Tea Leaf")
             {

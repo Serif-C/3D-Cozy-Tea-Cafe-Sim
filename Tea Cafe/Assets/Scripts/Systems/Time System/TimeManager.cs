@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour
@@ -13,7 +14,8 @@ public class TimeManager : MonoBehaviour
     [Header("Start Date")]
     [SerializeField] private int startDay = 1;
     [SerializeField] private int startMonth = 1;
-    [SerializeField] private int startyear = 1;
+    [SerializeField] private int startYear = 1;
+    private int totalDaySinceStart = 0;
 
     // Public API
     public int Hour { get; private set; }
@@ -24,4 +26,85 @@ public class TimeManager : MonoBehaviour
 
     /// <summary>0..1 value representing how far we are in the current day.</summary>
     public float DayProgress01 { get; private set; }
+    public Action<int, int> OnHourChanged;
+    public Action OnDayChanged;
+
+    [SerializeField] private float timeInCurrentDaySeconds;
+
+    private void Awake()
+    {
+        Day = startDay;
+        Month = startMonth;
+        Year = startYear;
+
+        float totalMinutes = startHour * 60f + startMinute;     // Basically minutes passed since 00:00 (midnight)
+        DayProgress01 = totalMinutes / (24f * 60);
+        timeInCurrentDaySeconds = DayProgress01 * realSecondsPerGameDay;
+
+        UpdateClockFields();
+    }
+
+    private void Update()
+    {
+        timeInCurrentDaySeconds += Time.deltaTime;
+
+        if (timeInCurrentDaySeconds >= realSecondsPerGameDay)
+        {
+            timeInCurrentDaySeconds -= realSecondsPerGameDay; // basically = 0
+            IncrementDate();
+            OnDayChanged?.Invoke();
+        }
+
+        DayProgress01 = timeInCurrentDaySeconds / realSecondsPerGameDay;
+
+        // Calculate current time from day progress
+        float totalMinutes = DayProgress01 * 24f * 60f;
+        int newHour = Mathf.FloorToInt(totalMinutes / 60f);
+        int newMinute = Mathf.FloorToInt(totalMinutes % 60f);
+
+        // only fire event when hour changes (to avoid spam)
+        if (newHour != Hour)
+        {
+            Hour = newHour;
+            Minute = newMinute;
+            OnHourChanged?.Invoke(Hour, Minute);
+        }
+        else
+        {
+            Minute = newMinute;
+        }
+    }
+
+    private void UpdateClockFields()
+    {
+        float totalMinutes = DayProgress01 * 24f * 60f;
+        Hour = Mathf.FloorToInt(totalMinutes / 60f);
+        Minute = Mathf.FloorToInt(totalMinutes % 60f);
+    }
+
+    private void IncrementDate()
+    {
+        Day++;
+        int daysInMonth = GetDaysInMonth(Month);
+
+        if (Day > daysInMonth)
+        {
+            Day = 1;
+            Month++;
+
+            if (Month > 12) { Month = 1; Year++; }
+        }
+    }
+
+    public int GetDayOfWeekIndex(int startDayOfWeek = 0)
+    {
+        return (startDayOfWeek + totalDaySinceStart) % 7;
+    }
+
+    private int GetDaysInMonth(int month)
+    {
+        if (month == 2) return 28;
+        if (month == 4 || month == 6 || month == 9 || month == 11) return 30;
+        return 31;
+    }
 }

@@ -2,11 +2,35 @@ using UnityEngine;
 
 public class DayCycle : MonoBehaviour
 {
-    // 24-hour day-night cycle squeezed into 60 minutes
-    // This script controls the position of the "Sun" and the "Moon"
-    // Basically there is a Sun and Moon placed in the opposite side within a radius
-    // The Sun rises (becomes active) from the east at Time 06:00
-    // The Sun is directly in the middle of the sky at Time 12:00
-    // The Sun sets (becomes inactive) frpm the west at Time 18:00
-    // The Moon follows in the same fashion
+    [SerializeField] private TimeManager timeManager;
+
+    [Header("Lights")]
+    [SerializeField] private Light sunLight;
+
+    [Header("Angles")]
+    [Tooltip("Angle when the day starts (in degrees). E.g. -90 = horizon at sunrise")]
+    [SerializeField] private float sunriseAngle = -90f;
+    [Tooltip("Angle when the day ends. E.g. 270 = full circle over a day.")]
+    [SerializeField] private float sunsetAngle = 270f;
+    [SerializeField] private float yRotation;
+    [SerializeField] private float zRotation;
+
+    private void Reset()
+    {
+        timeManager = FindFirstObjectByType<TimeManager>();
+    }
+
+    private void Update()
+    {
+        if (timeManager == null || sunLight == null) return;
+
+        float t = timeManager.DayProgress01;
+        float sunAngle = Mathf.Lerp(sunriseAngle, sunsetAngle, t);
+
+        sunLight.transform.rotation = Quaternion.Euler(sunAngle, yRotation, zRotation);
+
+        // turn sun intensity up/down based on angle
+        float sunDot = Mathf.Clamp01(Vector3.Dot(sunLight.transform.forward, Vector3.down));
+        sunLight.intensity = Mathf.Lerp(0.1f, 1.2f, sunDot);
+    }
 }

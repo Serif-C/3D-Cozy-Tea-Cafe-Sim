@@ -25,6 +25,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [SerializeField] private TransformTarget entry;
     [SerializeField] private TransformTarget counter;
     [SerializeField] private TransformTarget exit;
+    [SerializeField] private float exitRadius = 1.5f;
     [SerializeField] private QueueManager queue;
     private SeatingManager seating;
     private TransformTarget mySeat;
@@ -283,20 +284,40 @@ public class CustomerBrain : MonoBehaviour, IResettable
             mySeat = null;
         }
 
-        yield return Go(exit);
+        Vector3 baseExitPos = exit.Position;
+        Vector2 offSet2D = UnityEngine.Random.insideUnitCircle * exitRadius;
+        Vector3 randomExitPos = new Vector3(
+            baseExitPos.x + offSet2D.x,
+            baseExitPos.y,
+            baseExitPos.z + offSet2D.y
+        );
+
+        ITarget randomExitTarget = new PointTarget(randomExitPos);
+
+        yield return Go(randomExitTarget);
 
         DeSpawn();
     }
 
+    private class PointTarget : ITarget
+    {
+        public Vector3 Position { get; }
 
-    /* Create a flag done = false;
-     * Define a tiny helper function Handler() that sets done = true
-     * Tell movement to start going somewhere
-     * Subscribe to the movement’s event — “when you arrive, call Handler()”
-     * Wait (do nothing) until done flips to true
-     * Once we’re done waiting, unsubscribe from the event (cleanup)
-     */
-    IEnumerator Go(ITarget t)
+        public PointTarget(Vector3 position)
+        {
+            Position = position;
+        }
+    }
+
+
+        /* Create a flag done = false;
+         * Define a tiny helper function Handler() that sets done = true
+         * Tell movement to start going somewhere
+         * Subscribe to the movement’s event — “when you arrive, call Handler()”
+         * Wait (do nothing) until done flips to true
+         * Once we’re done waiting, unsubscribe from the event (cleanup)
+         */
+        IEnumerator Go(ITarget t)
     {
         bool done = false;
         void Handler()

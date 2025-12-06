@@ -29,7 +29,12 @@ public class TimeManager : MonoBehaviour
     public Action<int, int> OnHourChanged;
     public Action OnDayChanged;
 
+    [Header("Current Time")]
     [SerializeField] private float timeInCurrentDaySeconds;
+    [SerializeField] private int currentHour = 0;
+    [SerializeField] private int currentMinute = 0;
+    [SerializeField] private int currentDay = 1;
+    [SerializeField] private int currentMonth = 1;
 
     private void Awake()
     {
@@ -66,12 +71,14 @@ public class TimeManager : MonoBehaviour
         if (newHour != Hour)
         {
             Hour = newHour;
+            currentHour = Hour;
             Minute = newMinute;
             OnHourChanged?.Invoke(Hour, Minute);
         }
         else
         {
             Minute = newMinute;
+            currentMinute = Minute;
         }
     }
 
@@ -85,12 +92,15 @@ public class TimeManager : MonoBehaviour
     private void IncrementDate()
     {
         Day++;
+        totalDaySinceStart++;
+        currentDay = Day;
         int daysInMonth = GetDaysInMonth(Month);
 
         if (Day > daysInMonth)
         {
             Day = 1;
             Month++;
+            currentMonth = Month;
 
             if (Month > 12) { Month = 1; Year++; }
         }

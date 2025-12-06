@@ -4,13 +4,30 @@ using UnityEngine.Pool;
 
 public class CustomerSpawner : MonoBehaviour
 {
+    [Header("References")]
+    private TimeManager timeManager;
     [SerializeField] private GameObject[] customerPrefabs;
+    
+    [Header("Spawner Settings")]
     [SerializeField] private Vector3 spawnRadius = new Vector3(5, 0, 5);
+
+    [Header("Normal Spawn Times")]
     [SerializeField] private int minSpawnTime = 7;
     [SerializeField] private int maxSpawnTime = 15;
 
+    [Header("Rush Hour Spawn Times")]
+    [SerializeField] private int rushMinSpawnTime = 2;
+    [SerializeField] private int rushMaxSpawnTime = 5;
+    [SerializeField] private int rushStartTime = 12;
+    [SerializeField] private int rushEndTime = 15;
+
     private IObjectPool<GameObject> pool;
     private Coroutine spawnLoop;
+
+    private void Awake()
+    {
+        timeManager = FindFirstObjectByType<TimeManager>();
+    }
 
     private void Start()
     {
@@ -32,7 +49,7 @@ public class CustomerSpawner : MonoBehaviour
             maxSize: CustomerManager.Instance.GetMaxNumCustomer()
         );
 
-        spawnLoop = StartCoroutine(SpawnLoop(minSpawnTime, maxSpawnTime)); // start AFTER pool exists
+        spawnLoop = StartCoroutine(SpawnLoop());
     }
 
     private void OnDisable()
@@ -81,7 +98,7 @@ public class CustomerSpawner : MonoBehaviour
 
     private void OnDestroyItem(GameObject obj) => Destroy(obj);
 
-    private IEnumerator SpawnLoop(int minSeconds, int maxSeconds)
+    private IEnumerator SpawnLoop()
     {
         while (true)
         {
@@ -99,7 +116,19 @@ public class CustomerSpawner : MonoBehaviour
 
             }
 
-            yield return new WaitForSeconds(Random.Range(minSeconds, maxSeconds));
+            //  Dynamic spawn delay based on rush hour
+            int currentHour;
+            if (timeManager != null) currentHour = timeManager.Hour;
+            else currentHour = 0;
+
+            bool isRushHour = currentHour >= rushStartTime && currentHour <= rushEndTime;
+
+            int minDelay = isRushHour ? rushMinSpawnTime : rushMaxSpawnTime;
+            int maxDelay = isRushHour ? rushMaxSpawnTime : rushMinSpawnTime;
+
+            float waitSeconds = Random.Range(minDelay, maxDelay);
+
+            yield return new WaitForSeconds(waitSeconds);
         }
     }
 

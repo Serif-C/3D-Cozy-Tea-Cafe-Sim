@@ -8393,6 +8393,10 @@ MonoBehaviour:
   startMonth: 1
   startYear: 1
   timeInCurrentDaySeconds: 0
+  currentHour: 0
+  currentMinute: 0
+  currentDay: 1
+  currentMonth: 1
 --- !u!4 &1347946731
 Transform:
   m_ObjectHideFlags: 0
@@ -10571,6 +10575,10 @@ MonoBehaviour:
   spawnRadius: {x: 5, y: 0, z: 5}
   minSpawnTime: 3
   maxSpawnTime: 3
+  rushMinSpawnTime: 2
+  rushMaxSpawnTime: 5
+  rushStartTime: 8
+  rushEndTime: 9
 --- !u!1 &1764737101
 GameObject:
   m_ObjectHideFlags: 0

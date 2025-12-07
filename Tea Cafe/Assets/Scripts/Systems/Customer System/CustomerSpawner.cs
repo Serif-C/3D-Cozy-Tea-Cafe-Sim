@@ -10,16 +10,10 @@ public class CustomerSpawner : MonoBehaviour
     
     [Header("Spawner Settings")]
     [SerializeField] private Vector3 spawnRadius = new Vector3(5, 0, 5);
-
-    [Header("Normal Spawn Times")]
-    [SerializeField] private int minSpawnTime = 7;
-    [SerializeField] private int maxSpawnTime = 15;
-
-    [Header("Rush Hour Spawn Times")]
-    [SerializeField] private int rushMinSpawnTime = 2;
-    [SerializeField] private int rushMaxSpawnTime = 5;
-    [SerializeField] private int rushStartTime = 12;
-    [SerializeField] private int rushEndTime = 15;
+    [Tooltip("X = hour of day (0–24), Y = seconds between spawns (lower = more customers during rush)")]
+    [SerializeField] private AnimationCurve spawnDelayByHour;
+    [Tooltip("Safety clamp so curve can't produce 0 or negative delays")]
+    [SerializeField] private float minAllowedDelay = 0.5f;
 
     private IObjectPool<GameObject> pool;
     private Coroutine spawnLoop;
@@ -112,23 +106,24 @@ public class CustomerSpawner : MonoBehaviour
             // only spawn if we have room
             if (active < max)
             {
-                var customer = pool.Get();
-
+                pool.Get();
             }
 
             //  Dynamic spawn delay based on rush hour
-            int currentHour;
-            if (timeManager != null) currentHour = timeManager.Hour;
-            else currentHour = 0;
+            float hourOfDay = 0f;
+            if (timeManager != null)
+            {
+                // Hour is an int 0–23, Minute is 0–59
+                hourOfDay = timeManager.Hour + timeManager.Minute / 60f;
+            }
 
-            bool isRushHour = currentHour >= rushStartTime && currentHour <= rushEndTime;
+            float delay = spawnDelayByHour != null ? spawnDelayByHour.Evaluate(hourOfDay) : 5f;
 
-            int minDelay = isRushHour ? rushMinSpawnTime : rushMaxSpawnTime;
-            int maxDelay = isRushHour ? rushMaxSpawnTime : rushMinSpawnTime;
+            // Clamp to avoid 0 or negative delays
+            if (delay < minAllowedDelay)
+                delay = minAllowedDelay;
 
-            float waitSeconds = Random.Range(minDelay, maxDelay);
-
-            yield return new WaitForSeconds(waitSeconds);
+            yield return new WaitForSeconds(delay);
         }
     }
 

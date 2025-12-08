@@ -18,8 +18,9 @@ public class CustomerManager : MonoBehaviour
     [Tooltip("How many extra customers to allow each step")]
     [SerializeField] private int customersPerStep = 5;
 
-    private int daysPassed = 0;
-    private int currCustomerCount;
+    [Header("Attributes for Tracking")]
+    [SerializeField] private int daysPassed = 0;
+    [SerializeField] private int currCustomerCount;
 
     private TimeManager timeManager;
 
@@ -34,6 +35,29 @@ public class CustomerManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        timeManager = FindFirstObjectByType<TimeManager>();
+        if (timeManager != null)
+        {
+            timeManager.OnDayChanged += HandleDayChanged;
+        }
+        else
+        {
+            Debug.LogWarning("CustomerManager: No TimeManager found, progression will not run.");
+        }
+    }
+
+    private void HandleDayChanged()
+    {
+        daysPassed++;
+
+        if (daysPassed % daysPerIncrease == 0)
+        {
+            IncreaseMaxCustomer();
+        }
+    }
+
     public int GetMaxNumCustomer()
     {
         return maxNumCustomer;
@@ -41,16 +65,15 @@ public class CustomerManager : MonoBehaviour
 
     public void IncreaseMaxCustomer()
     {
-        // Level-based logic goes here
+        int newMax = maxNumCustomer + customersPerStep;
+        maxNumCustomer = Mathf.Min(newMax, customerHardCap);
+
+        Debug.Log($"CustomerManager: Max customers increased to {maxNumCustomer}");
     }
 
-    public int GetDefaultMax()
-    {
-        return defaultMax;
-    }
-
-    public int GetCurrentCustomer()
-    {
-        return currCustomerCount;
-    }
+    public int GetDefaultMax() { return defaultMax; }
+    public int GetHardCapMax() { return customerHardCap;}
+    public void IncrementCurrentCustomer() { currCustomerCount++; }
+    public void DecrementCurrentCustomer() { currCustomerCount--; }
+    public int GetCurrentCustomer() { return currCustomerCount; }
 }

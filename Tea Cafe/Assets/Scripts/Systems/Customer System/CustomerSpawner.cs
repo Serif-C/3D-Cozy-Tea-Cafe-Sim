@@ -33,14 +33,17 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
+        int defaultCapacity = CustomerManager.Instance.GetDefaultMax();
+        int hardCap = CustomerManager.Instance.GetHardCapMax();
+
         pool = new ObjectPool<GameObject>(
             createFunc: CreateCustomer,
             actionOnGet: OnGet,
             actionOnRelease: OnRelease,
             actionOnDestroy: OnDestroyItem,
             collectionCheck: true,
-            defaultCapacity: CustomerManager.Instance.GetDefaultMax(),
-            maxSize: CustomerManager.Instance.GetMaxNumCustomer()
+            defaultCapacity: defaultCapacity,
+            maxSize: hardCap
         );
 
         spawnLoop = StartCoroutine(SpawnLoop());
@@ -59,6 +62,7 @@ public class CustomerSpawner : MonoBehaviour
 
         // Instantiate a new instance for the pool
         var go = Instantiate(prefab, parent: null);
+
         go.SetActive(false);
         return go;
     }
@@ -66,6 +70,9 @@ public class CustomerSpawner : MonoBehaviour
     private void OnGet(GameObject obj)
     {
         obj.SetActive(true);
+
+        CustomerManager.Instance.IncrementCurrentCustomer();
+
         // random spawn position
         var pos = transform.position + new Vector3(
             Random.Range(-spawnRadius.x, spawnRadius.x),
@@ -83,6 +90,8 @@ public class CustomerSpawner : MonoBehaviour
     private void OnRelease(GameObject obj)
     {
         obj.SetActive(false);
+
+        CustomerManager.Instance.DecrementCurrentCustomer();
 
         // Clear callback (optional hygiene)
         var brain = obj.GetComponent<CustomerBrain>();

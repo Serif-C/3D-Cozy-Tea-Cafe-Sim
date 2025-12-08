@@ -4493,12 +4493,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   minAllowedDelay: 0.5
-  minSpawnTime: 3
-  maxSpawnTime: 3
-  rushMinSpawnTime: 2
-  rushMaxSpawnTime: 5
-  rushStartTime: 8
-  rushEndTime: 9
 --- !u!4 &720194315
 Transform:
   m_ObjectHideFlags: 0
@@ -10186,6 +10180,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxNumCustomer: 10
+  defaultMax: 10
+  customerHardCap: 100
+  daysPerIncrease: 3
+  customersPerStep: 5
+  daysPassed: 0
+  currCustomerCount: 0
 --- !u!4 &1603642020
 Transform:
   m_ObjectHideFlags: 0
@@ -10856,12 +10856,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   minAllowedDelay: 0.5
-  minSpawnTime: 3
-  maxSpawnTime: 3
-  rushMinSpawnTime: 2
-  rushMaxSpawnTime: 5
-  rushStartTime: 8
-  rushEndTime: 9
 --- !u!1 &1764737101
 GameObject:
   m_ObjectHideFlags: 0
@@ -11184,12 +11178,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   minAllowedDelay: 0.5
-  minSpawnTime: 3
-  maxSpawnTime: 3
-  rushMinSpawnTime: 2
-  rushMaxSpawnTime: 5
-  rushStartTime: 8
-  rushEndTime: 9
 --- !u!4 &1773491718
 Transform:
   m_ObjectHideFlags: 0

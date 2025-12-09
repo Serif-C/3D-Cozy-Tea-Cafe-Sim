@@ -1,6 +1,13 @@
 using System;
 using UnityEngine;
 
+public enum MealTime
+{
+    BreakfastTime,
+    LunchTime,
+    DinnerTime
+}
+
 public class TimeManager : MonoBehaviour
 {
     [Header("Time Scale")]
@@ -35,6 +42,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private int currentMinute = 0;
     [SerializeField] private int currentDay = 1;
     [SerializeField] private int currentMonth = 1;
+    [SerializeField] private MealTime mealTime = MealTime.BreakfastTime;
 
     private void Awake()
     {
@@ -47,6 +55,10 @@ public class TimeManager : MonoBehaviour
         timeInCurrentDaySeconds = DayProgress01 * realSecondsPerGameDay;
 
         UpdateClockFields();
+
+        currentHour = startHour;
+        currentMinute = startMinute;
+        mealTime = TrackMealTime();
     }
 
     private void Update()
@@ -74,6 +86,7 @@ public class TimeManager : MonoBehaviour
             currentHour = Hour;
             Minute = newMinute;
             OnHourChanged?.Invoke(Hour, Minute);
+            mealTime = TrackMealTime();
         }
         else
         {
@@ -116,5 +129,17 @@ public class TimeManager : MonoBehaviour
         if (month == 2) return 28;
         if (month == 4 || month == 6 || month == 9 || month == 11) return 30;
         return 31;
+    }
+
+    private MealTime TrackMealTime()
+    {
+        if (currentHour >= 8 && currentHour <= 12) return MealTime.BreakfastTime;
+        else if (currentHour > 12 && currentHour <= 19) return MealTime.LunchTime;
+        else return MealTime.DinnerTime;
+    }
+
+    public MealTime GetMealTime()
+    {
+        return mealTime;
     }
 }

@@ -8549,7 +8549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   realSecondsPerGameDay: 300
-  startHour: 6
+  startHour: 8
   startMinute: 0
   startDay: 1
   startMonth: 1
@@ -8559,6 +8559,7 @@ MonoBehaviour:
   currentMinute: 0
   currentDay: 1
   currentMonth: 1
+  mealTime: 0
 --- !u!4 &1347946731
 Transform:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using static UnityEngine.CullingGroup;
 using System.Collections;
 using System.Net.Sockets;
 using NUnit.Framework;
+using Unity.VisualScripting;
 
 public enum CustomerState
 {
@@ -17,6 +18,8 @@ public enum CustomerState
 
 public class CustomerBrain : MonoBehaviour, IResettable
 {
+    private TimeManager timeManager;
+
     [Header("Customer Action Providers")]
     [SerializeField] private MonoBehaviour moverProvider;
     private IMover mover;
@@ -40,8 +43,11 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
     [Header("Customer Order Settings")]
     [SerializeField] private DrinkType desiredDrink = DrinkType.BlackTea;
-    //private DrinkType PickDrinkForThisCustomer() => DrinkType.BlackTea;
-    [SerializeField] private int sizeOfMenu;    // The number of drinks in DrinkType enum
+    [SerializeField] private MainDish desiredDish;
+    // DesiredMainDish = Either Breakfast, Lunch, Dinner item
+    // DesiredDessert = Dessert item
+
+    //[SerializeField] private int sizeOfMenu;    // The number of drinks in DrinkType enum
     private CustomerMood myMood;
     [SerializeField] private float moodDecayAmount = 2f;    // The amount of mood deducted
     [SerializeField] private float moodDecayRate = 0.25f;   // The frequency the is deducted
@@ -63,7 +69,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private float minTip = 0f;
     [SerializeField] private float maxTip = 20f;
-    // Animation curve tipping: Most tip low, but rarely, very happy customers tip really high
+    [Tooltip("Animation curve tipping: Most tip low, but rarely, very happy customers tip really high:")]
     [SerializeField] private AnimationCurve tipByMood = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
     private void Awake()
@@ -76,7 +82,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
         exit = GameObject.FindGameObjectWithTag("Exit").gameObject.GetComponent<TransformTarget>();
 
         if (queue == null)
-            queue = FindFirstObjectByType<QueueManager>(); // single shared instance
+            queue = FindFirstObjectByType<QueueManager>();
 
         // Resolve seating if not set
         if (seating == null)
@@ -88,10 +94,10 @@ public class CustomerBrain : MonoBehaviour, IResettable
         if (seating == null)
             Debug.LogError("CustomerBrain: SeatingManager not found in scene.");
 
-        foreach (DrinkType drink in Enum.GetValues(typeof(DrinkType)))
-        {
-            sizeOfMenu++;
-        }
+        //foreach (DrinkType drink in Enum.GetValues(typeof(DrinkType)))
+        //{
+        //    sizeOfMenu++;
+        //}
 
         myMood = gameObject.GetComponent<CustomerMood>();
 
@@ -99,6 +105,32 @@ public class CustomerBrain : MonoBehaviour, IResettable
             orderBubble = gameObject.GetComponentInChildren<OrderBubble>();
 
         orderBubble.gameObject.SetActive(false);
+    }
+
+    // Desired dish should not live in start method (CHANGE THIS IMMEDIETLY!!!)
+    private void Start()
+    {
+        timeManager = FindFirstObjectByType(typeof(TimeManager)).GetComponent<TimeManager>();
+        desiredDish = new MainDish();
+
+        // Find out whether its breakfast, lunch, dinner
+        // Then set desiredDish
+        if (timeManager.GetMealTime() == MealTime.BreakfastTime)
+        {
+            desiredDish.breakfast = desiredDish.OrderRandomBreakfastItem();
+            Debug.Log("Desired Dish: " + desiredDish.breakfast);
+        }
+        else if (timeManager.GetMealTime() == MealTime.LunchTime)
+        {
+            desiredDish.lunch = desiredDish.OrderRandomLunchItem();
+            Debug.Log("Desired Dish: " + desiredDish.lunch);
+        }
+        else
+        {
+            desiredDish.dinner = desiredDish.OrderRandomDinnerItem();
+            Debug.Log("Desired Dish: " + desiredDish.dinner);
+        }
+
     }
 
     private void OnEnable()
@@ -168,7 +200,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
         // ... order logic ...
         // Ordering time for now to simulate ordering
-        desiredDrink = OrderForARandomDrink();
+        desiredDrink = OrderForARandomMenuItem();
         yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
 
         orderBubble.gameObject.SetActive(true);
@@ -253,8 +285,6 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
 
         // Keep world position/rotation as-is when parenting (important!)
-        // If your Table has non-uniform scale, consider leaving customers unparented,
-        // or ensure the Table and its ancestors use uniform scale (1,1,1).
         transform.SetParent(table.transform, worldPositionStays: true);
     }
 
@@ -357,7 +387,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
     }
 
 
-    private DrinkType OrderForARandomDrink()
+    private DrinkType OrderForARandomMenuItem()
     {
         DrinkType randomDrinkType = (DrinkType) UnityEngine.Random.Range(0, Enum.GetValues(typeof(DrinkType)).Length);
         return randomDrinkType;

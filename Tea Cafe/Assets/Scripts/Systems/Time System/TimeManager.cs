@@ -133,7 +133,7 @@ public class TimeManager : MonoBehaviour
 
     private MealTime TrackMealTime()
     {
-        if (currentHour >= 8 && currentHour <= 12) return MealTime.BreakfastTime;
+        if (currentHour >= 4 && currentHour <= 12) return MealTime.BreakfastTime;
         else if (currentHour > 12 && currentHour <= 19) return MealTime.LunchTime;
         else return MealTime.DinnerTime;
     }

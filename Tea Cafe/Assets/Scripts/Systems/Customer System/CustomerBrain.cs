@@ -44,13 +44,15 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [Header("Customer Order Settings")]
     [SerializeField] private DrinkType desiredDrink = DrinkType.BlackTea;
     [SerializeField] private MainDish desiredDish;
-    // DesiredMainDish = Either Breakfast, Lunch, Dinner item
-    // DesiredDessert = Dessert item
-
     //[SerializeField] private int sizeOfMenu;    // The number of drinks in DrinkType enum
     private CustomerMood myMood;
     [SerializeField] private float moodDecayAmount = 2f;    // The amount of mood deducted
     [SerializeField] private float moodDecayRate = 0.25f;   // The frequency the is deducted
+
+    [Header("Order Progression")]
+    [SerializeField] private int breakfastUnlockDay = 5;
+    [SerializeField] private int lunchUnlockDay = 7;
+    [SerializeField] private int dinnerUnlockDay = 9;
 
     // For parenting/unparenting the customer
     private Transform originalParent;
@@ -105,32 +107,9 @@ public class CustomerBrain : MonoBehaviour, IResettable
             orderBubble = gameObject.GetComponentInChildren<OrderBubble>();
 
         orderBubble.gameObject.SetActive(false);
-    }
 
-    // Desired dish should not live in start method (CHANGE THIS IMMEDIETLY!!!)
-    private void Start()
-    {
-        timeManager = FindFirstObjectByType(typeof(TimeManager)).GetComponent<TimeManager>();
-        desiredDish = new MainDish();
-
-        // Find out whether its breakfast, lunch, dinner
-        // Then set desiredDish
-        if (timeManager.GetMealTime() == MealTime.BreakfastTime)
-        {
-            desiredDish.breakfast = desiredDish.OrderRandomBreakfastItem();
-            Debug.Log("Desired Dish: " + desiredDish.breakfast);
-        }
-        else if (timeManager.GetMealTime() == MealTime.LunchTime)
-        {
-            desiredDish.lunch = desiredDish.OrderRandomLunchItem();
-            Debug.Log("Desired Dish: " + desiredDish.lunch);
-        }
-        else
-        {
-            desiredDish.dinner = desiredDish.OrderRandomDinnerItem();
-            Debug.Log("Desired Dish: " + desiredDish.dinner);
-        }
-
+        if (timeManager == null)
+            timeManager = FindFirstObjectByType<TimeManager>();
     }
 
     private void OnEnable()
@@ -200,7 +179,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
         // ... order logic ...
         // Ordering time for now to simulate ordering
-        desiredDrink = OrderForARandomMenuItem();
+        //desiredDrink = OrderForARandomTea();
         yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
 
         orderBubble.gameObject.SetActive(true);
@@ -387,10 +366,64 @@ public class CustomerBrain : MonoBehaviour, IResettable
     }
 
 
-    private DrinkType OrderForARandomMenuItem()
+    private DrinkType OrderForARandomTea()
     {
         DrinkType randomDrinkType = (DrinkType) UnityEngine.Random.Range(0, Enum.GetValues(typeof(DrinkType)).Length);
         return randomDrinkType;
+    }
+
+    private void GenerateOrder()
+    {
+        if (timeManager == null)
+        {
+            // Fallback: try to grab it if something went wrong
+            timeManager = FindFirstObjectByType<TimeManager>();
+            if (timeManager == null)
+            {
+                Debug.LogWarning("CustomerBrain: TimeManager not found, defaulting to tea only.");
+                desiredDrink = OrderForARandomTea();
+                return;
+            }
+        }
+
+        // Always order a tea
+        desiredDrink = OrderForARandomTea();
+
+        // Prepare main dish container for this customer
+        desiredDish = new MainDish();
+        desiredDish.breakfast = default;
+        desiredDish.lunch = default;
+        desiredDish.dinner = default;
+
+        int currentDay = timeManager.Day;
+        MealTime currentMealTime = timeManager.GetMealTime();
+
+        switch (currentMealTime)
+        {
+            case MealTime.BreakfastTime:
+                if (currentDay >= breakfastUnlockDay)
+                {
+                    desiredDish.breakfast = desiredDish.OrderRandomBreakfastItem();
+                    Debug.Log($"[Order] Day {currentDay}, Breakfast unlocked. Dish = {desiredDish.breakfast}");
+                }
+                break;
+
+            case MealTime.LunchTime:
+                if (currentDay >= lunchUnlockDay)
+                {
+                    desiredDish.lunch = desiredDish.OrderRandomLunchItem();
+                    Debug.Log($"[Order] Day {currentDay}, Lunch unlocked. Dish = {desiredDish.lunch}");
+                }
+                break;
+
+            case MealTime.DinnerTime:
+                if (currentDay >= dinnerUnlockDay)
+                {
+                    desiredDish.dinner = desiredDish.OrderRandomDinnerItem();
+                    Debug.Log($"[Order] Day {currentDay}, Dinner unlocked. Dish = {desiredDish.dinner}");
+                }
+                break;
+        }
     }
 
     private int ComputeTipFromMood(float mood01to100)
@@ -412,6 +445,12 @@ public class CustomerBrain : MonoBehaviour, IResettable
         SetState(CustomerState.EnteringCafe);
         myMood.ResetMood();
 
+        // Generate a fresh order for this spawn
+        GenerateOrder();
+
+        // Make sure order bubble starts hidden
+        if (orderBubble != null)
+            orderBubble.gameObject.SetActive(false);
     }
     
     // For Testing Purposes

@@ -11,7 +11,11 @@ namespace TeaShop.Systems.Building
         [Tooltip("Optional area where building is allowed.")]
         [SerializeField] private Collider allowedArea;
 
-        public bool CanPlaceAt(PlaceableItemConfig item, Vector3 position, Quaternion rotation)
+        [Header("Grid")]
+        [SerializeField] private PlacementGrid grid;
+        [SerializeField] private PlacementRegistry registry;
+
+        public bool CanPlaceAt(PlaceableItemConfig item, Vector3 position, Quaternion rotation, PlaceableInstance ignore = null)
         {
             if (item == null) return false;
 

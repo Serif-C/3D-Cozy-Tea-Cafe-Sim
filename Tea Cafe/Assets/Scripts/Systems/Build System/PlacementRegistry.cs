@@ -16,8 +16,9 @@ namespace TeaShop.Systems.Building
         {
             if (inst == null) return;
             if (!instances.Contains(inst)) instances.Add(inst);
-            Action<PlaceableInstance> h = Placed;
-            if (h != null) h(inst);
+            //Action<PlaceableInstance> h = Placed;
+            //if (h != null) h(inst);
+            Placed?.Invoke(inst);
         }
 
         public void UnRegister(PlaceableInstance inst)
@@ -25,12 +26,44 @@ namespace TeaShop.Systems.Building
             if (inst == null) return;
             if (instances.Remove(inst))
             {
-                Action<PlaceableInstance> h = Removed;
-                if (h != null) h(inst);
+                //Action<PlaceableInstance> h = Removed;
+                //if (h != null) h(inst);
+                Removed?.Invoke(inst);
             }
         }
 
         public IReadOnlyList<PlaceableInstance> All() { return instances; }
+
+        public bool OverlapsFootprint(PlaceableItemConfig cfg, Vector3 worldPosition, Quaternion worldRotation, PlaceableInstance ignore = null, PlacementGrid grid = null)
+        {
+            if (cfg == null) return false;
+            if (grid == null) return false;
+
+            var cells = PlacementFootprint.GetOccupiedCells(cfg, worldPosition, worldRotation, grid);
+
+            for (int i = 0; i < instances.Count; i++)
+            {
+                var inst = instances[i];
+                if (inst == null || inst == ignore) continue;
+
+                var icfg = inst.GetConfig();
+                if (icfg == null) continue;
+
+                var otherCells = PlacementFootprint.GetOccupiedCells(icfg, inst.transform.position, inst.transform.rotation, grid);
+
+                // any overlap?
+                for (int a = 0; a < cells.Count; a++)
+                {
+                    for (int b = 0; b < otherCells.Count; b++)
+                    {
+                        if (cells[a] == otherCells[b])
+                            return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Convert currently registered instances to serializable records for saving.

@@ -317,6 +317,7 @@ namespace TeaShop.Systems.Building
             EnterEditMode();
         }
 
+        // Choose an item in the UI
         public void SelectItem(PlaceableItemConfig item)
         {
             selectedItem = item;

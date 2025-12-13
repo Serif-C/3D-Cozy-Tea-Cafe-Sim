@@ -7,6 +7,7 @@ how to gamify cozy tea cafe sim
 6. More visual upgrades such as adding water
 7. Expand order menu
 8. Animate objects, customers, players
+9. Customers should be social entities: They can be interacted with and they should also interact with their surroundings
 
 Gameplayloop-wise it should be something like:
 - You start with basic Tea orders with prep - serve looking like:

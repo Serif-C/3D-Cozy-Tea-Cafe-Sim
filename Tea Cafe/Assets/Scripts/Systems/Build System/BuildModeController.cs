@@ -424,18 +424,22 @@ namespace TeaShop.Systems.Building
             return Vector3.zero;
         }
 
-        private (PlaceableInstance inst, RaycastHit hit) RaycastPlaced()
+        private (PlaceableInstance inst, RaycastHit hit) RaycastSelectablePlaced()
         {
             if (buildCamera == null) return (null, default);
+
             Vector2 screenPos = pointAction != null
                 ? pointAction.action.ReadValue<Vector2>()
                 : (Pointer.current != null ? Pointer.current.position.ReadValue() : Vector2.zero);
 
-            if (Physics.Raycast(buildCamera.ScreenPointToRay(screenPos), out var hit, 500f))
+            var ray = buildCamera.ScreenPointToRay(screenPos);
+
+            if (Physics.Raycast(ray, out var hit, 500f, selectableMask, QueryTriggerInteraction.Ignore))
             {
                 var inst = hit.collider.GetComponentInParent<PlaceableInstance>();
                 return (inst, hit);
             }
+
             return (null, default);
         }
 
@@ -468,25 +472,6 @@ namespace TeaShop.Systems.Building
                     kvp.Key.gameObject.layer = kvp.Value;
             }
             cachedLayers.Clear();
-        }
-
-        private (PlaceableInstance inst, RaycastHit hit) RaycastSelectablePlaced()
-        {
-            if (buildCamera == null) return (null, default);
-
-            Vector2 screenPos = pointAction != null
-                ? pointAction.action.ReadValue<Vector2>()
-                : (Pointer.current != null ? Pointer.current.position.ReadValue() : Vector2.zero);
-
-            var ray = buildCamera.ScreenPointToRay(screenPos);
-
-            if (Physics.Raycast(ray, out var hit, 500f, selectableMask, QueryTriggerInteraction.Ignore))
-            {
-                var inst = hit.collider.GetComponentInParent<PlaceableInstance>();
-                return (inst, hit);
-            }
-
-            return (null, default);
         }
 
         private void SetLayerRecursively(GameObject root, int layer)

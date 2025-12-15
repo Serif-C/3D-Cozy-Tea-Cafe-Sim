@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7598458909315598077}
   - component: {fileID: 9206775396784165094}
   - component: {fileID: 1507591194527050279}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wooden_Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

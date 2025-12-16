@@ -24,10 +24,10 @@ TagManager:
   - Customer
   - Build
   - Placeable
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Floor
+  - Table
+  - Decoration
   - 
   - 
   - 

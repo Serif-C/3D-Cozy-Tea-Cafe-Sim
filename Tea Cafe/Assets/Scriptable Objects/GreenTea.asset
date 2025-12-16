@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a9570ac1e88f84a978461566b36a35, type: 3}
   m_Name: GreenTea
   m_EditorClassIdentifier: 
-  id: 
-  category: 0
-  prefab: {fileID: 0}
+  id: 05
+  category: 7
+  prefab: {fileID: 3901574274817438375, guid: 4873878aa08740f41980b45577969cd0, type: 3}
   width: 1
   depth: 1
-  priceCents: 1000
+  priceCents: 10

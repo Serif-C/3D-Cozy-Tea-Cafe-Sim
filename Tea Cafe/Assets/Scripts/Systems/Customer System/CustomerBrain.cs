@@ -151,24 +151,37 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
     IEnumerator WaitInLine()
     {
+        // 1) Try seat immediately (covers customers 1..4 while tables available)
+        TransformTarget seatTarget;
+        if (seating.TryReserveRandomFreeSeat(out seatTarget))
+        {
+            mySeat = seatTarget;
+            yield break; // seat acquired, continue pipeline
+        }
+
+        // 2) No seats -> join line (customers 5,6,...)
         SetState(CustomerState.WaitingInLine);
+        queue.JoinLine(this);
 
-        currentQueueSpot = queue.Join(this);
-        //if (currentQueueSpot != null)
-        //    yield return Go(currentQueueSpot);
-
-        // Wait until customer is in front AND the customer is free
+        // Wait until I'm front and a seat becomes available
         while (true)
         {
-            if (queue.IsMyTurn(this))
+            if (queue.IsFrontOfLine(this))
             {
-                if (queue.TryAcquireCounter(this))
-                    break; // this customer owns the counter now
+                if (seating.TryReserveRandomFreeSeat(out seatTarget))
+                {
+                    // I have priority because I'm front
+                    mySeat = seatTarget;
+
+                    queue.LeaveLine(this); // shift everyone forward
+                    break;
+                }
             }
 
             yield return new WaitForSeconds(0.1f);
         }
 
+        // stop queue movement coroutine if one is active
         if (queueMove != null)
         {
             StopCoroutine(queueMove);
@@ -189,58 +202,28 @@ public class CustomerBrain : MonoBehaviour, IResettable
         orderBubble.VisualizeOrder(desiredDrink);
 
         // free the counter for the next customer
-        queue.ReleaseCounter(this);
+        queue.LeaveLine(this);
     }
 
     IEnumerator SitAndDrink()
     {
-        TransformTarget seatTarget = null;
-
-        // Join the FIFO seat-wait list in the exact order customers reach SitAndDrink()
-        EnqueueForSeat();
-
-        // Only the first waiter is allowed to try reserving a seat.
-        while (true)
+        if (mySeat == null)
         {
-            // Not your turn yet -> keep waiting
-            if (!IsFirstInSeatWaitList())
-            {
-                yield return new WaitForSeconds(0.1f);
-                continue;
-            }
-
-            // Your turn -> try to reserve a seat
-            if (seating.TryReserveRandomFreeSeat(out seatTarget))
-            {
-                // Once we succeed, pop ourselves off the FIFO list
-                DequeueForSeat();
-                break;
-            }
-
-            // No seats yet
-            yield return new WaitForSeconds(0.2f);
+            Debug.LogError("CustomerBrain: mySeat is null when trying to sit.");
+            yield break;
         }
 
         SetState(CustomerState.Sitting);
 
-        mySeat = seatTarget;
-
-        var table = SeatingManager.Instance.GetTableForSeat(seatTarget);
+        var table = SeatingManager.Instance.GetTableForSeat(mySeat);
         if (table == null)
         {
-            SeatingManager.Instance.ReleaseSeat(seatTarget);
+            SeatingManager.Instance.ReleaseSeat(mySeat);
             mySeat = null;
-
-            // IMPORTANT: if we fail mapping, we should go back into the FIFO
-            // (otherwise we might accidentally let later customers pass us)
-            EnqueueForSeat();
-
-            yield return new WaitForSeconds(0.25f);
-            StartCoroutine(SitAndDrink());
             yield break;
         }
 
-        yield return Go(seatTarget);
+        yield return Go(mySeat);
         AttachToTable(table);
 
         // Wait until the correct drink shows up on THIS table

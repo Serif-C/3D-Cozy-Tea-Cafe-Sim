@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a9570ac1e88f84a978461566b36a35, type: 3}
   m_Name: QueueSpot
   m_EditorClassIdentifier: 
-  id: 
-  category: 0
-  prefab: {fileID: 0}
-  width: 1
-  depth: 1
-  priceCents: 1000
+  id: 000
+  category: 3
+  prefab: {fileID: 7684153464173143822, guid: b3d1075e87f08ee478c9fe137f2e890b, type: 3}
+  width: 0
+  depth: 0
+  priceCents: 0

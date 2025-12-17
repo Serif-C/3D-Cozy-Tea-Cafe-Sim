@@ -5,6 +5,7 @@ using System.Collections;
 using System.Net.Sockets;
 using NUnit.Framework;
 using Unity.VisualScripting;
+using System.Collections.Generic;
 
 public enum CustomerState
 {
@@ -61,6 +62,11 @@ public class CustomerBrain : MonoBehaviour, IResettable
     // For Queue spots
     private ITarget currentQueueSpot;
     private Coroutine queueMove;
+    // --- Seat fairness (FIFO) ---
+    // Whoever enters SitAndDrink first should get first priority for seats.
+    private static readonly LinkedList<CustomerBrain> SeatWaitList = new();
+    private static readonly Dictionary<CustomerBrain, LinkedListNode<CustomerBrain>> SeatNodes = new();
+
 
     // For CustomerSpawner 
     private System.Action<GameObject> releaseToPool;
@@ -95,11 +101,6 @@ public class CustomerBrain : MonoBehaviour, IResettable
         // Safety log
         if (seating == null)
             Debug.LogError("CustomerBrain: SeatingManager not found in scene.");
-
-        //foreach (DrinkType drink in Enum.GetValues(typeof(DrinkType)))
-        //{
-        //    sizeOfMenu++;
-        //}
 
         myMood = gameObject.GetComponent<CustomerMood>();
 
@@ -153,8 +154,8 @@ public class CustomerBrain : MonoBehaviour, IResettable
         SetState(CustomerState.WaitingInLine);
 
         currentQueueSpot = queue.Join(this);
-        if (currentQueueSpot != null)
-            yield return Go(currentQueueSpot);
+        //if (currentQueueSpot != null)
+        //    yield return Go(currentQueueSpot);
 
         // Wait until customer is in front AND the customer is free
         while (true)
@@ -168,9 +169,11 @@ public class CustomerBrain : MonoBehaviour, IResettable
             yield return new WaitForSeconds(0.1f);
         }
 
-        // Since this customer now owns the counter:
-        // Leave the line (compress others) then walk to the counter
-        yield return Go(queue.CounterTarget);
+        if (queueMove != null)
+        {
+            StopCoroutine(queueMove);
+            queueMove = null;
+        }
     }
 
     IEnumerator PlaceOrder()
@@ -193,31 +196,51 @@ public class CustomerBrain : MonoBehaviour, IResettable
     {
         TransformTarget seatTarget = null;
 
-        // NEW: just retry seat reservation on a short cadence (no queue churn)
-        while (!seating.TryReserveRandomFreeSeat(out seatTarget))
+        // Join the FIFO seat-wait list in the exact order customers reach SitAndDrink()
+        EnqueueForSeat();
+
+        // Only the first waiter is allowed to try reserving a seat.
+        while (true)
         {
-            yield return new WaitForSeconds(0.5f);
+            // Not your turn yet -> keep waiting
+            if (!IsFirstInSeatWaitList())
+            {
+                yield return new WaitForSeconds(0.1f);
+                continue;
+            }
+
+            // Your turn -> try to reserve a seat
+            if (seating.TryReserveRandomFreeSeat(out seatTarget))
+            {
+                // Once we succeed, pop ourselves off the FIFO list
+                DequeueForSeat();
+                break;
+            }
+
+            // No seats yet
+            yield return new WaitForSeconds(0.2f);
         }
 
         SetState(CustomerState.Sitting);
 
         mySeat = seatTarget;
-        var seatTT = seatTarget;   // safe downcast 
 
         var table = SeatingManager.Instance.GetTableForSeat(seatTarget);
         if (table == null)
         {
-            // Seat fails front-of-table rule or mapping not found -> bail and retry
-            // Release this seat and try again
             SeatingManager.Instance.ReleaseSeat(seatTarget);
             mySeat = null;
+
+            // IMPORTANT: if we fail mapping, we should go back into the FIFO
+            // (otherwise we might accidentally let later customers pass us)
+            EnqueueForSeat();
+
             yield return new WaitForSeconds(0.25f);
-            StartCoroutine(SitAndDrink()); // simple retry; or loop here
+            StartCoroutine(SitAndDrink());
             yield break;
         }
 
-        yield return Go(seatTarget);    // Walk to seat
-        // Attach to table for sitting/drinking
+        yield return Go(seatTarget);
         AttachToTable(table);
 
         // Wait until the correct drink shows up on THIS table
@@ -281,6 +304,8 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
     IEnumerator LeaveCafe()
     {
+        DequeueForSeat();
+
         SetState(CustomerState.LeavingCafe);
 
         orderBubble.gameObject.SetActive(false);
@@ -355,6 +380,24 @@ public class CustomerBrain : MonoBehaviour, IResettable
             if (queueMove != null) StopCoroutine(queueMove);
             queueMove = StartCoroutine(Go(newSpot));
         }
+    }
+
+    private void EnqueueForSeat()
+    {
+        if (SeatNodes.ContainsKey(this)) return;
+        SeatNodes[this] = SeatWaitList.AddLast(this);
+    }
+
+    private void DequeueForSeat()
+    {
+        if (!SeatNodes.TryGetValue(this, out var node)) return;
+        SeatWaitList.Remove(node);
+        SeatNodes.Remove(this);
+    }
+
+    private bool IsFirstInSeatWaitList()
+    {
+        return SeatWaitList.First != null && SeatWaitList.First.Value == this;
     }
 
     private void Update()

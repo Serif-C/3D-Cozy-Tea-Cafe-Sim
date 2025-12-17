@@ -184,9 +184,11 @@ MonoBehaviour:
   emote: {fileID: 2381575865460478903}
   stateRightNow: 0
   desiredDrink: 1
-  sizeOfMenu: 0
   moodDecayAmount: 0.2
   moodDecayRate: 0.25
+  breakfastUnlockDay: 5
+  lunchUnlockDay: 7
+  dinnerUnlockDay: 9
   coinPrefab: {fileID: 111490766695922311, guid: 5f80248db315c9c429b0e24df9a1cbfd, type: 3}
   minTip: 0
   maxTip: 20
@@ -229,8 +231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4145da5ff57f484b8a9c83441dfe03d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMoodValue: 7.2
-  startRange: {x: 10, y: 10}
+  currentMoodValue: 80
+  startRange: {x: 80, y: 100}
   emotes:
   - {fileID: 903275101, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
   - {fileID: -1074192354, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
@@ -265,7 +267,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0.1
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

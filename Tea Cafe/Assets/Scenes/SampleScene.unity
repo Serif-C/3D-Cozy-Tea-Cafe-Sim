@@ -13157,8 +13157,6 @@ MonoBehaviour:
   slotSpacing: 0.9
   lineDirectionSource: {fileID: 0}
   navMeshSampleDistance: 2
-  minSeparationFactor: 0.85
-  maxPushAttempts: 6
 --- !u!33 &3469287837528816066
 MeshFilter:
   m_ObjectHideFlags: 0

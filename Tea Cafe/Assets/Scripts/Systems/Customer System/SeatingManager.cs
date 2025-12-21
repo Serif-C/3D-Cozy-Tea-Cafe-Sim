@@ -30,7 +30,6 @@ public class SeatingManager : MonoBehaviour
 
         var tag = GameObject.FindGameObjectsWithTag("Seats");
         var list = new List<TransformTarget>(tag.Length);
-        //var listOfTables = new List<Table>();
 
         foreach (var s in tag)
         {

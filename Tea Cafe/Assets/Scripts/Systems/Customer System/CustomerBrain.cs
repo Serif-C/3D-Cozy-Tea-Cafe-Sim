@@ -14,7 +14,8 @@ public enum CustomerState
     PlacingOrder,
     Sitting,
     Drinking,
-    LeavingCafe
+    LeavingCafe,
+    Browsing,    // Customer walks around viewing decorations  
 }
 
 public class CustomerBrain : MonoBehaviour, IResettable
@@ -130,6 +131,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
     private void SetState(CustomerState s)
     {
         current = s;
+        stateRightNow = current;
         if (OnStateChanged != null)
         {
             OnStateChanged.Invoke(s);
@@ -251,6 +253,8 @@ public class CustomerBrain : MonoBehaviour, IResettable
         emote.sprite = myMood.GetEmote(myMood.currentMoodValue);
         SetState(CustomerState.Drinking);
         yield return new WaitForSeconds(UnityEngine.Random.Range(5f, 8f));
+        emote.sprite = null;
+        emote.gameObject.SetActive(false);
 
         // Customer Successfully finished drinking -> give coin to the player
         int tipAmount = ComputeTipFromMood(myMood.currentMoodValue);
@@ -303,19 +307,24 @@ public class CustomerBrain : MonoBehaviour, IResettable
             mySeat = null;
         }
 
-        Vector3 baseExitPos = exit.Position;
-        Vector2 offSet2D = UnityEngine.Random.insideUnitCircle * exitRadius;
-        Vector3 randomExitPos = new Vector3(
-            baseExitPos.x + offSet2D.x,
-            baseExitPos.y,
-            baseExitPos.z + offSet2D.y
-        );
-
-        ITarget randomExitTarget = new PointTarget(randomExitPos);
+        ITarget randomExitTarget = SampleRandomTransformTarget(exit.Position, exitRadius);
 
         yield return Go(randomExitTarget);
 
         DeSpawn();
+    }
+
+    private ITarget SampleRandomTransformTarget(Vector3 basePos, float sampleRadius)
+    {
+        Vector2 offSet2D = UnityEngine.Random.insideUnitCircle * sampleRadius;
+        Vector3 randomPos = new Vector3(
+            basePos.x + offSet2D.x,
+            basePos.y,
+            basePos.z + offSet2D.y
+        );
+
+        ITarget randomTarget = new PointTarget(randomPos);
+        return randomTarget;
     }
 
     private class PointTarget : ITarget
@@ -367,32 +376,12 @@ public class CustomerBrain : MonoBehaviour, IResettable
         }
     }
 
-    private void EnqueueForSeat()
-    {
-        if (SeatNodes.ContainsKey(this)) return;
-        SeatNodes[this] = SeatWaitList.AddLast(this);
-    }
-
     private void DequeueForSeat()
     {
         if (!SeatNodes.TryGetValue(this, out var node)) return;
         SeatWaitList.Remove(node);
         SeatNodes.Remove(this);
     }
-
-    private bool IsFirstInSeatWaitList()
-    {
-        return SeatWaitList.First != null && SeatWaitList.First.Value == this;
-    }
-
-    private void Update()
-    {
-        // Just to see in the inspector the current state
-        stateRightNow = current;
-
-        ChangeColor();
-    }
-
 
     private DrinkType OrderForARandomTea()
     {
@@ -479,23 +468,5 @@ public class CustomerBrain : MonoBehaviour, IResettable
         // Make sure order bubble starts hidden
         if (orderBubble != null)
             orderBubble.gameObject.SetActive(false);
-    }
-    
-    // For Testing Purposes
-    [SerializeField] private Material[] customerMaterials;
-    private void ChangeColor()
-    {
-        MeshRenderer mr;
-        if (gameObject.TryGetComponent<MeshRenderer>(out mr))
-        {
-            if (stateRightNow.Equals(CustomerState.Drinking))
-            {
-                mr.material = customerMaterials[1];
-            }
-            else
-            {
-                mr.material = customerMaterials[0];
-            }
-        }
     }
 }

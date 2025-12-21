@@ -45,37 +45,6 @@ public class SeatingManager : MonoBehaviour
         Debug.Log($"[Seating] Preplaced seats found: {seats.Count}");
     }
 
-    //public bool TryReserveRandomFreeSeat(out TransformTarget seat)
-    //{
-    //    seat = null;
-
-    //    // Build a list of free seats
-    //    var free = new List<int>(seats.Count);
-
-    //    for (int i = 0; i < seats.Count; i++)
-    //    {
-    //        var table = seats[i].GetComponentInParent<Table>();
-    //        if (table != null && !table.IsTableOccupied())
-    //        { 
-    //            free.Add(i); 
-    //        }
-    //    }
-
-    //    if (free.Count == 0)
-    //        return false;   // if nothing is free, let caller wait
-
-    //    // Pick one at random
-    //    int pick = free[Random.Range(0, free.Count)];
-    //    var pickedSeat = seats[pick];
-
-    //    // Reserve immidiately to prevent customers from racing to it
-    //    pickedSeat.GetComponentInParent<Table>().SetOccupiedValue(true);
-
-    //    seat = pickedSeat;
-    //    return true;
-
-    //}
-
     public bool TryReserveRandomFreeSeat(out TransformTarget seat)
     {
         seat = null;
@@ -171,25 +140,6 @@ public class SeatingManager : MonoBehaviour
         return table;
     }
 
-    //private bool TryFindTableInFront(TransformTarget seat, out Table table)
-    //{
-    //    table = null;
-    //    if (seat == null) return false;
-
-    //    Vector3 start = seat.transform.position + Vector3.up * tableCheckHeight;
-    //    Vector3 dir = seat.transform.forward;  // front = +Z of chair
-    //    float dist = tableCheckDistance;
-
-    //    // SphereCast is more forgiving than a Raycast
-    //    if (Physics.SphereCast(start, tableCheckRadius, dir, out var hit, dist, tableMask, QueryTriggerInteraction.Ignore))
-    //    {
-    //        table = hit.collider.GetComponentInParent<Table>();
-    //        return table != null;
-    //    }
-
-    //    return false;
-    //}
-
     private bool TryFindTableInFront(TransformTarget seat, out Table table)
     {
         table = null;
@@ -241,10 +191,6 @@ public class SeatingManager : MonoBehaviour
         }
 
         if (bestTable == null) return false;
-
-        // Optionally: do a visibility check (ray) if you want to ensure nothing blocks the chair -> table line
-        // if (Physics.Linecast(seatPos, bestPoint, out var hit, ~0, QueryTriggerInteraction.Ignore) && !hit.collider.GetComponentInParent<Table>())
-        //     return false;
 
         table = bestTable;
         return true;

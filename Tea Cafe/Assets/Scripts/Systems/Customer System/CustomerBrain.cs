@@ -38,6 +38,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [SerializeField] private OrderBubble orderBubble;
     [SerializeField] private SpriteRenderer emote;
 
+    [Header("Customer State")]
     public CustomerState current { get; private set; }
     public CustomerState stateRightNow;
     public event Action<CustomerState> OnStateChanged;
@@ -45,7 +46,8 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [Header("Customer Order Settings")]
     [SerializeField] private DrinkType desiredDrink = DrinkType.BlackTea;
     [SerializeField] private MainDish desiredDish;
-    //[SerializeField] private int sizeOfMenu;    // The number of drinks in DrinkType enum
+
+    [Header("Customer Mood Settings")]
     private CustomerMood myMood;
     [SerializeField] private float moodDecayAmount = 2f;    // The amount of mood deducted
     [SerializeField] private float moodDecayRate = 0.25f;   // The frequency the is deducted

@@ -153,6 +153,11 @@ public class CustomerBrain : MonoBehaviour, IResettable
         yield return Go(entry);
     }
 
+    IEnumerator LookAround()
+    {
+        yield return new WaitForSeconds(2f);
+    }
+
     IEnumerator WaitInLine()
     {
         // 1) Try seat immediately (covers customers 1..4 while tables available)
@@ -307,14 +312,14 @@ public class CustomerBrain : MonoBehaviour, IResettable
             mySeat = null;
         }
 
-        ITarget randomExitTarget = SampleRandomTransformTarget(exit.Position, exitRadius);
+        ITarget randomExitTarget = SampleAroundTransformTargetRandomly(exit.Position, exitRadius);
 
         yield return Go(randomExitTarget);
 
         DeSpawn();
     }
 
-    private ITarget SampleRandomTransformTarget(Vector3 basePos, float sampleRadius)
+    private ITarget SampleAroundTransformTargetRandomly(Vector3 basePos, float sampleRadius)
     {
         Vector2 offSet2D = UnityEngine.Random.insideUnitCircle * sampleRadius;
         Vector3 randomPos = new Vector3(

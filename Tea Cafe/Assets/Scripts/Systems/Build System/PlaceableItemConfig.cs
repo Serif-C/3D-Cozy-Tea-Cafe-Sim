@@ -3,7 +3,7 @@ using UnityEngine;
 namespace TeaShop.Systems.Building
 {
     public enum PlaceableCategory 
-    { Wall, Table, Chair, Floor, Counter, Stove, BrewingStation, TeaPlant }
+    { Wall, Table, Chair, Floor, Counter, Stove, BrewingStation, TeaPlant, Decoration }
 
     [CreateAssetMenu(fileName = "PlaceableItem", menuName = "TeaShop/Building/Placeable Item", order = 0)]
     public class PlaceableItemConfig : ScriptableObject

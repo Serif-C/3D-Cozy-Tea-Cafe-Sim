@@ -19092,6 +19092,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3383794670261332965, guid: c9f7f5837449b594f86da3bb90007c18, type: 3}
+      propertyPath: m_Intensity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3383794670261332965, guid: c9f7f5837449b594f86da3bb90007c18, type: 3}
+      propertyPath: m_ColorTemperature
+      value: 5673
+      objectReference: {fileID: 0}
+    - target: {fileID: 3383794670261332965, guid: c9f7f5837449b594f86da3bb90007c18, type: 3}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.812
+      objectReference: {fileID: 0}
     - target: {fileID: 4754154769901615882, guid: c9f7f5837449b594f86da3bb90007c18, type: 3}
       propertyPath: timeManager
       value: 

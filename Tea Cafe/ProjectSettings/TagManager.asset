@@ -13,6 +13,7 @@ TagManager:
   - Queue
   - Entrance
   - Exit
+  - Decoration
   layers:
   - Default
   - TransparentFX

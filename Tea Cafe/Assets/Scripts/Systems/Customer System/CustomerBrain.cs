@@ -32,6 +32,9 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [SerializeField] private TransformTarget exit;
     [SerializeField] private float exitRadius = 1.5f;
     [SerializeField] private QueueManager queue;
+    [SerializeField] private DecorationManager decor;
+    [SerializeField] private float decorViewRadius = 1.5f;
+    private TransformTarget decorationViewSpot;
     private SeatingManager seating;
     private TransformTarget mySeat;
 
@@ -95,6 +98,9 @@ public class CustomerBrain : MonoBehaviour, IResettable
         if (queue == null)
             queue = FindFirstObjectByType<QueueManager>();
 
+        if (decor == null)
+            decor = FindFirstObjectByType<DecorationManager>();
+
         // Resolve seating if not set
         if (seating == null)
             seating = SeatingManager.Instance != null
@@ -155,7 +161,12 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
     IEnumerator LookAround()
     {
-        yield return new WaitForSeconds(2f);
+        List<TransformTarget> tt = decor.GetListOfDecorations;
+        decorationViewSpot = tt[UnityEngine.Random.Range(0, tt.Count)];
+
+        ITarget randomViewTarget = SampleAroundTransformTargetRandomly(decorationViewSpot.Position, decorViewRadius);
+
+        yield return Go(randomViewTarget);
     }
 
     IEnumerator WaitInLine()

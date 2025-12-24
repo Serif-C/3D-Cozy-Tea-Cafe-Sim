@@ -34,6 +34,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [SerializeField] private QueueManager queue;
     [SerializeField] private DecorationManager decor;
     [SerializeField] private float decorViewRadius = 1.5f;
+    [SerializeField] private bool interestedInWaiting;
     private TransformTarget decorationViewSpot;
     private SeatingManager seating;
     private TransformTarget mySeat;
@@ -147,6 +148,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
     IEnumerator Run()
     {
         yield return EnterCafe();
+        yield return LookAround();
         yield return WaitInLine();
         yield return PlaceOrder();
         yield return SitAndDrink();
@@ -156,22 +158,35 @@ public class CustomerBrain : MonoBehaviour, IResettable
     IEnumerator EnterCafe()
     {
         SetState(CustomerState.EnteringCafe);
+
+        // Decides whether to look around or go straight to counter (ordering)
+        if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
+            interestedInWaiting = false;
+        else
+            interestedInWaiting = true;
+
         yield return Go(entry);
     }
 
     IEnumerator LookAround()
     {
-        List<TransformTarget> tt = decor.GetListOfDecorations;
-        decorationViewSpot = tt[UnityEngine.Random.Range(0, tt.Count)];
+        if (interestedInWaiting == false && decor != null)
+        {
+            SetState(CustomerState.Browsing);
 
-        ITarget randomViewTarget = SampleAroundTransformTargetRandomly(decorationViewSpot.Position, decorViewRadius);
+            List<TransformTarget> tt = decor.GetListOfDecorations;
+            decorationViewSpot = tt[UnityEngine.Random.Range(0, tt.Count)];
 
-        yield return Go(randomViewTarget);
+            ITarget randomViewTarget = SampleAroundTransformTargetRandomly(decorationViewSpot.Position, decorViewRadius);
+
+            yield return Go(randomViewTarget);
+            yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 3f));
+        }
     }
 
     IEnumerator WaitInLine()
     {
-        // 1) Try seat immediately (covers customers 1..4 while tables available)
+        // 1) Try seat immediately 
         TransformTarget seatTarget;
         if (seating.TryReserveRandomFreeSeat(out seatTarget))
         {

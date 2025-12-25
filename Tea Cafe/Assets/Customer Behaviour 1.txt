@@ -1,0 +1,7 @@
+Problems that requires fixing eventually:
+
+1. Customer Browsing Logic: Customers should naturally look around the cafe decoration before approaching 
+   the counter. (TLDR: Implement a more realistic browsing behavior)
+2. Queue Management: Customers should ignore browsing customers when lining up 
+   instead of saving their position in line for the.
+3. Order Customization: Allow customers to customize their orders (e.g., adding extra ingredients, etc...)

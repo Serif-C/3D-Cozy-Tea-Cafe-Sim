@@ -168,6 +168,11 @@ public class CustomerBrain : MonoBehaviour, IResettable
         yield return Go(entry);
     }
 
+    // TO:DO
+    // Customer should naturally wander around the cafe,
+    // then only when it spots a decoration should they stop and look at it for a while.
+    // This requires decorations to have some kind of "visibility" check from the customer's position.
+    // For now, just randomly pick a decoration and walk to it.
     IEnumerator LookAround()
     {
         if (interestedInWaiting == false && decor != null)

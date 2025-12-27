@@ -4,10 +4,17 @@ using UnityEngine;
 // Teas and Smoothies Can be ordered anytime
 public enum DrinkType // (Classic Warm Teas)
 {
+    // Low Complexity
     GreenTea,
     BlackTea,
     Oolong,
-    Herbal
+    Herbal,
+
+    // Mid Complexity
+    MatchaTarro,
+
+    // High Complexity
+    UberDeluxeTea
 }
 
 public enum Dessert

@@ -10,22 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12d43b0e2f5bb604c9ed25407e3354b2, type: 3}
-  m_Name: BlackTea_Recipe
+  m_Name: Waffle_Recipe
   m_EditorClassIdentifier: 
-  id: Black_Tea_Recipe
-  outputKind: 1
-  outputIngredient: {fileID: 0}
+  id: Waffle_Recipe
+  outputKind: 0
+  outputIngredient: {fileID: 11400000, guid: 309ca24c37aa1774db0172ab89ae576c, type: 2}
   outputMenuItem:
-    category: 0
+    category: 2
     value: 1
-  toolType: 1
+  toolType: 0
   unlockDay: 1
   requirements:
-  - specific: {fileID: 11400000, guid: 4480deeb71cb11e4fa93f4b9f78a78d3, type: 2}
+  - specific: {fileID: 11400000, guid: d5246e5dc45c7f841b7c01bdd8a1d18a, type: 2}
     amount: 1
     requiredDistinct: 0
     distinctCount: 0
-  - specific: {fileID: 11400000, guid: 737c40154f6403e47a45842ad54d2799, type: 2}
+  - specific: {fileID: 11400000, guid: 0201fdcc184363f4f9cd353261d16177, type: 2}
+    amount: 1
+    requiredDistinct: 0
+    distinctCount: 0
+  - specific: {fileID: 11400000, guid: df761fbe12da5914197d1feed47e20af, type: 2}
     amount: 1
     requiredDistinct: 0
     distinctCount: 0

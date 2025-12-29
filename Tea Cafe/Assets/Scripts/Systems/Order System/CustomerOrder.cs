@@ -11,10 +11,10 @@ public enum DrinkType // (Classic Warm Teas)
     Herbal,
 
     // Mid Complexity
-    MatchaTarro,
+    //MatchaTarro,
 
     // High Complexity
-    UberDeluxeTea
+    //UberDeluxeTea
 }
 
 public enum Dessert

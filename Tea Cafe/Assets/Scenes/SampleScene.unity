@@ -17845,7 +17845,7 @@ GameObject:
   - component: {fileID: 2141693311}
   - component: {fileID: 2141693310}
   m_Layer: 6
-  m_Name: Brewing Station
+  m_Name: Assembling Station
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

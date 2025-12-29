@@ -19,5 +19,5 @@ public class IngredientRequirement
 
     // If tag-based: require distinct item?
     public bool requiredDistinct = false;       // true for "any 2 different fruit" kind of recipe
-    public int distinctCount = 0;               // e.g. 2
+    public int distinctCount = 0;               // e.g. 2 for "any 2 different fruit" kind of recipe
 }

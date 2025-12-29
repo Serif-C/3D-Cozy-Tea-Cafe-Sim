@@ -8,7 +8,8 @@ public enum IngredientTag
     TeaLeaf,
     Fruit,
     Dairy,
-    Liquid
+    Liquid,
+    Poultry
     /// etc...
 }
 

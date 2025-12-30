@@ -17697,6 +17697,7 @@ GameObject:
   - component: {fileID: 543450652054783996}
   - component: {fileID: 3469287838051272793}
   - component: {fileID: 1711813855064226963}
+  - component: {fileID: 3469287838051272794}
   m_Layer: 8
   m_Name: kitchencounter_straight_A_backsplash (1)
   m_TagString: Untagged
@@ -18870,6 +18871,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147579510086}
   m_Mesh: {fileID: 7562691965320869908, guid: 179c050023ffb344a91f29c481d65946, type: 3}
+--- !u!114 &3469287838051272794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147579510086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f179978364b6b6446a1107783d78fec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipes:
+  - recipe: {fileID: 11400000, guid: 6ce0444712402cf428f70ce21728cd24, type: 2}
+    outputPrefab: {fileID: 4198456964990446437, guid: 7081f8721f851b448bb74cad5c12cdeb, type: 3}
 --- !u!33 &3469287838078302702
 MeshFilter:
   m_ObjectHideFlags: 0

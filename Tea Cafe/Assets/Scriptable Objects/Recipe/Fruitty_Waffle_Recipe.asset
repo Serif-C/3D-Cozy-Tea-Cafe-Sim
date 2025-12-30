@@ -22,10 +22,6 @@ MonoBehaviour:
   unlockDay: 1
   requirements:
   - specific: {fileID: 11400000, guid: 309ca24c37aa1774db0172ab89ae576c, type: 2}
-    amount: 2
-    requiredDistinct: 1
-    distinctCount: 2
-  - specific: {fileID: 11400000, guid: 309ca24c37aa1774db0172ab89ae576c, type: 2}
-    amount: 2
-    requiredDistinct: 1
-    distinctCount: 2
+    amount: 1
+    requiredDistinct: 0
+    distinctCount: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7896905664578128000}
   - component: {fileID: 6360104832106967654}
   - component: {fileID: 6514518251685212603}
+  - component: {fileID: -763368910289999447}
   m_Layer: 0
   m_Name: TeaLeaf
   m_TagString: Tea Leaf
@@ -99,3 +100,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b088782b0e4474b836c71b8b33b008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-763368910289999447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943303920584371282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb2d839d942914e45abd8c5a0cad978f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredient: {fileID: 11400000, guid: 17c9f0c2c927c004ba4dc47b09c5bc21, type: 2}

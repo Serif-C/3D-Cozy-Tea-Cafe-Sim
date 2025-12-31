@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3858657349064541845}
   - component: {fileID: 5292478932507269724}
   - component: {fileID: 3578776173697392822}
+  - component: {fileID: -6070014100674485450}
   m_Layer: 0
   m_Name: Boiled Water
   m_TagString: Boiled Water
@@ -86,3 +87,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-6070014100674485450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7377725346547854795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb2d839d942914e45abd8c5a0cad978f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredient: {fileID: 11400000, guid: 737c40154f6403e47a45842ad54d2799, type: 2}

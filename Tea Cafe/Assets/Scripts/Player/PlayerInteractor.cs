@@ -65,7 +65,7 @@ public class PlayerInteractor : MonoBehaviour
         if (heldItem.TryGetComponent<Rigidbody>(out var rb))
             rb.isKinematic = true; // keep kinematic on counters; set false if you want it to fall
 
-        // clear carry state
+        // Clear carry state
         heldItem = null;
         isHoldingItem = false;
     }

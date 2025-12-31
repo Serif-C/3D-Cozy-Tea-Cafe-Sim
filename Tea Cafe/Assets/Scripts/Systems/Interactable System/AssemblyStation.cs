@@ -10,7 +10,7 @@ public class RecipePrefabEntry
     public GameObject outputPrefab;
 }
 
-public class AssemblyStation : MonoBehaviour
+public class AssemblyStation : MonoBehaviour, IInteractable
 {
     [Header("Station")]
     [SerializeField] private ToolType stationTool = ToolType.None;
@@ -44,13 +44,17 @@ public class AssemblyStation : MonoBehaviour
         // Otherwise allow adding if player has something and there's room.
         if (outputItem != null)
         {
+            Debug.Log("AssemblyStation: Output item exists, player can only take it if not holding anything.");
             return !player.IsHoldingItem();
         }
 
         if (player.IsHoldingItem())
         {
+            Debug.Log("AssemblyStation: Player is holding an item and there is room to add it.");
             return GetFirstEmptySlot() != null;
         }
+
+        Debug.Log("AssemblyStation: Player is not holding an item to add.");
 
         return false;
     }
@@ -66,7 +70,7 @@ public class AssemblyStation : MonoBehaviour
         }
 
         // Case 2: Add ingredient
-        if (outputItem != null && player.isHoldingItem)
+        if (outputItem == null && player.isHoldingItem)
         {
             TryAddIngredientFromPlayer(player);
             TryCraft();
@@ -103,7 +107,7 @@ public class AssemblyStation : MonoBehaviour
 
     private void TryCraft()
     {
-        if (outputItem == null) return;
+        if (outputItem != null) return;
 
         // Find first recipe that matches
         foreach (var entry in recipes)
@@ -144,9 +148,7 @@ public class AssemblyStation : MonoBehaviour
             {
                 // Check if we have enough of the specific ingredient
                 if (!requiredCounts.TryGetValue(req.specific, out int have) || have < req.amount)
-                {
                     return false;
-                }
 
                 continue;
             }
@@ -155,7 +157,6 @@ public class AssemblyStation : MonoBehaviour
             if (req.ingredientTag.HasValue)
             {
                 IngredientTag tag = req.ingredientTag.Value;
-
                 List<KeyValuePair<IngredientSO, int>> matching = new();
 
                 foreach (var kvp in requiredCounts)
@@ -164,9 +165,7 @@ public class AssemblyStation : MonoBehaviour
                     int amount = kvp.Value;
 
                     if (ingredient != null) continue;
-
                     if (!ingredient.tags.Contains(tag)) continue;
-
                     if (amount <= 0) continue;
 
                     matching.Add(kvp);
@@ -232,5 +231,6 @@ public class AssemblyStation : MonoBehaviour
         placedIngredients.Clear();
 
         outputItem = Instantiate(entry.outputPrefab, outputSlot.position, outputSlot.rotation, outputSlot);
+        Debug.Log("AssemblyStation: Crafted " + entry.outputPrefab.name);   
     }
 }

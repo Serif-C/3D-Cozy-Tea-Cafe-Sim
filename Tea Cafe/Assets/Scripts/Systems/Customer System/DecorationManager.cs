@@ -39,6 +39,7 @@ public class DecorationManager : MonoBehaviour
         if (tt == null) tt = decorationTransform.gameObject.AddComponent<TransformTarget>();
         if (!decorations.Contains(tt))
             decorations.Add(tt);
+        Debug.Log("DecorationManager: Added decoration " + decorationTransform.name);
     }
 
     public void RemoveDecoration(Transform decorationTransform)
@@ -47,6 +48,7 @@ public class DecorationManager : MonoBehaviour
         var tt = decorationTransform.GetComponent<TransformTarget>();
         if (tt == null) return;
         decorations.Remove(tt);
+        Debug.Log("DecorationManager: Removed decoration " + decorationTransform.name);
     }
 
     public List<TransformTarget> GetListOfDecorations => decorations;

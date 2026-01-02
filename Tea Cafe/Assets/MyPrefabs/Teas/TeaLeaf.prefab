@@ -113,3 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient: {fileID: 11400000, guid: 17c9f0c2c927c004ba4dc47b09c5bc21, type: 2}
+  teaLeaves:
+  - {fileID: 11400000, guid: 4480deeb71cb11e4fa93f4b9f78a78d3, type: 2}
+  - {fileID: 11400000, guid: 17c9f0c2c927c004ba4dc47b09c5bc21, type: 2}
+  - {fileID: 11400000, guid: a1d2d0134e3d382469d794a1e9c45529, type: 2}
+  - {fileID: 11400000, guid: 6e0219e18ef8f65448b035bba42da607, type: 2}

@@ -15,3 +15,5 @@ MonoBehaviour:
   id: Green_Tea_Leaf
   icon: {fileID: 0}
   tags: 00000000
+  isTeaLeaf: 1
+  leafDrinkType: 0

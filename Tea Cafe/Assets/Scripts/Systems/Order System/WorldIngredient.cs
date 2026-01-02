@@ -1,13 +1,29 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WorldIngredient : MonoBehaviour
 {
     public IngredientSO ingredient;
+    public List<IngredientSO> teaLeaves = new();
 
-    public Leaf leafObject;
+    private DrinkType leafType;
 
-    public DrinkType CheckLeafType()
+    private void Start()
     {
-        return leafObject.GetLeafType();
+        if (!CompareTag("Tea Leaf"))
+            return;
+
+        DrinkType leafType = gameObject.GetComponent<Leaf>().GetLeafType();
+
+        foreach (IngredientSO teaLeaf in teaLeaves)
+        {
+            if (teaLeaf.isTeaLeaf && teaLeaf.leafDrinkType == leafType)
+            {
+                ingredient = teaLeaf;
+                Debug.Log("WorldIngredient: Assigned tea leaf ingredient " + teaLeaf.name);
+                break;
+            }
+        }
     }
 }

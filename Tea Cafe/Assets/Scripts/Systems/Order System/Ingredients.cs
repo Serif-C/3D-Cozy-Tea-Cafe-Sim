@@ -7,6 +7,10 @@ public class IngredientSO : ScriptableObject
     public string id;   // "flour", "sugar", etc...
     public Sprite icon;
     public List<IngredientTag> tags = new();
+
+    // Only used for tea leaves (ignore for non-leaves)
+    public bool isTeaLeaf = false;
+    public DrinkType leafDrinkType;    // e.g. BlackTea, GreenTea, HerbalTea, etc...
 }
 
 [System.Serializable]

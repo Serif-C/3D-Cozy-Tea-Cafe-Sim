@@ -1,0 +1,13 @@
+Problems that requires fixing eventually:
+
+1. Customer Browsing Logic: Customers should naturally look around the cafe decoration before approaching 
+   the counter. (TLDR: Implement a more realistic browsing behavior)
+2. Queue Management: Customers should ignore browsing customers when lining up 
+   instead of saving their position in line for the.
+3. Order Customization: Allow customers to customize their orders (e.g., adding extra ingredients, etc...)
+
+Plans and Optiions regarding Assets:
+1. Use Pixel-Art textures for walls and floors to give the cafe a cozy and retro feel.
+2. Use Voxel-style furniture and decor (or any complicated shapes) to maintain a consistent aesthetic.
+3. Use Pixel-Art sprites for customers and staff to match the overall theme.
+4. Implement simple animations for customer actions (e.g., walking, ordering, eating) to enhance immersion.

@@ -4,6 +4,8 @@ using UnityEngine;
 // Teas and Smoothies Can be ordered anytime
 public enum DrinkType // (Classic Warm Teas)
 {
+    //None,
+
     // Low Complexity
     GreenTea,
     BlackTea,

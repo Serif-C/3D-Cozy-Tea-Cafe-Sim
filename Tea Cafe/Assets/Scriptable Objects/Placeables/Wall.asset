@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 02
   category: 0
-  prefab: {fileID: 298521579094198289, guid: ee5c1ec53ccee1840ba48942bb5601fe, type: 3}
+  prefab: {fileID: 6610427244261126664, guid: a9c8e49bb4dd9ab4ab82b8b54dafbe50, type: 3}
   width: 1
   depth: 1
-  priceCents: 1000
+  priceCents: 1

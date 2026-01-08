@@ -86,7 +86,7 @@ public class CustomerSpawner : MonoBehaviour
         if (brain != null)
             brain.Init(ReleaseToPool);
     }
-
+    
     private void OnRelease(GameObject obj)
     {
         obj.SetActive(false);

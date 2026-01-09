@@ -40,9 +40,7 @@ namespace TeaShop.Systems.Building
 
         private GameObject ghost;
         private bool placeTriggeredThisFrame;
-
-        private TileEdge _wallEdge;
-        private int _wallFaceFlip = 0; // 0 or 180
+        //private bool selectTriggered;
 
         private readonly Dictionary<Transform, int> cachedLayers = new Dictionary<Transform, int>(64);
 
@@ -103,15 +101,8 @@ namespace TeaShop.Systems.Building
             // Dragging takes priority
             if (dragging && selectedInst != null)
             {
-                //Vector3 snap = GetSnappedPointerWorldOnSurface();
-                //selectedInst.transform.position = snap;
-
-                int yaw;
-                var cfg = selectedInst.GetConfig();
-                Vector3 snap = GetSnappedPointerWorldOnSurface(cfg, out yaw);
+                Vector3 snap = GetSnappedPointerWorldOnSurface();
                 selectedInst.transform.position = snap;
-                selectedInst.transform.rotation = Quaternion.Euler(0, yaw, 0);
-
                 return;
             }
 
@@ -186,17 +177,6 @@ namespace TeaShop.Systems.Building
 
         private void OnRotatePerformed(InputAction.CallbackContext ctx)
         {
-            // If we’re handling a WALL, rotate = flip face (180)
-            bool isWallGhost = (ghost != null && selectedItem != null && selectedItem.Category == PlaceableCategory.Wall);
-            bool isWallDragging = (selectedInst != null && dragging && selectedInst.GetConfig() != null && selectedInst.GetConfig().Category == PlaceableCategory.Wall);
-
-            if (isWallGhost || isWallDragging)
-            {
-                _wallFaceFlip = (_wallFaceFlip == 0) ? 180 : 0;
-                return; // rotation will be reapplied by snapping update
-            }
-
-            // Otherwise keep old behavior (+90)
             if (selectedInst != null && dragging)
             {
                 selectedInst.transform.rotation = Quaternion.Euler(0, selectedInst.transform.eulerAngles.y + 90f, 0);
@@ -227,21 +207,21 @@ namespace TeaShop.Systems.Building
             Deselect();
         }
 
-        //private Vector3 GetSnappedPointerWorld()
-        //{
-        //    if (buildCamera == null) return Vector3.zero;
+        private Vector3 GetSnappedPointerWorld()
+        {
+            if (buildCamera == null) return Vector3.zero;
 
-        //    Vector2 screenPos = pointAction != null
-        //        ? pointAction.action.ReadValue<Vector2>()
-        //        : (Pointer.current != null ? Pointer.current.position.ReadValue() : Vector2.zero);
+            Vector2 screenPos = pointAction != null
+                ? pointAction.action.ReadValue<Vector2>()
+                : (Pointer.current != null ? Pointer.current.position.ReadValue() : Vector2.zero);
 
-        //    if (Physics.Raycast(buildCamera.ScreenPointToRay(screenPos), out var hit, 500f))
-        //    {
-        //        return grid != null ? grid.SnapToGrid(hit.point) : hit.point;
-        //    }
+            if (Physics.Raycast(buildCamera.ScreenPointToRay(screenPos), out var hit, 500f))
+            {
+                return grid != null ? grid.SnapToGrid(hit.point) : hit.point;
+            }
 
-        //    return Vector3.zero;
-        //}
+            return Vector3.zero;
+        }
 
         // ---------- Mode management ----------
         private void SetBuildMode(bool enabled)
@@ -282,7 +262,7 @@ namespace TeaShop.Systems.Building
         private void EnsureGhost()
         {
             if (selectedItem == null || ghost != null) return;
-            
+
             ghost = Instantiate(selectedItem.Prefab);
             CacheAndSetLayerRecursively(ghost.transform, LayerMask.NameToLayer("Ignore Raycast"));
             ApplyGhostMaterial(ghost, ghostValidMaterial);
@@ -297,7 +277,7 @@ namespace TeaShop.Systems.Building
         private void DestroyGhost()
         {
             if (ghost == null) return;
-            
+
             Destroy(ghost);
             ghost = null;
         }
@@ -306,13 +286,8 @@ namespace TeaShop.Systems.Building
         {
             if (ghost == null || buildCamera == null) return;
 
-            //Vector3 snap = GetSnappedPointerWorldOnSurface();
-            //ghost.transform.position = snap;
-
-            int yaw;
-            Vector3 snap = GetSnappedPointerWorldOnSurface(selectedItem, out yaw);
+            Vector3 snap = GetSnappedPointerWorldOnSurface();
             ghost.transform.position = snap;
-            ghost.transform.rotation = Quaternion.Euler(0, yaw, 0);
 
             bool ok = true;
             if (validator != null && selectedItem != null)
@@ -447,38 +422,6 @@ namespace TeaShop.Systems.Building
             }
 
             return Vector3.zero;
-        }
-
-        private Vector3 GetSnappedPointerWorldOnSurface(PlaceableItemConfig cfg, out int desiredYaw)
-        {
-            desiredYaw = 0;
-
-            if (buildCamera == null) return Vector3.zero;
-
-            Vector2 screenPos = pointAction != null
-                ? pointAction.action.ReadValue<Vector2>()
-                : (Pointer.current != null ? Pointer.current.position.ReadValue() : Vector2.zero);
-
-            Ray ray = buildCamera.ScreenPointToRay(screenPos);
-
-            if (!Physics.Raycast(ray, out var hit, 500f, placementSurfaceMask, QueryTriggerInteraction.Ignore))
-                return Vector3.zero;
-
-            if (grid == null) return hit.point;
-
-            // WALL: strict tile-edge placement
-            if (cfg != null && cfg.Category == PlaceableCategory.Wall)
-            {
-                Vector3 snap = grid.SnapWallToTileEdge(hit.point, out _wallEdge);
-                int baseYaw = PlacementGrid.BaseYawForEdge(_wallEdge);
-
-                desiredYaw = (baseYaw + _wallFaceFlip) % 360;
-                return snap;
-            }
-
-            // NON-WALL: normal center snapping
-            desiredYaw = Mathf.RoundToInt((ghost != null ? ghost.transform.eulerAngles.y : 0f) / 90f) * 90;
-            return grid.SnapToCellCenter(hit.point);
         }
 
         private (PlaceableInstance inst, RaycastHit hit) RaycastSelectablePlaced()

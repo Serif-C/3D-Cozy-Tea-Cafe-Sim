@@ -492,7 +492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6695420970207128319, guid: 88a2f8e3e9e168b41b82cb3318780035, type: 3}
       propertyPath: cellSize
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6786273795658610681, guid: 88a2f8e3e9e168b41b82cb3318780035, type: 3}
       propertyPath: selectedItem

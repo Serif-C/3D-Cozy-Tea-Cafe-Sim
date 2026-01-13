@@ -48,7 +48,7 @@ Material:
     m_Floats:
     - _Depth: 1.12
     - _Displacement: 1.17
-    - _Normal_Strength: 0.394
+    - _Normal_Strength: 0.47
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0.5

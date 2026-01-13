@@ -1,0 +1,13 @@
+Tea Leaves Cabinet UI:
+1. When the player interacts with the cabinet, a UI pops-up
+2. The player can select which tea leaf to get from the cabinet indicated by their icons
+3. When the mouse is hovered on a cabinet drawer, it gets highlighted
+4. When a highlighted drawer is clicked, it opens, and the player can take the desired tea leaf.
+
+Logic Flow:
+1. Interacting with the Cabinet game object actives the Cabinet UI.
+2. The cabinet UI is divided into several rectangles, each containing various information.
+3. A cabinet stores: 1) Highlight sprite, 2) Cabinet Open Sprite, 3) The Tea leaf itself.
+4. When the mouse is hovered over a cabinet, it's sprite switches to its Highlight Sprite.
+5. When a cabinet is clicked, its sprite switches to its Cabinet Open Sprite.
+6. If the cabinet is open (this must be true) then the player can click the opened cabinet to take the desired Tea Leaf.

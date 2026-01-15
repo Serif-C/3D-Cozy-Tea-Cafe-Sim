@@ -4,32 +4,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TeaCabinet : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class TeaCabinet : MonoBehaviour
 {
-    [SerializeField] private Image highlightImage;
+    [SerializeField] private Sprite openCabinet;
+    [SerializeField] private GameObject teaLeafPowderObject;
 
-    private void Awake()
+    private Button button;
+    private Image image;
+
+    private void Start()
     {
-        // If you didn't assign it, fallback to Image on this object
-        if (highlightImage == null)
-            highlightImage = GetComponent<Image>();
-
-        // Start hidden
-        if (highlightImage != null)
-            highlightImage.enabled = false;
-        else
-            Debug.LogError($"{name}: No Image found to toggle.");
+        button = GetComponent<Button>();
+        image = GetComponent<Image>();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnClickCabinet()
     {
-        if (highlightImage != null) highlightImage.enabled = true;
-        Debug.Log("Hover ENTER: " + gameObject.name);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (highlightImage != null) highlightImage.enabled = false;
-        Debug.Log("Hover EXIT: " + gameObject.name);
+        image.sprite = openCabinet;
+        button.targetGraphic = image;
+        Debug.Log("cabinet clicked");
     }
 }

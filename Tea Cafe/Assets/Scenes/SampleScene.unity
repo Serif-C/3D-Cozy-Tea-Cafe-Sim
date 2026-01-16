@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 49150461}
   - component: {fileID: 49150460}
   - component: {fileID: 49150463}
+  - component: {fileID: 49150464}
   m_Layer: 0
   m_Name: r5c3
   m_TagString: Untagged
@@ -640,7 +641,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 49150460}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 49150464}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &49150464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49150458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1001 &56751553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -952,6 +982,7 @@ GameObject:
   - component: {fileID: 106123050}
   - component: {fileID: 106123049}
   - component: {fileID: 106123052}
+  - component: {fileID: 106123053}
   m_Layer: 0
   m_Name: r5c4
   m_TagString: Untagged
@@ -1059,7 +1090,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 106123049}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 106123053}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &106123053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106123047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &107806862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,6 +1498,7 @@ GameObject:
   - component: {fileID: 161721089}
   - component: {fileID: 161721088}
   - component: {fileID: 161721091}
+  - component: {fileID: 161721092}
   m_Layer: 0
   m_Name: r4c4
   m_TagString: Untagged
@@ -1545,7 +1606,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 161721088}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 161721092}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &161721092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161721086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &170445811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,6 +1830,7 @@ GameObject:
   - component: {fileID: 188246200}
   - component: {fileID: 188246199}
   - component: {fileID: 188246202}
+  - component: {fileID: 188246203}
   m_Layer: 0
   m_Name: r3c1
   m_TagString: Untagged
@@ -1847,7 +1938,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 188246199}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 188246203}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &188246203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188246197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1001 &190764930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4262,6 +4382,7 @@ GameObject:
   - component: {fileID: 384523656}
   - component: {fileID: 384523655}
   - component: {fileID: 384523658}
+  - component: {fileID: 384523659}
   m_Layer: 0
   m_Name: r2c1
   m_TagString: Untagged
@@ -4369,7 +4490,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 384523655}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 384523659}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &384523659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384523653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &394087904
 GameObject:
   m_ObjectHideFlags: 0
@@ -4849,6 +4999,7 @@ GameObject:
   - component: {fileID: 441288482}
   - component: {fileID: 441288481}
   - component: {fileID: 441288484}
+  - component: {fileID: 441288485}
   m_Layer: 0
   m_Name: r3c3
   m_TagString: Untagged
@@ -4956,7 +5107,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 441288481}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 441288485}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &441288485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441288479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &444010812
 GameObject:
   m_ObjectHideFlags: 0
@@ -8830,6 +9010,7 @@ GameObject:
   - component: {fileID: 832269641}
   - component: {fileID: 832269640}
   - component: {fileID: 832269643}
+  - component: {fileID: 832269644}
   m_Layer: 0
   m_Name: r1c4
   m_TagString: Untagged
@@ -8937,7 +9118,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 832269640}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 832269644}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &832269644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832269638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: -36340666, guid: 5744ad7044e4f844d89f0aec4a3502d2, type: 3}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -9715,6 +9925,7 @@ GameObject:
   - component: {fileID: 932666628}
   - component: {fileID: 932666627}
   - component: {fileID: 932666630}
+  - component: {fileID: 932666631}
   m_Layer: 0
   m_Name: r2c2
   m_TagString: Untagged
@@ -9822,7 +10033,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 932666627}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 932666631}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &932666631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932666625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &932946247
 GameObject:
   m_ObjectHideFlags: 0
@@ -10566,6 +10806,7 @@ GameObject:
   - component: {fileID: 1021923620}
   - component: {fileID: 1021923619}
   - component: {fileID: 1021923622}
+  - component: {fileID: 1021923623}
   m_Layer: 0
   m_Name: r1c3
   m_TagString: Untagged
@@ -10673,7 +10914,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1021923619}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1021923623}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1021923623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021923617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: -514337236, guid: 5744ad7044e4f844d89f0aec4a3502d2, type: 3}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &1023616306
 GameObject:
   m_ObjectHideFlags: 0
@@ -10843,7 +11113,7 @@ MonoBehaviour:
   m_MoveAction: {fileID: 393127876733835205, guid: e3a37244f698c484d826e0969e285515, type: 3}
   m_SubmitAction: {fileID: 0}
   m_CancelAction: {fileID: 7397424227253829928, guid: e3a37244f698c484d826e0969e285515, type: 3}
-  m_LeftClickAction: {fileID: 0}
+  m_LeftClickAction: {fileID: -881022062779299312, guid: e3a37244f698c484d826e0969e285515, type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 0}
@@ -11615,6 +11885,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openCabinet: {fileID: -1314244962, guid: 5744ad7044e4f844d89f0aec4a3502d2, type: 3}
   teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &1160411898
 GameObject:
   m_ObjectHideFlags: 0
@@ -11951,6 +12224,7 @@ GameObject:
   - component: {fileID: 1193887792}
   - component: {fileID: 1193887791}
   - component: {fileID: 1193887794}
+  - component: {fileID: 1193887795}
   m_Layer: 0
   m_Name: r3c2
   m_TagString: Untagged
@@ -12058,7 +12332,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1193887791}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1193887795}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1193887795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193887789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &1194737545
 GameObject:
   m_ObjectHideFlags: 0
@@ -12157,6 +12460,7 @@ GameObject:
   - component: {fileID: 1194920281}
   - component: {fileID: 1194920280}
   - component: {fileID: 1194920283}
+  - component: {fileID: 1194920284}
   m_Layer: 0
   m_Name: r3c4
   m_TagString: Untagged
@@ -12264,7 +12568,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1194920280}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1194920284}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1194920284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194920278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &1195418437
 GameObject:
   m_ObjectHideFlags: 0
@@ -16441,6 +16774,7 @@ GameObject:
   - component: {fileID: 1595915825}
   - component: {fileID: 1595915824}
   - component: {fileID: 1595915827}
+  - component: {fileID: 1595915828}
   m_Layer: 0
   m_Name: r4c3
   m_TagString: Untagged
@@ -16548,7 +16882,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1595915824}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1595915828}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1595915828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595915822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1001 &1596785194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16841,6 +17204,7 @@ GameObject:
   - component: {fileID: 1666623390}
   - component: {fileID: 1666623389}
   - component: {fileID: 1666623392}
+  - component: {fileID: 1666623393}
   m_Layer: 0
   m_Name: r5c2
   m_TagString: Untagged
@@ -16948,7 +17312,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1666623389}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1666623393}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1666623393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666623387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &1667742033
 GameObject:
   m_ObjectHideFlags: 0
@@ -19090,6 +19483,7 @@ GameObject:
   - component: {fileID: 1880471444}
   - component: {fileID: 1880471443}
   - component: {fileID: 1880471446}
+  - component: {fileID: 1880471447}
   m_Layer: 0
   m_Name: r4c2
   m_TagString: Untagged
@@ -19197,7 +19591,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1880471443}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1880471447}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1880471447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880471441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &1881289804
 GameObject:
   m_ObjectHideFlags: 0
@@ -19210,6 +19633,7 @@ GameObject:
   - component: {fileID: 1881289807}
   - component: {fileID: 1881289806}
   - component: {fileID: 1881289809}
+  - component: {fileID: 1881289810}
   m_Layer: 0
   m_Name: r1c2
   m_TagString: Untagged
@@ -19317,7 +19741,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1881289806}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1881289810}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1881289810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881289804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 490942323, guid: 5744ad7044e4f844d89f0aec4a3502d2, type: 3}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &1897235854
 GameObject:
   m_ObjectHideFlags: 0
@@ -19330,6 +19783,7 @@ GameObject:
   - component: {fileID: 1897235857}
   - component: {fileID: 1897235856}
   - component: {fileID: 1897235859}
+  - component: {fileID: 1897235860}
   m_Layer: 0
   m_Name: r4c1
   m_TagString: Untagged
@@ -19437,7 +19891,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1897235856}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1897235860}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1897235860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897235854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1001 &1907066242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19572,6 +20055,7 @@ GameObject:
   - component: {fileID: 1917299160}
   - component: {fileID: 1917299159}
   - component: {fileID: 1917299162}
+  - component: {fileID: 1917299163}
   m_Layer: 0
   m_Name: r2c4
   m_TagString: Untagged
@@ -19679,7 +20163,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1917299159}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1917299163}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1917299163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917299157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &1918655872
 GameObject:
   m_ObjectHideFlags: 0
@@ -20661,6 +21174,7 @@ GameObject:
   - component: {fileID: 2027614190}
   - component: {fileID: 2027614189}
   - component: {fileID: 2027614192}
+  - component: {fileID: 2027614193}
   m_Layer: 0
   m_Name: r5c1
   m_TagString: Untagged
@@ -20768,7 +21282,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2027614189}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2027614193}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2027614193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027614187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1 &2029589558
 GameObject:
   m_ObjectHideFlags: 0
@@ -21702,6 +22245,7 @@ GameObject:
   - component: {fileID: 2132995987}
   - component: {fileID: 2132995986}
   - component: {fileID: 2132995989}
+  - component: {fileID: 2132995990}
   m_Layer: 0
   m_Name: r2c3
   m_TagString: Untagged
@@ -21809,7 +22353,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2132995986}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2132995990}
+        m_TargetAssemblyTypeName: TeaCabinet, Assembly-CSharp
+        m_MethodName: OnClickCabinet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2132995990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132995984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fad64f5a7c54b43bb6287ecac456eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openCabinet: {fileID: 0}
+  teaLeafPowderObject: {fileID: 0}
+  isCabinetOpen: 0
+  image: {fileID: 0}
+  originalCabinetSprite: {fileID: 0}
 --- !u!1001 &2136159031
 PrefabInstance:
   m_ObjectHideFlags: 0

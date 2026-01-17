@@ -29,3 +29,4 @@ public class TeaLeaf : MonoBehaviour, IInteractable
         player.PickUp(item);
     }
 }
+ 

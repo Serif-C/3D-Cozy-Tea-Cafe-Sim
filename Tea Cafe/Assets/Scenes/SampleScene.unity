@@ -881,6 +881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &75995236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,7 +925,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 75995233}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 75995235}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &90931772 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7846663673553905845, guid: d84cb5616a802674c8859541d90d3c29, type: 3}
@@ -1073,7 +1086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &99776412
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1157,6 +1170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &99776417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1200,7 +1214,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 99776414}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 99776416}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &105687530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5011,6 +5037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &410690443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5054,7 +5081,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 410690440}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 410690442}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &413464286
 GameObject:
   m_ObjectHideFlags: 0
@@ -5777,6 +5816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &449472705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5820,7 +5860,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 449472702}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 449472704}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &460600015
 GameObject:
   m_ObjectHideFlags: 0
@@ -8195,6 +8247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &678771053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8238,7 +8291,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 678771050}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 678771052}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &680158903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8721,7 +8786,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &724016416
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8805,6 +8870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &724016421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8848,7 +8914,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 724016418}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 724016420}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &726525947
 GameObject:
   m_ObjectHideFlags: 0
@@ -9740,7 +9818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &813598940
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9824,6 +9902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &813598945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9867,7 +9946,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 813598942}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 813598944}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &815432693
 GameObject:
   m_ObjectHideFlags: 0
@@ -11283,7 +11374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &960416479
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11316,7 +11407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teaLeaftPrefab: {fileID: 943303920584371282, guid: ee4baf0ca3ced1941a9bc40f4d2873b9, type: 3}
-  leafType: 0
+  leafType: 2
 --- !u!114 &960416481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11367,6 +11458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &960416484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11410,7 +11502,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 960416481}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 960416483}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &964642076
 GameObject:
   m_ObjectHideFlags: 0
@@ -12287,7 +12391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1040153493
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12320,7 +12424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teaLeaftPrefab: {fileID: 943303920584371282, guid: ee4baf0ca3ced1941a9bc40f4d2873b9, type: 3}
-  leafType: 0
+  leafType: 1
 --- !u!114 &1040153495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12371,6 +12475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1040153498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12414,7 +12519,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1040153495}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1040153497}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1044091742
 GameObject:
   m_ObjectHideFlags: 0
@@ -12989,7 +13106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1099833263
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13022,7 +13139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teaLeaftPrefab: {fileID: 943303920584371282, guid: ee4baf0ca3ced1941a9bc40f4d2873b9, type: 3}
-  leafType: 0
+  leafType: 3
 --- !u!114 &1099833265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13073,6 +13190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1099833268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13116,7 +13234,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1099833265}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1099833267}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1119003288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14454,7 +14584,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1222218639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14538,6 +14668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1222218644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14581,7 +14712,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1222218641}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1222218643}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1227894624
 GameObject:
   m_ObjectHideFlags: 0
@@ -14779,7 +14922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1239823829
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14863,6 +15006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1239823834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14906,7 +15050,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1239823831}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1239823833}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1247283297
 GameObject:
   m_ObjectHideFlags: 0
@@ -17902,6 +18058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1506688075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17945,7 +18102,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1506688072}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1506688074}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1513894916
 GameObject:
   m_ObjectHideFlags: 0
@@ -18202,6 +18371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1521769492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18245,7 +18415,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1521769489}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1521769491}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1532038354
 GameObject:
   m_ObjectHideFlags: 0
@@ -18436,6 +18618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1549244556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18479,7 +18662,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1549244553}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1549244555}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1552210961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19529,6 +19724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1630739024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19572,7 +19768,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1630739021}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1630739023}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1666623387
 GameObject:
   m_ObjectHideFlags: 0
@@ -22683,6 +22891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1917682636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22726,7 +22935,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1917682633}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1917682635}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1918655872
 GameObject:
   m_ObjectHideFlags: 0
@@ -23106,6 +23327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &1947896027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23149,7 +23371,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1947896024}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1947896026}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1955556949
 GameObject:
   m_ObjectHideFlags: 0
@@ -24337,6 +24571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &2058961106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24380,7 +24615,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2058961103}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2058961105}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &2061259933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24764,6 +25011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c80b7bd518738048af558ea7fb030a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teaPrefab: {fileID: 0}
 --- !u!114 &2083254271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24807,7 +25055,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2083254268}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2083254270}
+        m_TargetAssemblyTypeName: TeaPowder, Assembly-CSharp
+        m_MethodName: OnClickTeaPowder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &2092485362 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6292723265662149951, guid: a9c8e49bb4dd9ab4ab82b8b54dafbe50, type: 3}

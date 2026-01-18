@@ -29,5 +29,12 @@ public class TeaLeaf : MonoBehaviour, IInteractable
         item.GetComponent<Leaf>().SetLeafType(leafType);
         player.PickUp(item);
     }
+
+    public GameObject GetTeaPrefab()
+    {
+        GameObject item = Instantiate (teaLeaftPrefab);
+        item.GetComponent <Leaf>().SetLeafType(leafType);
+        return item;
+    }
 }
  

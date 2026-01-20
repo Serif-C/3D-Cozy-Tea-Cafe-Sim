@@ -20,8 +20,9 @@ public class TeaPowder : MonoBehaviour
         
         if (!player.IsHoldingItem())
         {
-            canvas.gameObject.SetActive(false);
+            canvas.enabled = false;
             player.PickUp(teaPrefab);
+            TimeManager.Instance.Resume();
         }
 
     }

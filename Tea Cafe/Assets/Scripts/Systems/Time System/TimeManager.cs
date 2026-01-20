@@ -8,11 +8,18 @@ public enum MealTime
     DinnerTime
 }
 
-public class TimeManager : MonoBehaviour
+public class TimeManager : MonoBehaviour, ITimeScaleController
 {
+    public static TimeManager Instance { get; private set; }
+
     [Header("Time Scale")]
     [Tooltip("How many real-time seconds a full in-game day lasts")]
     [SerializeField] private float realSecondsPerGameDay = 3600f;
+    [Tooltip("Value == 1.0 normal speed, 2.0 two times speed, etc....")]
+    [SerializeField] private float defaultTimeScale = 1f;
+
+    private float previousTimeScale = 1f;
+    public float Current => Time.timeScale;
 
     [Header("Start Time")]
     [SerializeField] private int startHour = 6;
@@ -46,6 +53,16 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        previousTimeScale = defaultTimeScale;
+        Time.timeScale = defaultTimeScale;
+
         Day = startDay;
         Month = startMonth;
         Year = startYear;
@@ -141,5 +158,38 @@ public class TimeManager : MonoBehaviour
     public MealTime GetMealTime()
     {
         return mealTime;
+    }
+
+    // ----------------------------
+    // Interface Implementation
+    // ----------------------------
+
+    public void Pause()
+    {
+        // Save the current timeScale so Resume() restores it
+        previousTimeScale = Time.timeScale;
+        Time.timeScale = 0f;
+    }
+
+    public void Resume()
+    {
+        // Restore the previous time scale
+        Time.timeScale = previousTimeScale <= 0f ? defaultTimeScale : previousTimeScale;
+    }
+
+    public void Set(float scale)
+    {
+        previousTimeScale = Time.timeScale;
+        Time.timeScale = Mathf.Max(0f, scale);
+    }
+
+    public void SetTimeScale(float newTimeScale)
+    {
+        Set(newTimeScale);
+    }
+
+    public void RevertTimeScale()
+    {
+        Resume();
     }
 }

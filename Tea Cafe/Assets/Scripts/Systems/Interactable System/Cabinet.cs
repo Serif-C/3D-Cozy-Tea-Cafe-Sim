@@ -3,14 +3,16 @@ using UnityEngine;
 public class Cabinet : MonoBehaviour, IInteractable
 {
     [Header("Cabinet Settings")]
-    [SerializeField] private GameObject cabinetUI_Container;
+    [SerializeField] private Canvas cabinetUI_Container;
 
     private Canvas cabinetCanvas;
     private bool isCanvasActive = false;
 
     private void Awake()
     {
-        cabinetCanvas = cabinetUI_Container.gameObject.GetComponentInChildren<Canvas>();
+        cabinetUI_Container = gameObject.GetComponentInChildren<Canvas>();
+        cabinetUI_Container.enabled = false;
+        cabinetCanvas = cabinetUI_Container.GetComponent<Canvas>();
     }
 
     public string Prompt
@@ -33,7 +35,8 @@ public class Cabinet : MonoBehaviour, IInteractable
 
     public void Interact(PlayerInteractor player)
     {
+        TimeManager.Instance.Pause();
         // open the tea cabinet canvas
-        cabinetCanvas.gameObject.SetActive(true);
+        cabinetCanvas.enabled = true;
     }
 }

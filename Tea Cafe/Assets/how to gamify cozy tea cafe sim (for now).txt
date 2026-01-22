@@ -1,3 +1,15 @@
+Core Gameplay
+- Slow and cozy
+- Customers come in managable intervals
+- Customers sit down to dine while they either socialize with their group or if they are solo (read a book)
+- If the cafe is full, customers either line up, or browse around the cafe's lounge section
+- The player's motivation for playing is to improve the appearance of their cafe and unlock more features
+- Unlockable features such as:
+	1. Pets (think of a way to incorporate this)
+	2. Autopilot Workers
+	3. Shop Items
+	4. Sea kings (or other big creatures outside the cafe if going the Non-Baratie route)
+
 how to gamify cozy tea cafe sim
 1. Customers should feel expressive (show a bunch of emotes while drinking their order)
 2. Customer arrival should be based on time (chill hours and busy hours)
@@ -34,12 +46,3 @@ Gameplayloop-wise it should be something like:
 - Non-seasonal menu should always be available to order
 
 These added tasks and complexity are the motivation behind expanding the cafe and hiring workers.
-
-
-ANOTHER IDEA:
-- When performing interactable actions in the kitchen, go into 1st-person view then perform the action:
-	Example:
-	Chopping Tea Leaves - go into first person view and chop by dragging knife in a certain motion.
-
-- With this idea, customers must wait for their order to be taken at the front of the server before
-  being able to choose/sit on a table.

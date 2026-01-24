@@ -1,0 +1,11 @@
+Models:
+1. Walls
+2. Tiles
+3. Tables
+4. Chairs
+5. Counters and other kitchen equipment
+6. Machines to Make Tea
+7. Tea Cups, Tea Pot
+8. Bookshelf
+9. Comfy Chair
+10. Coffee Table

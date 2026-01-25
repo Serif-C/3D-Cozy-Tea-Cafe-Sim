@@ -9,3 +9,6 @@ Models:
 8. Bookshelf
 9. Comfy Chair
 10. Coffee Table
+11. Door
+12. Windows
+13. Pastry Counter Display

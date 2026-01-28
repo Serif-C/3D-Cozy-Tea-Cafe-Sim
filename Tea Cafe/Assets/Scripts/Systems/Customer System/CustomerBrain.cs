@@ -36,8 +36,8 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [SerializeField] private float decorViewRadius = 1.5f;
     [SerializeField] private bool interestedInWaiting;
     private TransformTarget decorationViewSpot;
-    private SeatingManager seating;
-    private TransformTarget mySeat;
+    //private SeatingManager seating;
+    private Cust_SeatingManager seating;
 
     [Header("UI Related")]
     [SerializeField] private OrderBubble orderBubble;
@@ -65,6 +65,23 @@ public class CustomerBrain : MonoBehaviour, IResettable
     // For parenting/unparenting the customer
     private Transform originalParent;
     private Table currentTable;
+
+    // Seating
+    private TransformTarget mySeat;
+    private List<TransformTarget> partySeats;
+
+    // Party support
+    public CustomerParty Party { get; private set; }
+    private bool isPartyLeader;
+    public bool IsInParty => Party != null;
+
+    // Lounge support (solo only)
+    private LoungeManager lounge;
+    private LoungeSeat reservedLoungeSeat;
+    [SerializeField, UnityEngine.Range(0f, 1f)] private float soloChoosesLoungeChance = 0.25f;
+
+    // Social bubbles (optional)
+    [SerializeField] private CustomerSocialBubble socialBubble;
 
     // For Queue spots
     private ITarget currentQueueSpot;
@@ -102,15 +119,20 @@ public class CustomerBrain : MonoBehaviour, IResettable
         if (decor == null)
             decor = FindFirstObjectByType<DecorationManager>();
 
-        // Resolve seating if not set
-        if (seating == null)
-            seating = SeatingManager.Instance != null
-                ? SeatingManager.Instance
-                : FindFirstObjectByType<SeatingManager>();
+        // Party (optional)
+        if (Party == null)
+            Party = GetComponentInParent<CustomerParty>();
 
-        // Safety log
+        isPartyLeader = (Party == null) || Party.Leader == this;
+
+        // Resolve seating (new)
         if (seating == null)
-            Debug.LogError("CustomerBrain: SeatingManager not found in scene.");
+            seating = Cust_SeatingManager.Instance != null
+                ? Cust_SeatingManager.Instance
+                : FindFirstObjectByType<Cust_SeatingManager>();
+
+        if (seating == null)
+            Debug.LogError("CustomerBrain: Cust_SeatingManager not found in scene.");
 
         myMood = gameObject.GetComponent<CustomerMood>();
 
@@ -121,6 +143,13 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
         if (timeManager == null)
             timeManager = FindFirstObjectByType<TimeManager>();
+
+        if (socialBubble == null)
+            socialBubble = GetComponentInChildren<CustomerSocialBubble>();
+
+        if (lounge == null)
+            lounge = LoungeManager.Instance != null ? LoungeManager.Instance : FindFirstObjectByType<LoungeManager>();
+
     }
 
     private void OnEnable()
@@ -132,7 +161,43 @@ public class CustomerBrain : MonoBehaviour, IResettable
     {
         yield return null; // wait 1 frame!!!
         ResetObject();
-        StartCoroutine(Run());
+        if (IsInParty && !isPartyLeader)
+            StartCoroutine(RunFollower());
+        else
+            StartCoroutine(Run());
+    }
+
+    IEnumerator RunFollower()
+    {
+        yield return EnterCafe();
+
+        if (UnityEngine.Random.value < 0.25f)
+            yield return LookAround();
+
+        while (Party != null && !Party.HasReservedSeats)
+        {
+            if (Party.Leader != null)
+            {
+                var leaderPos = Party.Leader.transform.position;
+                var offset = -Party.Leader.transform.forward * 0.6f;
+                yield return Go(new PointTarget(leaderPos + offset));
+            }
+            else yield return null;
+        }
+
+        if (Party == null || !Party.HasReservedSeats)
+        {
+            yield return LeaveCafe();
+            yield break;
+        }
+
+        mySeat = Party.GetSeatFor(this);
+        partySeats = Party.GetAllSeatsCopy();
+
+        if (orderBubble != null) orderBubble.gameObject.SetActive(false);
+
+        yield return SitAndDrink();
+        yield return LeaveCafe();
     }
 
     private void SetState(CustomerState s)
@@ -191,29 +256,123 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
     IEnumerator WaitInLine()
     {
-        // 1) Try seat immediately 
+        //// 1) Try seat immediately 
+        //TransformTarget seatTarget;
+        //if (seating.TryReserveRandomFreeSeat(out seatTarget))
+        //{
+        //    mySeat = seatTarget;
+        //    yield break; // seat acquired, continue pipeline
+        //}
+
+        //// 2) No seats -> join line (customers 5,6,...)
+        //SetState(CustomerState.WaitingInLine);
+        //queue.JoinLine(this);
+
+        //// Wait until I'm front and a seat becomes available
+        //while (true)
+        //{
+        //    if (queue.IsFrontOfLine(this))
+        //    {
+        //        if (seating.TryReserveRandomFreeSeat(out seatTarget))
+        //        {
+        //            // I have priority because I'm front
+        //            mySeat = seatTarget;
+
+        //            queue.LeaveLine(this); // shift everyone forward
+        //            break;
+        //        }
+        //    }
+
+        //    yield return new WaitForSeconds(0.1f);
+        //}
+
+        // Refresh party refs in case spawner/party setup happens after Awake
+        if (Party == null)
+            Party = GetComponentInParent<CustomerParty>();
+
+        isPartyLeader = (Party == null) || Party.Leader == this;
+
+        // ---------------------------
+        // PARTY LOGIC
+        // ---------------------------
+        if (Party != null)
+        {
+            // Non-leaders do NOT compete for seats or join the queue.
+            // They just wait until the leader has reserved seating for the whole party.
+            if (!isPartyLeader)
+            {
+                while (!Party.HasReservedSeats)
+                    yield return null;
+
+                mySeat = Party.GetSeatFor(this);
+                yield break;
+            }
+
+            // Leader path: try reserve seats for whole party (1..4)
+            int partySize = Mathf.Clamp(Party.Size, 1, 4);
+
+            List<TransformTarget> seatsReserved;
+            Table tableReserved;
+
+            // 1) Try immediately (no queue)
+            if (seating.TryReserveSeatsForParty(partySize, out seatsReserved, out tableReserved))
+            {
+                Party.SetReservedSeating(tableReserved, seatsReserved);
+                mySeat = Party.GetSeatFor(this);
+                yield break;
+            }
+
+            // 2) No table with enough free seats -> leader joins the queue
+            SetState(CustomerState.WaitingInLine);
+            queue.JoinLine(this);
+
+            while (true)
+            {
+                if (queue.IsFrontOfLine(this))
+                {
+                    if (seating.TryReserveSeatsForParty(partySize, out seatsReserved, out tableReserved))
+                    {
+                        Party.SetReservedSeating(tableReserved, seatsReserved);
+                        mySeat = Party.GetSeatFor(this);
+
+                        queue.LeaveLine(this);
+                        break;
+                    }
+                }
+
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            if (queueMove != null)
+            {
+                StopCoroutine(queueMove);
+                queueMove = null;
+            }
+
+            yield break;
+        }
+
+        // ---------------------------
+        // SOLO LOGIC (unchanged idea)
+        // ---------------------------
         TransformTarget seatTarget;
         if (seating.TryReserveRandomFreeSeat(out seatTarget))
         {
             mySeat = seatTarget;
-            yield break; // seat acquired, continue pipeline
+            yield break;
         }
 
-        // 2) No seats -> join line (customers 5,6,...)
         SetState(CustomerState.WaitingInLine);
         queue.JoinLine(this);
 
-        // Wait until I'm front and a seat becomes available
         while (true)
         {
             if (queue.IsFrontOfLine(this))
             {
                 if (seating.TryReserveRandomFreeSeat(out seatTarget))
                 {
-                    // I have priority because I'm front
                     mySeat = seatTarget;
-
-                    queue.LeaveLine(this); // shift everyone forward
+                    queue.LeaveLine(this);
                     break;
                 }
             }
@@ -221,7 +380,6 @@ public class CustomerBrain : MonoBehaviour, IResettable
             yield return new WaitForSeconds(0.1f);
         }
 
-        // stop queue movement coroutine if one is active
         if (queueMove != null)
         {
             StopCoroutine(queueMove);
@@ -231,18 +389,41 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
     IEnumerator PlaceOrder()
     {
+        //SetState(CustomerState.PlacingOrder);
+
+        //// ... order logic ...
+        //// Ordering time for now to simulate ordering
+        ////desiredDrink = OrderForARandomTea();
+        //yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
+
+        //orderBubble.gameObject.SetActive(true);
+        //orderBubble.VisualizeOrder(desiredDrink);
+
+        //// free the counter for the next customer
+        //queue.LeaveLine(this);
+        // Party refresh
+        if (Party == null)
+            Party = GetComponentInParent<CustomerParty>();
+
+        isPartyLeader = (Party == null) || Party.Leader == this;
+
+        // If I'm in a party and I'm NOT the leader, I don't place an order.
+        // I just skip forward to sitting.
+        if (Party != null && !isPartyLeader)
+            yield break;
+
         SetState(CustomerState.PlacingOrder);
 
-        // ... order logic ...
-        // Ordering time for now to simulate ordering
-        //desiredDrink = OrderForARandomTea();
+        // simulate ordering time
         yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
 
         orderBubble.gameObject.SetActive(true);
         orderBubble.VisualizeOrder(desiredDrink);
 
-        // free the counter for the next customer
-        queue.LeaveLine(this);
+        // IMPORTANT:
+        // Only the leader should be in the queue, so only the leader leaves it.
+        if (queue != null && queue.IsInLine(this))
+            queue.LeaveLine(this);
     }
 
     IEnumerator SitAndDrink()
@@ -255,10 +436,10 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
         SetState(CustomerState.Sitting);
 
-        var table = SeatingManager.Instance.GetTableForSeat(mySeat);
+        var table = Cust_SeatingManager.Instance.GetTableForSeat(mySeat);
         if (table == null)
         {
-            SeatingManager.Instance.ReleaseSeat(mySeat);
+            Cust_SeatingManager.Instance.ReleaseSeat(mySeat);
             mySeat = null;
             yield break;
         }
@@ -339,7 +520,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
         if (mySeat != null)
         {
-            SeatingManager.Instance.ReleaseSeat(mySeat);
+            Cust_SeatingManager.Instance.ReleaseSeat(mySeat);
             mySeat = null;
         }
 
@@ -504,5 +685,25 @@ public class CustomerBrain : MonoBehaviour, IResettable
         // Make sure order bubble starts hidden
         if (orderBubble != null)
             orderBubble.gameObject.SetActive(false);
+    }
+
+    public void AssignParty(CustomerParty party)
+    {
+        Party = party;
+
+        // Followers mirror leader’s drink so table waits for one type
+        if (Party != null && !isPartyLeader && Party.Leader != null)
+            desiredDrink = Party.Leader.desiredDrink;
+    }
+
+    private void TickWaitingBehavior()
+    {
+        if (!IsInParty)
+        {
+            if (socialBubble != null) socialBubble.TryPulseThought();
+            return;
+        }
+
+        if (socialBubble != null) socialBubble.TryPulseEmoji();
     }
 }

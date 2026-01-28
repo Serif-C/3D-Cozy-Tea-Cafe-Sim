@@ -115,7 +115,43 @@ public class CustomerSpawner : MonoBehaviour
             // only spawn if we have room
             if (active < max)
             {
-                pool.Get();
+                int remaining = max - active;
+                int partySize = Random.Range(1, 5); // 1..4
+                if (partySize > remaining) partySize = remaining;
+
+                CustomerParty party = partySize > 1 ? new CustomerParty() : null;
+
+                // Base spawn position for the group
+                var basePos = transform.position + new Vector3(
+                    Random.Range(-spawnRadius.x, spawnRadius.x),
+                    0f,
+                    Random.Range(-spawnRadius.z, spawnRadius.z)
+                );
+
+                for (int i = 0; i < partySize; i++)
+                {
+                    GameObject go = pool.Get();
+                    if (go == null) continue;
+
+                    // Keep group members close together
+                    Vector3 offset = partySize == 1 ? Vector3.zero : new Vector3(
+                        Random.Range(-0.6f, 0.6f),
+                        0f,
+                        Random.Range(-0.6f, 0.6f)
+                    );
+                    go.transform.SetPositionAndRotation(basePos + offset, Quaternion.identity);
+
+                    if (party != null)
+                    {
+                        var brain = go.GetComponent<CustomerBrain>();
+                        if (brain != null)
+                        {
+                            bool isLeader = i == 0;
+                            party.AddMember(brain, isLeader);
+                            brain.AssignParty(party);
+                        }
+                    }
+                }
             }
 
             //  Dynamic spawn delay based on rush hour

@@ -100,6 +100,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9827081ef613d419d482a0545167ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2473807479832388237
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1805345280912812766}
+  - component: {fileID: 5045106778809399431}
+  m_Layer: 7
+  m_Name: SocialBubble
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1805345280912812766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473807479832388237}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9122275758972038843}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5045106778809399431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473807479832388237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcda0090f6c97cb42bedcd4f997405b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleRenderer: {fileID: 0}
+  socialSprites:
+  - {fileID: 462846591, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -354610717, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 1984327600, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -1996394489, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 1705084181, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 206973620, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 1804974825, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -548662686, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 782335956, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -1552582673, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 2105308981, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -803794109, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -1183440690, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 822277048, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 576540563, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 970224905, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 903275101, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 1172788293, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -1957907686, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 1613181483, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -1239826127, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -1200945023, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 1003690297, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 1271728009, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -1074192354, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 1713240985, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 1033965363, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -431517076, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: -498000133, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  - {fileID: 231148560, guid: 54a5f2e015ec80344a2962102caf3eb0, type: 3}
+  minInterval: 1.25
+  maxInterval: 3.5
+  showDuration: 0.9
 --- !u!1 &2764545133507838133
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +216,7 @@ Transform:
   - {fileID: 5189604999712817211}
   - {fileID: 6562364512407522620}
   - {fileID: 2188082045091022912}
+  - {fileID: 1805345280912812766}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &4184018869992980998
@@ -180,6 +260,9 @@ MonoBehaviour:
   exit: {fileID: 0}
   exitRadius: 1.5
   queue: {fileID: 0}
+  decor: {fileID: 0}
+  decorViewRadius: 1.5
+  interestedInWaiting: 0
   orderBubble: {fileID: 8406788865723628861}
   emote: {fileID: 2381575865460478903}
   stateRightNow: 0
@@ -189,6 +272,8 @@ MonoBehaviour:
   breakfastUnlockDay: 5
   lunchUnlockDay: 7
   dinnerUnlockDay: 9
+  soloChoosesLoungeChance: 0.25
+  socialBubble: {fileID: 0}
   coinPrefab: {fileID: 111490766695922311, guid: 5f80248db315c9c429b0e24df9a1cbfd, type: 3}
   minTip: 0
   maxTip: 20
@@ -216,9 +301,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  customerMaterials:
-  - {fileID: 2100000, guid: 1816148b007fee3478a36edaeb2c1bb5, type: 2}
-  - {fileID: 2100000, guid: c32c147c3bec89e4b9f9aec1a012b656, type: 2}
 --- !u!114 &2935746446799378450
 MonoBehaviour:
   m_ObjectHideFlags: 0

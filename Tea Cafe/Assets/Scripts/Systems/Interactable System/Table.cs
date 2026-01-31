@@ -143,6 +143,10 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
                 timer = customerSeatTime;
 
                 Debug.Log("Table: Customer has been served!");
+                if (DailyGoalsManager.Instance != null)
+                {
+                    DailyGoalsManager.Instance.RegisterCustomerServed();
+                }
             }
             else
             {

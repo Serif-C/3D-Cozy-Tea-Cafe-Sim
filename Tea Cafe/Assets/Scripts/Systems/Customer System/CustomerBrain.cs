@@ -80,6 +80,8 @@ public class CustomerBrain : MonoBehaviour, IResettable
     public void Init(System.Action<GameObject> releasePool) { releaseToPool = releasePool; }
     public void DeSpawn() { releaseToPool?.Invoke(gameObject); }
 
+    private bool hasReportedSatisfaction;
+
     [Header("Coin and Tip Settings")]
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private float minTip = 0f;
@@ -337,6 +339,8 @@ public class CustomerBrain : MonoBehaviour, IResettable
 
         DetachToTable();
 
+        ReportSatisfaction();
+
         if (mySeat != null)
         {
             SeatingManager.Instance.ReleaseSeat(mySeat);
@@ -348,6 +352,22 @@ public class CustomerBrain : MonoBehaviour, IResettable
         yield return Go(randomExitTarget);
 
         DeSpawn();
+    }
+
+
+    private void ReportSatisfaction()
+    {
+        if (hasReportedSatisfaction)
+        {
+            return;
+        }
+
+        if (DailyGoalsManager.Instance != null && myMood != null)
+        {
+            DailyGoalsManager.Instance.RegisterCustomerSatisfaction(myMood.currentMoodValue);
+        }
+
+        hasReportedSatisfaction = true;
     }
 
     private ITarget SampleAroundTransformTargetRandomly(Vector3 basePos, float sampleRadius)
@@ -377,9 +397,9 @@ public class CustomerBrain : MonoBehaviour, IResettable
         /* Create a flag done = false;
          * Define a tiny helper function Handler() that sets done = true
          * Tell movement to start going somewhere
-         * Subscribe to the movement’s event — “when you arrive, call Handler()”
+         * Subscribe to the movementÂ’s event Â— Â“when you arrive, call Handler()Â”
          * Wait (do nothing) until done flips to true
-         * Once we’re done waiting, unsubscribe from the event (cleanup)
+         * Once weÂ’re done waiting, unsubscribe from the event (cleanup)
          */
         IEnumerator Go(ITarget t)
     {
@@ -497,6 +517,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
     {
         SetState(CustomerState.EnteringCafe);
         myMood.ResetMood();
+        hasReportedSatisfaction = false;
 
         // Generate a fresh order for this spawn
         GenerateOrder();

@@ -23,6 +23,10 @@ public class PlayerManager : MonoBehaviour
     public void SetCountAmount(int amount)
     {
         walletBalance += amount;
+        if (DailyGoalsManager.Instance != null)
+        {
+            DailyGoalsManager.Instance.RegisterMoneyEarned(amount);
+        }
     }
 
     public void SetWalletBalance(int balance)

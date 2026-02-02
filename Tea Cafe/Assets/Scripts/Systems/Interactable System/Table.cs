@@ -194,7 +194,7 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
                 storedItem = null;
 
                 RaiseProgressChanged();
-                Debug.Log("Finished cleaning");
+                //Debug.Log("Finished cleaning");
             }
             else
             {

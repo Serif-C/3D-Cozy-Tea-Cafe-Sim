@@ -1,10 +1,12 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour, IMoneyEarnedSource
 {
     public static PlayerManager Instance;
     public int walletBalance = 0;
     private bool isQuitting;
+
+    public event System.Action<int> MoneyEarned;
 
     private void Awake()
     {
@@ -23,6 +25,7 @@ public class PlayerManager : MonoBehaviour
     public void SetCountAmount(int amount)
     {
         walletBalance += amount;
+        MoneyEarned?.Invoke(amount);
     }
 
     public void SetWalletBalance(int balance)

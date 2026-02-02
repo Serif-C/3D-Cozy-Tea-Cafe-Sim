@@ -23,7 +23,6 @@ public class TeaLeaf : MonoBehaviour, IInteractable
 
     public void Interact(PlayerInteractor player)
     {
-        Debug.Log("Tea Flower: Player takes a Tea Leaf!");
         //GameObject item = Instantiate(teaLeaftPrefab, teaLeafSpawnPoint.position, Quaternion.identity);
         GameObject item = Instantiate(teaLeaftPrefab);
         item.GetComponent<Leaf>().SetLeafType(leafType);

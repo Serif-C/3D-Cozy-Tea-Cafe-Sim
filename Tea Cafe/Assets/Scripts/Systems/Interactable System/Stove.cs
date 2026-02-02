@@ -89,7 +89,6 @@ public class Stove : MonoBehaviour, IInteractable, IHasProgress
         // Case 1: start boiling
         if (!isBoiling && !hasFinishedItem)
         {
-            Debug.Log("Stove: Started Boiling Water!");
             isBoiling = true;
             timer = cookTime;
             //fireEffect?.Play(); // start flames if assigned
@@ -97,7 +96,6 @@ public class Stove : MonoBehaviour, IInteractable, IHasProgress
         // Case 2: take finished item
         else if (hasFinishedItem && !player.IsHoldingItem())
         {
-            Debug.Log("Stove: Player takes Boiled Water!");
             GameObject item = Instantiate(cookedItemPrefab, spawnPoint.position, Quaternion.identity);
             player.PickUp(item);
             hasFinishedItem = false;
@@ -115,7 +113,6 @@ public class Stove : MonoBehaviour, IInteractable, IHasProgress
                 hasFinishedItem = true;
                 //fireEffect?.Stop();
                 RaiseProgressChanged(); // will flip ShowProgress to false and Progress01 to 1
-                Debug.Log("Stove: Boiled Water is ready!");
             }
             else
             {

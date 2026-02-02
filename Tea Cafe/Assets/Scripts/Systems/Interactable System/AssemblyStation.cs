@@ -44,17 +44,13 @@ public class AssemblyStation : MonoBehaviour, IInteractable
         // Otherwise allow adding if player has something and there's room.
         if (outputItem != null)
         {
-            Debug.Log("AssemblyStation: Output item exists, player can only take it if not holding anything.");
             return !player.IsHoldingItem();
         }
 
         if (player.IsHoldingItem())
         {
-            Debug.Log("AssemblyStation: Player is holding an item and there is room to add it.");
             return GetFirstEmptySlot() != null;
         }
-
-        Debug.Log("AssemblyStation: Player is not holding an item to add.");
 
         return false;
     }
@@ -231,6 +227,5 @@ public class AssemblyStation : MonoBehaviour, IInteractable
         placedIngredients.Clear();
 
         outputItem = Instantiate(entry.outputPrefab, outputSlot.position, outputSlot.rotation, outputSlot);
-        Debug.Log("AssemblyStation: Crafted " + entry.outputPrefab.name);   
     }
 }

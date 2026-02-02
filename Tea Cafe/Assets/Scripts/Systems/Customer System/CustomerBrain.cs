@@ -18,7 +18,7 @@ public enum CustomerState
     Browsing,    // Customer walks around viewing decorations  
 }
 
-public class CustomerBrain : MonoBehaviour, IResettable
+public class CustomerBrain : MonoBehaviour, IResettable, ICustomerServedSource
 {
     private TimeManager timeManager;
 
@@ -51,6 +51,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [Header("Customer Order Settings")]
     [SerializeField] private DrinkType desiredDrink = DrinkType.BlackTea;
     [SerializeField] private MainDish desiredDish;
+    public event Action<CustomerBrain> CustomerServed;
 
     [Header("Customer Mood Settings")]
     private CustomerMood myMood;
@@ -86,6 +87,9 @@ public class CustomerBrain : MonoBehaviour, IResettable
     [SerializeField] private float maxTip = 20f;
     [Tooltip("Animation curve tipping: Most tip low, but rarely, very happy customers tip really high:")]
     [SerializeField] private AnimationCurve tipByMood = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+
+    // Explicit Life Cycle
+    private Coroutine runRoutine;
 
     private void Awake()
     {
@@ -123,10 +127,29 @@ public class CustomerBrain : MonoBehaviour, IResettable
             timeManager = FindFirstObjectByType<TimeManager>();
     }
 
-    private void OnEnable()
+    public void Activate()
     {
-        StartCoroutine(DelayedStart());
+        ResetObject();
+
+        if (runRoutine != null)
+            StopCoroutine(runRoutine);
+
+        runRoutine = StartCoroutine(Run());
     }
+
+    public void Deactivate()
+    {
+        if (runRoutine != null)
+        {
+            StopCoroutine(runRoutine);
+            runRoutine = null;
+        }
+    }
+
+    //private void OnEnable()
+    //{
+    //    StartCoroutine(DelayedStart());
+    //}
 
     private IEnumerator DelayedStart()
     {
@@ -304,6 +327,7 @@ public class CustomerBrain : MonoBehaviour, IResettable
             }
         }
 
+        CustomerServed?.Invoke(this);
     }
 
     private void AttachToTable(Table table)

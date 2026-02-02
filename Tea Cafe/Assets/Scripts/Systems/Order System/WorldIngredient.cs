@@ -21,7 +21,6 @@ public class WorldIngredient : MonoBehaviour
             if (teaLeaf.isTeaLeaf && teaLeaf.leafDrinkType == leafType)
             {
                 ingredient = teaLeaf;
-                Debug.Log("WorldIngredient: Assigned tea leaf ingredient " + teaLeaf.name);
                 break;
             }
         }

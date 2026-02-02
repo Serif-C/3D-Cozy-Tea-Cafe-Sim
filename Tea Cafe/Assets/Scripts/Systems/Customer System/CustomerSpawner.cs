@@ -7,7 +7,8 @@ public class CustomerSpawner : MonoBehaviour
     [Header("References")]
     private TimeManager timeManager;
     [SerializeField] private GameObject[] customerPrefabs;
-    
+    [SerializeField] private CustomerServiceEventHub serviceHub;
+
     [Header("Spawner Settings")]
     [SerializeField] private Vector3 spawnRadius = new Vector3(5, 0, 5);
     [Tooltip("X = hour of day (0–24), Y = seconds between spawns (lower = more customers during rush)")]
@@ -70,7 +71,6 @@ public class CustomerSpawner : MonoBehaviour
     private void OnGet(GameObject obj)
     {
         obj.SetActive(true);
-
         CustomerManager.Instance.IncrementCurrentCustomer();
 
         // random spawn position
@@ -84,7 +84,15 @@ public class CustomerSpawner : MonoBehaviour
         // Hand the customer a release callback
         var brain = obj.GetComponent<CustomerBrain>();
         if (brain != null)
+        {
             brain.Init(ReleaseToPool);
+
+            // Register
+            if (serviceHub != null)
+                serviceHub.Register(brain);
+
+            brain.Activate();
+        }
     }
     
     private void OnRelease(GameObject obj)
@@ -96,7 +104,14 @@ public class CustomerSpawner : MonoBehaviour
         // Clear callback (optional hygiene)
         var brain = obj.GetComponent<CustomerBrain>();
         if (brain != null)
+        {
+            brain.Deactivate();
+
+            if (serviceHub != null)
+                serviceHub.Unregister(brain);
+
             brain.Init(null);
+        }
     }
 
     private void OnDestroyItem(GameObject obj) => Destroy(obj);

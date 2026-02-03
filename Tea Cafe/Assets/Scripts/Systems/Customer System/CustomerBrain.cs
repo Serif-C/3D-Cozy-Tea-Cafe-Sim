@@ -91,6 +91,8 @@ public class CustomerBrain : MonoBehaviour, IResettable, ICustomerServedSource
     // Explicit Life Cycle
     private Coroutine runRoutine;
 
+    public event Action<int> ReputationImpact;
+
     private void Awake()
     {
         originalParent = transform.parent;
@@ -370,6 +372,9 @@ public class CustomerBrain : MonoBehaviour, IResettable, ICustomerServedSource
         ITarget randomExitTarget = SampleAroundTransformTargetRandomly(exit.Position, exitRadius);
 
         yield return Go(randomExitTarget);
+
+        int repDelta = myMood.IsFedUp ? -3 : +1;
+        ReputationImpact?.Invoke(repDelta);
 
         DeSpawn();
     }

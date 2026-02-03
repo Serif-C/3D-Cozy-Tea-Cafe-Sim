@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -8,10 +9,31 @@ public class DailyGoalManager : MonoBehaviour
 
     private List<DailyGoal> activeGoals = new();
 
+    public event Action GoalsUpdated;
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
     }
+
+    public float GetCompletionRatio()
+    {
+        if (activeGoals.Count == 0)
+            return 0f;
+
+        float total = 0f;
+        foreach (var goal in activeGoals)
+            total += goal.Progress01; // 0–1
+
+        return total / activeGoals.Count;
+    }
+
 
     public void StartNewDay(List<DailyGoal> goals)
     {
@@ -23,6 +45,9 @@ public class DailyGoalManager : MonoBehaviour
         {
             goal.Initialize();
         }
+
+        GoalsUpdated?.Invoke();
+        Debug.Log($"GoalsUpdated invoked. Goals count: {activeGoals.Count}");
     }
 
     public void EndOfDay()
@@ -38,7 +63,7 @@ public class DailyGoalManager : MonoBehaviour
         }
 
         activeGoals.Clear();
-    }
+    }   
 
     public IReadOnlyList<DailyGoal> GetGoals() => activeGoals;
 }

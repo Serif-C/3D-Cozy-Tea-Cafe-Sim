@@ -8,6 +8,7 @@ public class CustomerSpawner : MonoBehaviour
     private TimeManager timeManager;
     [SerializeField] private GameObject[] customerPrefabs;
     [SerializeField] private CustomerServiceEventHub serviceHub;
+    [SerializeField] private CafeReputationManager reputationManager;
 
     [Header("Spawner Settings")]
     [SerializeField] private Vector3 spawnRadius = new Vector3(5, 0, 5);

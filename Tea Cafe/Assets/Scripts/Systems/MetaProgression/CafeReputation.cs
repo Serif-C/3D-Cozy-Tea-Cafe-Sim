@@ -4,7 +4,7 @@ using UnityEngine;
 public class CafeReputation
 { 
     [Range(0, 1000)]
-    public int Value = 500;
+    public int Value = 0;
 
     public void Add(int amount)
     {

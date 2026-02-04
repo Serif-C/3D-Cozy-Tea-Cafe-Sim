@@ -14,7 +14,7 @@ public class TimeManager : MonoBehaviour, ITimeScaleController
 
     [Header("Time Scale")]
     [Tooltip("How many real-time seconds a full in-game day lasts")]
-    [SerializeField] private float realSecondsPerGameDay = 3600f;
+    [SerializeField] private float realSecondsPerGameDay = 300f;
     [Tooltip("Value == 1.0 normal speed, 2.0 two times speed, etc....")]
     [SerializeField] private float defaultTimeScale = 1f;
 
@@ -158,6 +158,11 @@ public class TimeManager : MonoBehaviour, ITimeScaleController
     public MealTime GetMealTime()
     {
         return mealTime;
+    }
+
+    public void StartNextDay()
+    {
+
     }
 
     // ----------------------------

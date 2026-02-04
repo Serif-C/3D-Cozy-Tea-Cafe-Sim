@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd4b35e3b62cef47b1ddc89ff3e5334, type: 3}
   m_Name: PlayerProgress_Main
   m_EditorClassIdentifier: 
+  cafeRank:
+    Level: 1
+    CurrentXP: 0
+  cafeReputation:
+    Value: 0
   hasUnlockedSatisfaction: 0
   hasUnlockedMeals: 0
   hasUnlockedParties: 0

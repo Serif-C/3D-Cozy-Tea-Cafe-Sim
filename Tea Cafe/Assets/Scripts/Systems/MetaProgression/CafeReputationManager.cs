@@ -4,6 +4,8 @@ public class CafeReputationManager : MonoBehaviour
 {
     [SerializeField] private PlayerProgress progress;
 
+    public int Value { get; private set; }
+
     public void Register(CustomerBrain brain)
     {
         brain.ReputationImpact += OnReputationImpact;

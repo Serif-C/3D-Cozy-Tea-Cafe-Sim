@@ -300,7 +300,10 @@ public class CustomerBrain : MonoBehaviour, IResettable, ICustomerServedSource
             {
                 myMood.GetEmote(myMood.currentMoodValue);
                 SetState(CustomerState.LeavingCafe);
+
+                DailyCafeStats.Instance?.OnCustomerLost(myMood.currentMoodValue);
                 // play here: angry animation or something
+
                 yield return LeaveCafe();
                 yield break;
             }
@@ -330,6 +333,7 @@ public class CustomerBrain : MonoBehaviour, IResettable, ICustomerServedSource
         }
 
         CustomerServed?.Invoke(this);
+        DailyCafeStats.Instance?.OnCustomerServed(myMood.currentMoodValue);
     }
 
     private void AttachToTable(Table table)

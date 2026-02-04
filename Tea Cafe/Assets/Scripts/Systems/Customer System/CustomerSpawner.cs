@@ -91,6 +91,8 @@ public class CustomerSpawner : MonoBehaviour
             // Register
             if (serviceHub != null)
                 serviceHub.Register(brain);
+            if (reputationManager != null)
+                reputationManager.Register(brain);
 
             brain.Activate();
         }
@@ -110,6 +112,8 @@ public class CustomerSpawner : MonoBehaviour
 
             if (serviceHub != null)
                 serviceHub.Unregister(brain);
+            if (reputationManager != null)
+                reputationManager.Unregister(brain);
 
             brain.Init(null);
         }

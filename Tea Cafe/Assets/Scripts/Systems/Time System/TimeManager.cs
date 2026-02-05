@@ -42,6 +42,7 @@ public class TimeManager : MonoBehaviour, ITimeScaleController
     public float DayProgress01 { get; private set; }
     public Action<int, int> OnHourChanged;
     public Action OnDayChanged;
+    public event Action DayEnded;
 
     [Header("Current Time")]
     [SerializeField] private float timeInCurrentDaySeconds;
@@ -86,6 +87,7 @@ public class TimeManager : MonoBehaviour, ITimeScaleController
         {
             timeInCurrentDaySeconds -= realSecondsPerGameDay; // basically = 0
             IncrementDate();
+            DayEnded?.Invoke();
             OnDayChanged?.Invoke();
         }
 
@@ -162,7 +164,7 @@ public class TimeManager : MonoBehaviour, ITimeScaleController
 
     public void StartNextDay()
     {
-
+        Debug.Log("Not implemented yet");
     }
 
     // ----------------------------

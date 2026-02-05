@@ -4,8 +4,25 @@ public class EndOfDayController : MonoBehaviour
 {
     [SerializeField] private PlayerProgress playerProgress;
     public EndOfDayReport LastReport { get; private set; }
+
+    private void OnEnable()
+    {
+        var timeManager = FindFirstObjectByType<TimeManager>();
+        if (timeManager != null)
+            timeManager.DayEnded += OnDayEnded;
+    }
+
+    private void OnDisable()
+    {
+        var timeManager = FindFirstObjectByType<TimeManager>();
+        if (timeManager != null)
+            timeManager.DayEnded -= OnDayEnded;
+    }
+
     public void OnDayEnded()
     {
+        Debug.Log("DAY ENDED TRIGGERED");
+
         var stats = DailyCafeStats.Instance;
         if (stats == null)
         {
@@ -40,18 +57,6 @@ public class EndOfDayController : MonoBehaviour
         // 5) Unlock checks
         playerProgress.EvaluateUnlocks();
 
-        // 6) Cleanup daily goals (they will be recreated on next day start)
-        if (DailyGoalManager.Instance != null)
-            DailyGoalManager.Instance.EndOfDay();
-
-        // 7) Reset daily-only stats (served/lost/money/repDelta)
-        stats.ResetForNewDay();
-
-        // 8) Pause (EOD Summary UI will show on top)
-        Time.timeScale = 0f;
-
-        Debug.Log($"[EOD] goals={goalCompletion:P0}, rep01={rep01:0.00}, xp={xpGained}");
-
         var report = new EndOfDayReport
         {
             customersServed = stats.CustomersServed,
@@ -64,6 +69,19 @@ public class EndOfDayController : MonoBehaviour
         };
 
         LastReport = report;
+
+        // 6) Cleanup daily goals (they will be recreated on next day start)
+        if (DailyGoalManager.Instance != null)
+            DailyGoalManager.Instance.EndOfDay();
+
+        // 7) Reset daily-only stats (served/lost/money/repDelta)
+        stats.ResetForNewDay();
+
+        // 8) Pause (EOD Summary UI will show on top)
+        Time.timeScale = 0f;
+
+        Debug.Log($"[EOD] goals={goalCompletion:P0}, rep01={rep01:0.00}, xp={xpGained}");
+
 
         // Show UI
         FindFirstObjectByType<EndOfDaySummaryUI>()?.Show(report);

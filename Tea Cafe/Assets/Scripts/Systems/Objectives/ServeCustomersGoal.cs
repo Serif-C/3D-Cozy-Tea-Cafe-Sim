@@ -25,6 +25,7 @@ public class ServeCustomersGoal : DailyGoal
 
     private void OnCustomerServed(CustomerBrain brain)
     {
+        Debug.Log("Customer served event received!");
         Increment();
 
         // Optional debug

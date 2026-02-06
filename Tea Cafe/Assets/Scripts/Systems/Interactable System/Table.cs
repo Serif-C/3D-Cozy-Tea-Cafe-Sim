@@ -142,7 +142,7 @@ public class Table : MonoBehaviour, IInteractable, IHasProgress
                 isServed = true;
                 timer = customerSeatTime;
 
-                Debug.Log("Table: Customer has been served!");
+                //Debug.Log("Table: Customer has been served!");
             }
             else
             {

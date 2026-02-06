@@ -199,4 +199,9 @@ public class TimeManager : MonoBehaviour, ITimeScaleController
     {
         Resume();
     }
+
+    public int GetCurrentDay()
+    {
+        return currentDay;
+    }
 }

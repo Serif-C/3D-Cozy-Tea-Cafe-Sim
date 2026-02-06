@@ -42,8 +42,7 @@ public class RecipeSO: ScriptableObject
     public string id;
     public RecipeOutputKind outputKind;
     public IngredientSO outputIngredient;      // e.g. "BlackTeaLeaf" (if outputKind is Ingredient)\
-    public MenuItemID outputMenuItem;
+    public MenuItemSO outputMenuItem;
     public ToolType toolType = ToolType.None;
-    public int unlockDay = 1;
     [SerializeField] public List<IngredientRequirement> requirements = new List<IngredientRequirement>();
 }

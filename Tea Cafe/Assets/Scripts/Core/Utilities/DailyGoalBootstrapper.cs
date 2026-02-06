@@ -17,9 +17,7 @@ public class DailyGoalBootstrapper : MonoBehaviour
             playerProgress
         );
 
-        var goals = factory.CreateGoals(playerProgress);
+        var goals = factory.CreateGoals(timeManager.GetCurrentDay());
         DailyGoalManager.Instance.StartNewDay(goals);
-
-        //FindFirstObjectByType<DailyGoalsUI>()?.BuildUI();
     }
 }

@@ -24492,7 +24492,7 @@ MonoBehaviour:
   timeInCurrentDaySeconds: 0
   currentHour: 0
   currentMinute: 0
-  currentDay: 1
+  currentDay: 7
   currentMonth: 1
   mealTime: 0
 --- !u!4 &1347946731

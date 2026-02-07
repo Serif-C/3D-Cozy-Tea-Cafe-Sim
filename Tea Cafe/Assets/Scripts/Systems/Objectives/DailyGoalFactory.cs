@@ -3,17 +3,20 @@ using UnityEngine;
 
 public class DailyGoalFactory
 {
-     private readonly ICustomerServedSource customerServedSource;
+    private readonly ICustomerServedSource customerServedSource;
     private readonly IMoneyEarnedSource moneyEarnedSource;
+    private readonly ISatisfactionSource satisfactionSource;
     private readonly PlayerProgress progress;
 
     public DailyGoalFactory(
         ICustomerServedSource customerServedSource,
         IMoneyEarnedSource moneyEarnedSource,
+        ISatisfactionSource satisfactionSource,
         PlayerProgress progress)
     {
         this.customerServedSource = customerServedSource;
         this.moneyEarnedSource = moneyEarnedSource;
+        this.satisfactionSource = satisfactionSource;
         this.progress = progress;
     }
 
@@ -63,6 +66,9 @@ public class DailyGoalFactory
 
             DailyGoalType.EarnMoney =>
                 new EarnMoneyGoal(moneyEarnedSource, amount),
+
+            DailyGoalType.AverageCustomerMood =>
+                new AverageCustomerSatisfactionGoal(satisfactionSource, amount),
 
             _ => throw new System.NotImplementedException()
         };

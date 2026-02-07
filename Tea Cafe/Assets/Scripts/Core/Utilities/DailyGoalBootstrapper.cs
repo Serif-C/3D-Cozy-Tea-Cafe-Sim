@@ -12,8 +12,9 @@ public class DailyGoalBootstrapper : MonoBehaviour
     private void Start()
     {
         factory = new DailyGoalFactory(
-            customerHub,
-            playerManager,
+            customerHub,   // ICustomerServedSource
+            playerManager, // IMoneyEarnedSource
+            customerHub,   // ICustomerSatisfactionSource
             playerProgress
         );
 

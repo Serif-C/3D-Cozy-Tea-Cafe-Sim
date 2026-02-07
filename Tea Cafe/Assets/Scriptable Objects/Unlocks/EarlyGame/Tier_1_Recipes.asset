@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Tier_1_Recipes
   m_EditorClassIdentifier: 
   unlocksItem: {fileID: 0}
-  requiredRank: 0
-  requiredReputation: 0
+  requiredRank: 2
+  requiredReputation: 10
   requiredHappyCustomers: 0

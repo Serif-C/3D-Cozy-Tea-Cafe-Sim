@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58064f7b0db43dc468a3e8f6a3afcd31, type: 3}
-  m_Name: Money Earned
+  m_Name: Customer Average Mood
   m_EditorClassIdentifier: 
-  goalID: MoneyEarned
-  goalType: 1
+  goalID: Average Mood
+  goalType: 2
   alwaysInclude: 0
   baseAmount: 50
   scalingByDay:
@@ -22,18 +22,18 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0

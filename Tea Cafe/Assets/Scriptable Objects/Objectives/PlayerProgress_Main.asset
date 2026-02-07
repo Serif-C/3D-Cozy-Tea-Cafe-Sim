@@ -16,8 +16,11 @@ MonoBehaviour:
     Level: 1
     CurrentXP: 0
   cafeReputation:
-    Value: 0
-  hasUnlockedSatisfaction: 0
-  hasUnlockedMeals: 0
-  hasUnlockedParties: 0
+    Value: 5
+  allDailyGoalDefinitions:
+  - {fileID: 11400000, guid: 45a6356200de92946b60b07ad92dbf6e, type: 2}
+  - {fileID: 11400000, guid: 7477814ac62ddbd4ab6c387a8f6d9f29, type: 2}
+  - {fileID: 11400000, guid: ff44d5f2f21afe245993d66a3e003e4d, type: 2}
+  allUnlockRequirements:
+  - {fileID: 11400000, guid: dadff166d6ef63c4a9f2198b19e6dec1, type: 2}
   highestDayReached: 0

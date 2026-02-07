@@ -6,8 +6,10 @@ public class DailyCafeStats : MonoBehaviour
 
     public int CustomersServed { get; private set; }
     public int CustomersLost { get; private set; }
+    public float CustomerSatisfactionAvg { get; private set; }
 
     private float moodSum;
+    private float moodAverage;  // Customer satisfaction/mood average
     private int moodSamples;
 
     public int MoneyEarnedToday { get; private set; }
@@ -52,6 +54,11 @@ public class DailyCafeStats : MonoBehaviour
     public void OnMoneyEarned(int amount)
     {
         MoneyEarnedToday += amount;
+    }
+
+    public void OnCustomerSatisfactionUpdated()
+    {
+        moodAverage = (moodSum / moodSamples);
     }
 
     public void AddReputationDelta(int delta)

@@ -18,7 +18,7 @@ public enum CustomerState
     Browsing,    // Customer walks around viewing decorations  
 }
 
-public class CustomerBrain : MonoBehaviour, IResettable, ICustomerServedSource
+public class CustomerBrain : MonoBehaviour, IResettable, ICustomerServedSource, ISatisfactionSource
 {
     private TimeManager timeManager;
 
@@ -57,6 +57,7 @@ public class CustomerBrain : MonoBehaviour, IResettable, ICustomerServedSource
     private CustomerMood myMood;
     [SerializeField] private float moodDecayAmount = 2f;    // The amount of mood deducted
     [SerializeField] private float moodDecayRate = 0.25f;   // The frequency the is deducted
+    public event Action<float> SatisfactionUpdated;
 
     [Header("Order Progression")]
     [SerializeField] private int breakfastUnlockDay = 5;
@@ -334,6 +335,10 @@ public class CustomerBrain : MonoBehaviour, IResettable, ICustomerServedSource
 
         CustomerServed?.Invoke(this);
         DailyCafeStats.Instance?.OnCustomerServed(myMood.currentMoodValue);
+
+        float finalSatisfaction = myMood.currentMoodValue;
+        SatisfactionUpdated.Invoke(finalSatisfaction);
+        DailyCafeStats.Instance?.OnCustomerSatisfactionUpdated();
     }
 
     private void AttachToTable(Table table)

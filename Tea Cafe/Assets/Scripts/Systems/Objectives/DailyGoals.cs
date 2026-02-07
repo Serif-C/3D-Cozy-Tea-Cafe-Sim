@@ -5,6 +5,8 @@ public abstract class DailyGoal
     public string Title { get; protected set; }
     public string Description { get; protected set; }
 
+    public bool IsAPersistenGoal = false;
+
     public int Target { get; protected set; }
     public int Current {  get; protected set; }
 
@@ -19,5 +21,10 @@ public abstract class DailyGoal
     {
         Current += amount;
         Current = Mathf.Min(Current, Target);
+    }
+
+    public void MakeGoalTrackingPersisten(bool flag)
+    {
+        IsAPersistenGoal = flag;
     }
 }

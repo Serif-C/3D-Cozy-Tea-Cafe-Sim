@@ -8,6 +8,8 @@ public class AverageCustomerSatisfactionGoal : DailyGoal
 
     public AverageCustomerSatisfactionGoal(ISatisfactionSource source, int target)
     {
+        base.MakeGoalTrackingPersisten(true); // Tracks AVG satisfaction throughout the day
+
         this.satisfactionSource = source;
         Target = target;
 

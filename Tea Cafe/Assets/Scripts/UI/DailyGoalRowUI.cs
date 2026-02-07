@@ -16,12 +16,20 @@ public class DailyGoalRowUI : MonoBehaviour
     private void Update()
     {
         if (goal != null)
-            Refresh();
+            Refresh();  
     }
 
     private void Refresh()
     {
-        string check = goal.IsCompleted ? "Done" : "•";
-        text.text = $"{check} {goal.Description} ({goal.Current}/{goal.Target})";
+        if (!goal.IsAPersistenGoal)
+        {
+            string check = goal.IsCompleted ? "DONE" : "•";
+            text.text = $"{check} {goal.Description} ({goal.Current}/{goal.Target})";
+        }
+        else
+        {
+            // Persistent goals are not be marked completed until the end of the day
+            text.text = $"{goal.Description} ({goal.Current}/{goal.Target})";
+        }
     }
 }

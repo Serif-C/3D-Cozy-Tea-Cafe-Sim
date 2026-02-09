@@ -30,6 +30,9 @@ public class PlayerProgress : ScriptableObject
 
     public bool Meets(UnlockRequirementSO unlock)
     {
+        // Should update later to include more conditions not only CafeRank and CafeRep
+        // Probably use switch statements for different Meets conditions
+        // E.G., Number of Happy Customers Served etc...
         return cafeRank.Level >= unlock.requiredRank
             && cafeReputation.Value >= unlock.requiredReputation;
     }

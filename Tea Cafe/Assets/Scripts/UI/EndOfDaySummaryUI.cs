@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class EndOfDaySummaryUI : MonoBehaviour
 {
+    [Header("Button References")]
+    [SerializeField] private GameObject shopUI;
+
     [Header("Root")]
     [SerializeField] private GameObject root;
 
@@ -50,8 +53,9 @@ public class EndOfDaySummaryUI : MonoBehaviour
         FindFirstObjectByType<TimeManager>()?.StartNextDay();
     }
 
-    public void OnShopPressed()
+    public void OpenShop()
     {
-        Debug.Log("Shop not implemented yet");
+        shopUI.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

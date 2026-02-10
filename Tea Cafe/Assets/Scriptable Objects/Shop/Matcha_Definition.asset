@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209ca9d155cf7384b9b5202d2ca842ad, type: 3}
+  m_Name: Matcha_Definition
+  m_EditorClassIdentifier: 
+  displayName: Matcha Tea
+  cost: 1000
+  icon: {fileID: -1314244962, guid: 5744ad7044e4f844d89f0aec4a3502d2, type: 3}
+  unlockRequirement: {fileID: 11400000, guid: dadff166d6ef63c4a9f2198b19e6dec1, type: 2}

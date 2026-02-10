@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PlayerProgress_Main
   m_EditorClassIdentifier: 
   cafeRank:
-    Level: 1
-    CurrentXP: 0
+    Level: 2
+    CurrentXP: 70
   cafeReputation:
-    Value: 5
+    Value: 11
   allDailyGoalDefinitions:
   - {fileID: 11400000, guid: 45a6356200de92946b60b07ad92dbf6e, type: 2}
   - {fileID: 11400000, guid: 7477814ac62ddbd4ab6c387a8f6d9f29, type: 2}

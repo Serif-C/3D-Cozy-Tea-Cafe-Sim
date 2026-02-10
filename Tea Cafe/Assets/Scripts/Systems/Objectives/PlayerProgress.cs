@@ -22,6 +22,9 @@ public class PlayerProgress : ScriptableObject
     {
         foreach (var unlock in allUnlockRequirements)
         {
+            if (unlock.unlockViaShopOnly)
+                continue;
+
             if (Meets(unlock))
                 Unlock(unlock.unlocksItem);
         }

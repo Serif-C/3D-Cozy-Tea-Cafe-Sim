@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d43b0e2f5bb604c9ed25407e3354b2, type: 3}
   m_Name: MatchaTea_Recipe
   m_EditorClassIdentifier: 
-  id: 
-  outputKind: 0
+  id: Matcha_Tea_Recipe
+  outputKind: 1
   outputIngredient: {fileID: 0}
   outputMenuItem: {fileID: 0}
   toolType: 0
-  requirements: []
+  requirements:
+  - specific: {fileID: 0}
+    amount: 0
+    requiredDistinct: 0
+    distinctCount: 0

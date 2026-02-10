@@ -8,4 +8,6 @@ public class UnlockRequirementSO : ScriptableObject
     public int requiredRank;
     public int requiredReputation;
     public int requiredHappyCustomers;
+
+    public bool unlockViaShopOnly;
 }

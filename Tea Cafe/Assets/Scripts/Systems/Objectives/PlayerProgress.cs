@@ -26,9 +26,14 @@ public class PlayerProgress : ScriptableObject
                 continue;
 
             if (Meets(unlock))
-                Unlock(unlock.unlocksItem);
+            {
+                foreach (var item in unlock.unlocksItems)
+                {
+                    if (item == null) continue;
+                    Unlock(item);
+                }
+            }
         }
-
     }
 
     public bool Meets(UnlockRequirementSO unlock)

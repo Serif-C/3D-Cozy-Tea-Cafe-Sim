@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Cafe/Unlock Requirement")]
 public class UnlockRequirementSO : ScriptableObject
 {
-    public UnlockableItemSO unlocksItem;
+    public List<UnlockableItemSO> unlocksItems;
 
     public int requiredRank;
     public int requiredReputation;

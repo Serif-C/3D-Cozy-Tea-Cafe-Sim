@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7a2ec2a998af6e4794cac84ccf5d11a, type: 3}
-  m_Name: MatchaTea_Unlockable
+  m_Name: Matcha_Basic_Unlockable
   m_EditorClassIdentifier: 
   id: 
   category: 0

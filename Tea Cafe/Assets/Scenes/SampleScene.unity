@@ -16009,7 +16009,7 @@ MonoBehaviour:
   itemButtonPrefab: {fileID: 7590369418099192312, guid: 1baac158c6d8cb4469e6c26d4de355c3, type: 3}
   moneyText: {fileID: 355960014}
   shopItems:
-  - {fileID: 11400000, guid: 904b5a13710c0354cb7544e59de4a177, type: 2}
+  - {fileID: 11400000, guid: fc5d20490c22b164f9d98d3946ffb0b7, type: 2}
 --- !u!1 &842404831
 GameObject:
   m_ObjectHideFlags: 0

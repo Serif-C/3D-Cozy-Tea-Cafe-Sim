@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0dd7d3ef43a158e4e96b465f2ba9e28e, type: 3}
-  m_Name: Matcha_Req_Unlock
+  m_Name: Milk_Req_Unlock
   m_EditorClassIdentifier: 
   unlocksItems:
-  - {fileID: 11400000, guid: 459abd8795a30694890cc504dc197de9, type: 2}
-  - {fileID: 11400000, guid: a754132d86d81e04597a238885d993b5, type: 2}
-  requiredRank: 2
-  requiredReputation: 10
+  - {fileID: 11400000, guid: 25e3305bbfdc3d34b8727ab90edd8673, type: 2}
+  - {fileID: 11400000, guid: 8116dafcd193baf4c9f47252d036a043, type: 2}
+  requiredRank: 3
+  requiredReputation: 11
   requiredHappyCustomers: 0
   unlockViaShopOnly: 1

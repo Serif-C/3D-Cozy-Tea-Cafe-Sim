@@ -13,7 +13,10 @@ public enum DrinkType // (Classic Warm Teas)
     Herbal,
 
     // Mid Complexity
-    //MatchaTarro,
+    MatchaTea,
+    HoneyMatchaTea,
+    MilkTea,
+    HoneyMilkTea
 
     // High Complexity
     //UberDeluxeTea

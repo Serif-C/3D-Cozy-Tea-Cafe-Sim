@@ -18,7 +18,19 @@ MonoBehaviour:
   outputMenuItem: {fileID: 0}
   toolType: 0
   requirements:
-  - specific: {fileID: 0}
-    amount: 0
+  - specific: {fileID: 11400000, guid: c73d887adb1518149813f6281eebc92c, type: 2}
+    amount: 1
+    requiredDistinct: 0
+    distinctCount: 0
+  - specific: {fileID: 11400000, guid: 17c9f0c2c927c004ba4dc47b09c5bc21, type: 2}
+    amount: 1
+    requiredDistinct: 0
+    distinctCount: 0
+  - specific: {fileID: 11400000, guid: 2bf009b1cb95c6149918e030e72b1758, type: 2}
+    amount: 1
+    requiredDistinct: 0
+    distinctCount: 0
+  - specific: {fileID: 11400000, guid: 737c40154f6403e47a45842ad54d2799, type: 2}
+    amount: 1
     requiredDistinct: 0
     distinctCount: 0

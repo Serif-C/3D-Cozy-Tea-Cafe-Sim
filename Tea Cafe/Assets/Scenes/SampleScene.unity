@@ -24096,6 +24096,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1304505141}
   - component: {fileID: 1304505142}
+  - component: {fileID: 1304505143}
   m_Layer: 5
   m_Name: ItemsContainer
   m_TagString: Untagged
@@ -24146,6 +24147,20 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1304505143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304505140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1001 &1304769589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32476,6 +32491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerProgress: {fileID: 11400000, guid: b30c9fed933bd3544ba67c8996ae9400, type: 2}
+  playerInventory: {fileID: 11400000, guid: dd0a9c155adec484488efb704ef119bf, type: 2}
 --- !u!4 &1752054365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 989751692214287660, guid: 4d745f6aaf6e0ea46b6685d4a9a5c492, type: 3}

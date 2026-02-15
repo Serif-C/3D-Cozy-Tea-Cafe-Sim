@@ -2,6 +2,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum ShopCategory
+{
+    Unlocks,
+    Teas,
+    Decors,
+    Appliances
+}
+
 public class ShopUI : MonoBehaviour
 {
     [Header("Wiring")]
@@ -12,12 +20,19 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private Transform itemsContainer;
     [SerializeField] private ShopItemButton itemButtonPrefab;
     [SerializeField] private TMP_Text moneyText;
+    private ShopCategory currentCategory;
 
     [Header("Catalog")]
     [SerializeField] private List<ShopItemDefinition> shopItems;
 
     private void OnEnable()
     {
+        Rebuild();
+    }
+
+    public void SetCategory(ShopCategory category)
+    {
+        currentCategory = category;
         Rebuild();
     }
 
@@ -33,6 +48,9 @@ public class ShopUI : MonoBehaviour
         // Build buttons
         foreach (var item in shopItems)
         {
+            if (item.category != currentCategory)
+                continue;
+
             var btn = Instantiate(itemButtonPrefab, itemsContainer);
             btn.Setup(item, shopManager, this);
         }

@@ -4,50 +4,60 @@ using UnityEngine;
 public class ShopManager : MonoBehaviour
 {
     [SerializeField] private PlayerProgress playerProgress;
+    [SerializeField] private PlayerInventory playerInventory;
 
     public bool CanPurchase(ShopItemDefinition item)
     {
-        if (item == null || item.unlockRequirement == null || item.unlockRequirement.unlocksItems == null)
-        {
-            Debug.Log("Returned false");
+        if (item == null)
             return false;
-        }
-        // Money check
+
         if (PlayerManager.Instance.walletBalance < item.cost)
         {
             Debug.Log("Returned false");
             return false;
         }
-        // Already unlocked check (uses YOUR existing system)
-        bool allUnlocked = true;
-        foreach (var unlockable in item.unlockRequirement.unlocksItems)
-        {
-            if (unlockable == null) continue;
 
-            if (!playerProgress.IsUnlocked(unlockable))
+        switch (item.itemType)
+        {
+            case ShopItemType.Unlock:
             {
-                allUnlocked = false;
-                break;
+                if (item.unlockRequirement == null || item.unlockRequirement.unlocksItems == null)
+                {
+                    Debug.Log("Returned false");
+                    return false;
+                }
+
+                // Already unlocked check (uses existing system)
+                bool allUnlocked = true;
+                foreach (var unlockable in item.unlockRequirement.unlocksItems)
+                {
+                    if (unlockable == null) continue;
+
+                    if (!playerProgress.IsUnlocked(unlockable))
+                    {
+                        allUnlocked = false;
+                        break;
+                    }
+                }
+
+                if (allUnlocked){Debug.Log("Returned false - all already unlocked"); return false;}
+
+                if (!item.unlockRequirement.unlockViaShopOnly){Debug.Log("Returned false"); return false; /* don’t sell auto-unlock items */}
+
+                Debug.Log("Returned true");
+                return true;
+            }
+
+            case ShopItemType.InventoryItem:
+            {
+                // Inventory items only require money
+                // Optional For Later: add unlock gating here
+                return true;
             }
         }
 
-        if (allUnlocked)
-        {
-            Debug.Log("Returned false - all already unlocked");
-            return false;
-        }
-
-        if (!item.unlockRequirement.unlockViaShopOnly)
-        {
-            Debug.Log("Returned false");
-            return false; // don’t sell auto-unlock items
-        }
-        //// Optional: requirement gating (rank/rep/happy, etc.)
-        //// If Happy Customers isn't implemented yet, this will still work if Meets() ignores it or returns true.
-        //if (!playerProgress.Meets(item.unlockRequirement))
-        //    return false;
-        Debug.Log("Returned true");
-        return true;
+        Debug.Log("CanPurchase method returned false");
+        return false;
     }
 
     public bool Purchase(ShopItemDefinition item)
@@ -55,16 +65,27 @@ public class ShopManager : MonoBehaviour
         if (!CanPurchase(item))
             return false;
 
-        // Spend money (uses your existing PlayerManager API)
         PlayerManager.Instance.SetWalletBalance(PlayerManager.Instance.walletBalance - item.cost);
 
-        // Unlock via PlayerProgress (NOT a singleton)
-        foreach (var unlockable in item.unlockRequirement.unlocksItems)
+        switch (item.itemType)
         {
-            if (unlockable == null) continue;
+            // Unlock via PlayerProgress
+            case ShopItemType.Unlock:
+                foreach (var unlockable in item.unlockRequirement.unlocksItems)
+                {
+                    if (unlockable == null) continue;
 
-            if (!playerProgress.IsUnlocked(unlockable))
-                playerProgress.Unlock(unlockable);
+                    if (!playerProgress.IsUnlocked(unlockable))
+                        playerProgress.Unlock(unlockable);
+                }
+                break;
+
+            case ShopItemType.InventoryItem:
+                if (item.inventoryPrefab != null)
+                {
+                    playerInventory.Add(item.inventoryPrefab);
+                }
+                break;
         }
 
         return true;

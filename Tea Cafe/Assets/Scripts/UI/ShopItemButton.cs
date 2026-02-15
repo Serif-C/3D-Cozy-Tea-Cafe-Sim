@@ -17,6 +17,7 @@ public class ShopItemButton : MonoBehaviour
         this.item = item;
         this.shopManager = manager;
         this.shopUI = ui;
+        button.image.sprite = item.icon;
 
         Refresh();
         button.onClick.AddListener(OnClick);

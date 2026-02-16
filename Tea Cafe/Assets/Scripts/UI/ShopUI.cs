@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum ShopCategory
 {
@@ -15,24 +16,37 @@ public class ShopUI : MonoBehaviour
     [Header("Wiring")]
     [SerializeField] private ShopManager shopManager;
     [SerializeField] private GameObject endOfDaySummaryUI;
+    [SerializeField] private GameObject panel;
 
     [Header("UI")]
     [SerializeField] private Transform itemsContainer;
     [SerializeField] private ShopItemButton itemButtonPrefab;
     [SerializeField] private TMP_Text moneyText;
     private ShopCategory currentCategory;
+    [SerializeField] private Button unlocksButton;
+    [SerializeField] private Button teasButton;
+    [SerializeField] private Button decorsButton;
+    [SerializeField] private Sprite UnlockCategorySelected;
+    [SerializeField] private Sprite TeasCategorySelected;
+    [SerializeField] private Sprite DecorationsCategorySelected;
+    private Image selectedCategoryImage;
+
 
     [Header("Catalog")]
     [SerializeField] private List<ShopItemDefinition> shopItems;
 
     private void OnEnable()
     {
+        selectedCategoryImage = panel.GetComponent<Image>();
+        currentCategory = ShopCategory.Unlocks;
+        UpdateTabVisuals();
         Rebuild();
     }
 
     public void SetCategory(ShopCategory category)
     {
         currentCategory = category;
+        UpdateTabVisuals();
         Rebuild();
     }
 
@@ -54,6 +68,45 @@ public class ShopUI : MonoBehaviour
             var btn = Instantiate(itemButtonPrefab, itemsContainer);
             btn.Setup(item, shopManager, this);
         }
+    }
+
+    private void UpdateTabVisuals()
+    {
+        unlocksButton.interactable = currentCategory != ShopCategory.Unlocks;
+        teasButton.interactable = currentCategory != ShopCategory.Teas;
+        decorsButton.interactable = currentCategory != ShopCategory.Decors;
+
+        switch (currentCategory)
+        {
+            case ShopCategory.Unlocks:
+                selectedCategoryImage.sprite = UnlockCategorySelected;
+                break;
+
+            case ShopCategory.Teas:
+                selectedCategoryImage.sprite = TeasCategorySelected;
+                break;
+
+            case ShopCategory.Decors:
+                selectedCategoryImage.sprite = DecorationsCategorySelected;
+                break;
+        }
+    }
+
+    // BUTTONS //
+
+    public void SetUnlocksTab()
+    {
+        SetCategory(ShopCategory.Unlocks);
+    }
+
+    public void SetTeasTab()
+    {
+        SetCategory(ShopCategory.Teas);
+    }
+
+    public void SetDecorsTab()
+    {
+        SetCategory(ShopCategory.Decors);
     }
 
     public void CloseShop()

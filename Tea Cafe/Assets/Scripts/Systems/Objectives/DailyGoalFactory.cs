@@ -76,8 +76,8 @@ public class DailyGoalFactory
 
     private int DetermineGoalsPerDay(int day)
     {
-        if (day < 5) return 2;
-        if (day < 15) return 3;
-        return 4;
+        if (day < 5) return 3;
+        if (day < 10) return 4;
+        return 5;
     }
 }

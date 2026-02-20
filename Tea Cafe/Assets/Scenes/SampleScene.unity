@@ -16044,10 +16044,10 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Intensity: 12
   m_Range: 10
-  m_SpotAngle: 137.40001
-  m_InnerSpotAngle: 120.25208
+  m_SpotAngle: 144.66118
+  m_InnerSpotAngle: 77.53618
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -16086,7 +16086,7 @@ Light:
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -18765,10 +18765,10 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Intensity: 12
   m_Range: 10
-  m_SpotAngle: 137.40001
-  m_InnerSpotAngle: 120.25208
+  m_SpotAngle: 144.66118
+  m_InnerSpotAngle: 77.53618
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -18807,7 +18807,7 @@ Light:
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -19638,7 +19638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &950230721
 Transform:
   m_ObjectHideFlags: 0
@@ -28677,10 +28677,10 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Intensity: 12
   m_Range: 10
-  m_SpotAngle: 137.40001
-  m_InnerSpotAngle: 120.25208
+  m_SpotAngle: 144.66118
+  m_InnerSpotAngle: 77.53618
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -28719,7 +28719,7 @@ Light:
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -35017,10 +35017,10 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Intensity: 12
   m_Range: 10
-  m_SpotAngle: 137.40001
-  m_InnerSpotAngle: 120.25208
+  m_SpotAngle: 144.66118
+  m_InnerSpotAngle: 77.53618
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -35059,7 +35059,7 @@ Light:
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -35477,6 +35477,10 @@ PrefabInstance:
     - target: {fileID: 2464864912358213183, guid: 949aec1de74b7c84e9d31fc5e3b3b469, type: 3}
       propertyPath: m_Name
       value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2464864912358213183, guid: 949aec1de74b7c84e9d31fc5e3b3b469, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3514535996501842799, guid: 949aec1de74b7c84e9d31fc5e3b3b469, type: 3}
       propertyPath: m_LocalPosition.x

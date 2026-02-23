@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2572eff1bc3c7754099061ee89f81ae2
+guid: 06c1bda6663de0c4b96f3520dade5f94
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,101 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Decoration - Sign Board_0
+      name: Decoration - BookShelf_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
-        width: 31
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8025ad3c5c02b345a3839c33b6a4348
-      internalID: 2122417625
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Decoration - Sign Board_1
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 0
-        width: 2
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 91cca0d41c3cf4c48b2b44c15aa234d1
-      internalID: -2122617671
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Decoration - Sign Board_2
-      rect:
-        serializedVersion: 2
-        x: 97
-        y: 32
-        width: 30
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 84c250d2265d25d47bca0330e5a4f66a
-      internalID: 9230511
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Decoration - Sign Board_3
-      rect:
-        serializedVersion: 2
-        x: 101
-        y: 31
-        width: 22
-        height: 1
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab5e1e39026738745bee02615058ff69
-      internalID: 703877014
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Decoration - Sign Board_4
-      rect:
-        serializedVersion: 2
-        x: 123
-        y: 30
-        width: 1
-        height: 1
+        y: 132
+        width: 64
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,96 +138,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68995f99dda7e16458d0be9168c978b1
-      internalID: -1542225460
+      spriteID: 872184e530dcd264eb299bb55829061a
+      internalID: 2046722280
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Decoration - Sign Board_5
+      name: Decoration - BookShelf_1
       rect:
         serializedVersion: 2
-        x: 15
-        y: 9
-        width: 2
-        height: 8
+        x: 0
+        y: 0
+        width: 64
+        height: 66
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bdcf54804987bca41b4e8df3c34a8412
-      internalID: -886797670
+      spriteID: 680f80caa0bbdc9458289b1fd5bbc8eb
+      internalID: 202729312
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Decoration - Sign Board_6
+      name: Decoration - BookShelf_2
       rect:
         serializedVersion: 2
-        x: 15
-        y: 17
-        width: 2
-        height: 9
+        x: 0
+        y: 66
+        width: 64
+        height: 66
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6102d0869d0930a41a052655392c1e66
-      internalID: -642724511
+      spriteID: 3d4222bf302a72742b5142e79b9fd3af
+      internalID: -772719705
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Decoration - Sign Board_7
+      name: Decoration - BookShelf_3
       rect:
         serializedVersion: 2
-        x: 15
-        y: 26
-        width: 2
-        height: 3
+        x: 80
+        y: 0
+        width: 16
+        height: 66
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aec65dfb84e0cdc4aa8551272eef9a7a
-      internalID: -255866486
+      spriteID: 65ffcef8d38dd0a4db00ffa357f24485
+      internalID: -1486646905
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Decoration - Sign Board_8
+      name: Decoration - BookShelf_4
       rect:
         serializedVersion: 2
-        x: 15
-        y: 29
-        width: 2
-        height: 3
+        x: 112
+        y: 50
+        width: 64
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2b5bd454fe2082418efc192261b2fb2
-      internalID: -990647395
+      spriteID: bbbce9d5fbe4dd548b556945e89f099d
+      internalID: -2109614826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Decoration - BookShelf_5
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0826fd78067eb44db0e7df0d35a5003
+      internalID: -1382039582
       vertices: []
       indices: 
       edges: []
@@ -324,7 +258,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2566a4a582d259941b01d91951db9e17
+    spriteID: 49ab4c4afd4bf034986af7ec5668b579
     internalID: 0
     vertices: []
     indices: 
@@ -334,15 +268,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Decoration - Sign Board_0: 2122417625
-      Decoration - Sign Board_1: -2122617671
-      Decoration - Sign Board_2: 9230511
-      Decoration - Sign Board_3: 703877014
-      Decoration - Sign Board_4: -1542225460
-      Decoration - Sign Board_5: -886797670
-      Decoration - Sign Board_6: -642724511
-      Decoration - Sign Board_7: -255866486
-      Decoration - Sign Board_8: -990647395
+      Decoration - BookShelf_0: 2046722280
+      Decoration - BookShelf_1: 202729312
+      Decoration - BookShelf_2: -772719705
+      Decoration - BookShelf_3: -1486646905
+      Decoration - BookShelf_4: -2109614826
+      Decoration - BookShelf_5: -1382039582
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
